@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff; /* Clean white background */
+  --foreground: #1c1c1c; /* Charcoal text */
+  --muted: #5f5f5d;
+  --border-light: #e5e5e5;
+  --border-interactive: rgba(28, 28, 28, 0.4);
+  --btn-text-light: #fcfbf8;
+  
+  --font-display: var(--font-outfit), ui-sans-serif, system-ui;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border-light: var(--border-light);
+  --color-border-interactive: var(--border-interactive);
+  --color-btn-text-light: var(--btn-text-light);
+  
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+/* Lovable button inset shadow utility */
+.shadow-btn-inset {
+  box-shadow: 
+    rgba(255, 255, 255, 0.2) 0px 0.5px 0px 0px inset, 
+    rgba(0, 0, 0, 0.2) 0px 0px 0px 0.5px inset, 
+    rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+}
+
+/* Warm diffused focus state shadow */
+.shadow-focus-soft {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+/* Subtle atmospheric gradient wash for left panel background */
+.bg-gradient-wash {
+  background: radial-gradient(circle at 10% 20%, #f0f4ff 0%, #f5f0ff 45%, #eef4ff 90%);
+}
+
+/* Multi-stage animation for otp focus shifting helper */
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

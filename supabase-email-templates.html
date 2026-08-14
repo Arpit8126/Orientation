@@ -1,0 +1,178 @@
+<!-- ========================================== -->
+<!-- TEMPLATE 1: Confirm Signup (OTP Email)     -->
+<!-- ========================================== -->
+<div style="background-color: #0b0f19; width: 100%; margin: 0; padding: 40px 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
+  <div style="max-width: 600px; margin: 0 auto; padding: 0 20px; color: #fafaf9;">
+    
+    <!-- Header/Logo -->
+    <div style="margin-bottom: 24px; border-bottom: 2px solid #2563eb; padding-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+      <h1 style="color: #2563eb; margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; font-family: -apple-system, BlinkMacSystemFont, sans-serif;">GLA University</h1>
+      <span style="color: #a8a29e; font-size: 14px; font-weight: 600; margin-left: 8px;">Orientation 2026</span>
+    </div>
+
+    <!-- Title -->
+    <h2 style="color: #fafaf9; font-size: 22px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">
+      Verify Your Email 👋
+    </h2>
+
+    <!-- Body -->
+    <p style="font-size: 15px; line-height: 1.6; color: #e7e5e4; margin-bottom: 24px;">
+      Welcome to the Department Orientation Program 2026 for <strong>BCA (AIML & DS) 1st Year</strong>. Please enter the 8-digit verification code below on the registration page to activate your account:
+    </p>
+
+    <!-- OTP Code Display -->
+    <div style="margin: 28px 0; padding: 12px 0;">
+      <span style="font-size: 11px; text-transform: uppercase; color: #a8a29e; letter-spacing: 0.15em; display: block; margin-bottom: 6px; font-weight: 600;">Verification Code:</span>
+      <span style="font-size: 36px; font-weight: 800; color: #2563eb; letter-spacing: 4px; font-family: monospace; display: block;">{{ .Token }}</span>
+    </div>
+
+    <!-- Verification Instructions -->
+    <div style="border-left: 3px solid #2563eb; padding-left: 12px; margin: 28px 0;">
+      <strong style="color: #2563eb; font-size: 14px; display: block; margin-bottom: 6px;">⚠️ Critical Verification Instructions:</strong>
+      <ul style="margin: 0; padding-left: 16px; font-size: 13px; line-height: 1.6; color: #a8a29e;">
+        <li style="margin-bottom: 4px;"><strong>Do Not Close Page:</strong> Enter this code on the active registration screen. Do not refresh or close that browser tab.</li>
+        <li style="margin-bottom: 4px;"><strong>Expiration:</strong> This verification code is valid for 1 minute and will expire shortly.</li>
+        <li><strong>Double-check Email:</strong> Ensure you are using the same email address that you entered during registration.</li>
+      </ul>
+    </div>
+
+    <p style="font-size: 14px; line-height: 1.6; color: #a8a29e; margin-bottom: 32px;">
+      For any queries or if you require technical assistance, contact the support desk at <a href="mailto:support@codeshastra.tech" style="color: #2563eb; text-decoration: none;">support@codeshastra.tech</a>.
+    </p>
+
+    <!-- Divider -->
+    <hr style="border: none; border-top: 1px solid #1e293b; margin: 32px 0 20px 0;">
+    
+    <!-- Note -->
+    <p style="font-size: 12px; color: #78716c; line-height: 1.5; margin-bottom: 24px;">
+      If you didn't sign up for the GLA Orientation Portal, you can safely ignore this email.
+    </p>
+
+    <!-- Footer -->
+    <p style="font-size: 12px; color: #78716c; font-style: italic; margin-bottom: 20px; line-height: 1.5; border-top: 1px solid #1e293b; padding-top: 20px;">
+      Please do not reply directly to this email. This is an automated, system-generated message.
+    </p>
+
+    <p style="font-size: 13px; color: #a8a29e; line-height: 1.6; margin: 0;">
+      <strong style="color: #fafaf9; display: block; margin-bottom: 6px;">GLA Department Orientation Administration</strong>
+      <span style="color: #2563eb; text-decoration: none; font-weight: 500;">BCA (AIML & DS) Portal</span>
+    </p>
+
+  </div>
+</div>
+
+
+
+<!-- ========================================== -->
+<!-- TEMPLATE 2: Forgot Password / Reset Link   -->
+<!-- ========================================== -->
+<div style="background-color: #0b0f19; width: 100%; margin: 0; padding: 40px 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
+  <div style="max-width: 600px; margin: 0 auto; padding: 0 20px; color: #fafaf9;">
+    
+    <!-- Header/Logo -->
+    <div style="margin-bottom: 24px; border-bottom: 2px solid #2563eb; padding-bottom: 12px;">
+      <h1 style="color: #2563eb; margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; font-family: -apple-system, BlinkMacSystemFont, sans-serif;">GLA University Orientation</h1>
+    </div>
+
+    <!-- Title -->
+    <h2 style="color: #fafaf9; font-size: 22px; font-weight: 700; margin-top: 0; margin-bottom: 20px;">
+      Password Reset Request
+    </h2>
+
+    <!-- Body -->
+    <p style="font-size: 15px; line-height: 1.6; color: #e7e5e4; margin-bottom: 16px;">Hello,</p>
+    
+    <p style="font-size: 15px; line-height: 1.6; color: #e7e5e4; margin-bottom: 24px;">
+      We received a request to update the password for your GLA Orientation account. To proceed and choose a new password, please click the button below:
+    </p>
+
+    <!-- Reset Button -->
+    <div style="margin: 28px 0;">
+      <a href="{{ .ConfirmationURL }}" style="background-color: #2563eb; color: #ffffff; padding: 12px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 15px; display: inline-block; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);">
+        Reset Password
+      </a>
+    </div>
+
+    <!-- Redirection Instructions -->
+    <div style="border-left: 3px solid #2563eb; padding-left: 12px; margin: 28px 0;">
+      <strong style="color: #2563eb; font-size: 14px; display: block; margin-bottom: 6px;">⚠️ Critical Redirection Instructions:</strong>
+      <ul style="margin: 0; padding-left: 16px; font-size: 13px; line-height: 1.6; color: #a8a29e;">
+        <li style="margin-bottom: 4px;">Open the link in the <strong>same browser profile</strong> from where you requested the reset.</li>
+        <li style="margin-bottom: 4px;">Do not refresh the page until the password update form loads completely.</li>
+      </ul>
+    </div>
+
+    <!-- Security Info -->
+    <p style="font-size: 14px; line-height: 1.6; color: #a8a29e; margin-bottom: 16px;">
+      <strong style="color: #e7e5e4;">Important Security Notice:</strong> If you did not initiate this request, you can safely ignore this email. Your account credentials remain secure.
+    </p>
+
+    <p style="font-size: 14px; line-height: 1.6; color: #a8a29e; margin-bottom: 32px;">
+      For any queries or if you require technical assistance, contact the support desk at <a href="mailto:support@codeshastra.tech" style="color: #2563eb; text-decoration: none;">support@codeshastra.tech</a>.
+    </p>
+
+    <!-- Divider -->
+    <hr style="border: none; border-top: 1px solid #1e293b; margin: 32px 0;" />
+
+    <!-- Footer -->
+    <p style="font-size: 12px; color: #78716c; font-style: italic; margin-bottom: 20px; line-height: 1.5;">
+      Please do not reply directly to this email. This is an automated, system-generated message.
+    </p>
+
+    <p style="font-size: 13px; color: #a8a29e; line-height: 1.6; margin: 0;">
+      <strong style="color: #fafaf9; display: block; margin-bottom: 6px;">GLA Department Orientation Administration</strong>
+      <span style="color: #2563eb; text-decoration: none; font-weight: 500;">BCA (AIML & DS) Portal</span>
+    </p>
+
+  </div>
+</div>
+
+
+
+<!-- ========================================== -->
+<!-- TEMPLATE 3: Password Changed Confirmation  -->
+<!-- ========================================== -->
+<div style="background-color: #0b0f19; width: 100%; margin: 0; padding: 40px 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
+  <div style="max-width: 600px; margin: 0 auto; padding: 0 20px; color: #fafaf9;">
+    
+    <!-- Header/Logo -->
+    <div style="margin-bottom: 24px; border-bottom: 2px solid #2563eb; padding-bottom: 12px;">
+      <h1 style="color: #2563eb; margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; font-family: -apple-system, BlinkMacSystemFont, sans-serif;">GLA University Orientation</h1>
+    </div>
+
+    <!-- Title -->
+    <h2 style="color: #fafaf9; font-size: 22px; font-weight: 700; margin-top: 0; margin-bottom: 20px;">
+      Password Changed Successfully
+    </h2>
+
+    <!-- Body -->
+    <p style="font-size: 15px; line-height: 1.6; color: #e7e5e4; margin-bottom: 16px;">Hello,</p>
+    
+    <p style="font-size: 15px; line-height: 1.6; color: #e7e5e4; margin-bottom: 16px;">
+      This email confirms that the password for your GLA Orientation account has been successfully updated.
+    </p>
+    
+    <p style="font-size: 15px; line-height: 1.6; color: #e7e5e4; margin-bottom: 24px;">
+      No further action is required if you initiated this change. You can now log into the platform using your new credentials.
+    </p>
+
+    <!-- Notice -->
+    <p style="font-size: 14px; line-height: 1.6; color: #a8a29e; margin-bottom: 32px; border-left: 3px solid #ef4444; padding-left: 12px;">
+      <strong style="color: #ef4444;">Important Security Notice:</strong> If you did not make this change, please reset your password immediately via the login page and contact our support desk right away at <a href="mailto:support@codeshastra.tech" style="color: #ef4444; text-decoration: underline;">support@codeshastra.tech</a> to secure your profile.
+    </p>
+
+    <!-- Divider -->
+    <hr style="border: none; border-top: 1px solid #1e293b; margin: 32px 0;" />
+
+    <!-- Footer -->
+    <p style="font-size: 12px; color: #78716c; font-style: italic; margin-bottom: 20px; line-height: 1.5;">
+      Please do not reply directly to this email. This is an automated, system-generated message.
+    </p>
+
+    <p style="font-size: 13px; color: #a8a29e; line-height: 1.6; margin: 0;">
+      <strong style="color: #fafaf9; display: block; margin-bottom: 6px;">GLA Department Orientation Administration</strong>
+      <span style="color: #2563eb; text-decoration: none; font-weight: 500;">BCA (AIML & DS) Portal</span>
+    </p>
+
+  </div>
+</div>
