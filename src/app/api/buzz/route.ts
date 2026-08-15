@@ -22,6 +22,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: 'You are not assigned to any team yet.' }, { status: 400 })
     }
 
+    // Secure endpoint: Only team leaders are allowed to press the buzzer
+    if (!profile.isLeader) {
+      return NextResponse.json({ success: false, error: 'Only your team leader is allowed to press the buzzer.' }, { status: 403 })
+    }
+
     // Call buzzTeam helper which checks locks and writes to Supabase
     const result = await buzzTeam(user.id, profile.fullName, profile.teamName)
 

@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { saveStudentSurveyAction, signOutAction } from '@/app/auth/actions'
-import { Shield, CheckCircle2, AlertCircle, LogOut, Trophy, Zap, RefreshCw, Upload, Image as ImageIcon, Clock } from 'lucide-react'
+import { Shield, CheckCircle2, AlertCircle, LogOut, Trophy, Zap, RefreshCw, Upload, Image as ImageIcon, Clock, Users } from 'lucide-react'
 
 interface StudentProfile {
   id: string
@@ -13,6 +13,7 @@ interface StudentProfile {
   teamName: string | null
   surveyCompleted: boolean
   surveyAnswers: any | null
+  isLeader: boolean
 }
 
 interface TeamScore {
@@ -75,7 +76,7 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
   })
   const [buzzerRanks, setBuzzerRanks] = useState<BuzzerRank[]>([])
   const [teamUploads, setTeamUploads] = useState<TeamUpload[]>([])
-  const [teamMembers, setTeamMembers] = useState<{ id: string; fullName: string | null; email: string }[]>([])
+  const [teamMembers, setTeamMembers] = useState<{ id: string; fullName: string | null; email: string; isLeader?: boolean }[]>([])
 
   // Image upload states
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -107,9 +108,40 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
   // Input references for the 8-digit OTP boxes (placeholder in this view)
   const otpRefs = useRef<(HTMLInputElement | null)[]>([])
 
-  // 1. Server-Sent Events (SSE) for Real-Time Updates
+  // Coerce tab for regular team members who shouldn't access the buzzer
   useEffect(() => {
-    if (!profile.surveyCompleted) return // Do not connect to SSE when filling out survey
+    if (!profile.isLeader && activeTab === 'buzzer') {
+      setActiveTab('leaderboard')
+    }
+  }, [profile.isLeader, activeTab])
+
+  // 1. Fetch initial game-state on mount/refresh
+  useEffect(() => {
+    if (!profile.surveyCompleted) return
+
+    const fetchInitialState = async () => {
+      try {
+        const res = await fetch('/api/game-state')
+        const data = await res.json()
+        if (data.success) {
+          if (data.profile) setProfile(data.profile)
+          if (data.leaderboard) setLeaderboard(data.leaderboard)
+          if (data.buzzerState) setBuzzerState(data.buzzerState)
+          if (data.buzzerRanks) setBuzzerRanks(data.buzzerRanks)
+          if (data.teamUploads) setTeamUploads(data.teamUploads)
+          if (data.teamMembers) setTeamMembers(data.teamMembers)
+        }
+      } catch (err) {
+        console.error('Error fetching initial game state:', err)
+      }
+    }
+
+    fetchInitialState()
+  }, [profile.surveyCompleted])
+
+  // 2. Server-Sent Events (SSE) for Real-Time Updates (Leaders Only)
+  useEffect(() => {
+    if (!profile.surveyCompleted || !profile.teamName || !profile.isLeader) return
 
     const eventSource = new EventSource('/api/realtime')
 
@@ -126,11 +158,9 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
           if (data.teamMembers) setTeamMembers(data.teamMembers)
         }
       } catch (err) {
-        console.error('Error fetching game state:', err)
+        console.error('Error refreshing game state:', err)
       }
     }
-
-    refreshState()
 
     eventSource.onmessage = (event) => {
       if (event.data === 'update') {
@@ -141,7 +171,7 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
     return () => {
       eventSource.close()
     }
-  }, [profile.surveyCompleted])
+  }, [profile.surveyCompleted, profile.teamName, profile.isLeader])
 
   // 2. Countdown timer effect for Prompt Image Upload
   useEffect(() => {
@@ -653,7 +683,155 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
     )
   }
 
-  // Render State 3: Survey complete and team assigned (Main Dashboard)
+  // Render State 2.5: Survey complete, team assigned, but NOT a team leader (Static View - No SSE)
+  if (isSurveyComplete && hasTeam && !profile.isLeader) {
+    const teamLeader = teamMembers.find((m) => m.isLeader)
+    const myTeamRank = leaderboard.findIndex((t) => t.teamName.toLowerCase() === myTeam.toLowerCase()) + 1
+
+    return (
+      <div className="min-h-screen bg-[#fcfbf9] flex flex-col justify-between">
+        <header className="sticky top-0 z-50 bg-white border-b border-neutral-200/80 shadow-md">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <Image 
+                src="/gla-logo.webp" 
+                alt="GLA Logo" 
+                width={120} 
+                height={120} 
+                className="object-contain w-20 sm:w-28 h-auto max-h-11 sm:max-h-16" 
+              />
+              <div className="hidden md:flex flex-col">
+                <span className="font-display font-extrabold text-base sm:text-lg text-foreground tracking-tight leading-none">
+                  GLA University
+                </span>
+                <span className="text-[10px] text-muted font-bold mt-1">
+                  BCA Orientation 2026
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <div className="px-3.5 py-1.5 bg-neutral-100 text-neutral-800 border border-neutral-200/80 rounded-full text-xs font-bold tracking-tight shadow-sm">
+                {profile.teamName}
+              </div>
+              <button
+                onClick={handleLogout}
+                className="flex items-center justify-center p-2 border border-neutral-200 rounded-full text-foreground hover:bg-neutral-50 transition cursor-pointer shadow-sm"
+                title="Logout"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <main className="max-w-3xl mx-auto px-4 sm:px-6 py-12 flex-grow w-full space-y-6">
+          {/* Header Banner */}
+          <div className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8 shadow-md text-center space-y-3">
+            <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mx-auto shadow-sm">
+              <Users className="w-6 h-6" />
+            </div>
+            <h2 className="font-display text-xl sm:text-2xl font-black text-foreground">Welcome to Team {profile.teamName}!</h2>
+            <p className="text-xs sm:text-sm text-muted max-w-lg mx-auto leading-relaxed">
+              Your profile is verified and you have been assigned to your team. Coordinate with your teammates below to select a Team Leader. Once chosen, notify the host/admin to promote them!
+            </p>
+            <div className="pt-2">
+              <button
+                onClick={async () => {
+                  try {
+                    const res = await fetch('/api/game-state')
+                    const data = await res.json()
+                    if (data.success) {
+                      if (data.profile) setProfile(data.profile)
+                      if (data.leaderboard) setLeaderboard(data.leaderboard)
+                      if (data.teamMembers) setTeamMembers(data.teamMembers)
+                    }
+                  } catch (err) {
+                    console.error(err)
+                  }
+                }}
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-foreground text-btn-text-light hover:opacity-90 rounded-xl text-xs font-bold transition shadow-btn-inset cursor-pointer"
+              >
+                <RefreshCw className="w-3.5 h-3.5" /> Refresh Dashboard
+              </button>
+            </div>
+          </div>
+
+          {/* Info Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {/* Card 1: Team Leader status */}
+            <div className="bg-white border border-neutral-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between min-h-[140px]">
+              <div>
+                <span className="text-[10px] text-muted uppercase tracking-wider font-bold">Team Leader</span>
+                {teamLeader ? (
+                  <h4 className="font-display text-base font-extrabold text-foreground mt-1.5 flex items-center gap-1.5">
+                    <Shield className="w-4 h-4 text-amber-500 fill-amber-500 flex-shrink-0" />
+                    <span>{teamLeader.fullName || 'Leader Student'}</span>
+                  </h4>
+                ) : (
+                  <h4 className="font-display text-base font-extrabold text-red-500 mt-1.5 italic">
+                    Not Assigned Yet
+                  </h4>
+                )}
+              </div>
+              <p className="text-[11px] text-muted leading-relaxed mt-3">
+                {teamLeader 
+                  ? "Only your designated team leader has access to the Buzzer and live submission dashboard to play games." 
+                  : "Discuss with your teammates and ask the admin to assign a team leader to unlock game activities."}
+              </p>
+            </div>
+
+            {/* Card 2: Current Team Standing */}
+            <div className="bg-white border border-neutral-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between min-h-[140px]">
+              <div>
+                <span className="text-[10px] text-muted uppercase tracking-wider font-bold">Leaderboard Standing</span>
+                <h4 className="font-display text-base font-extrabold text-foreground mt-1.5 flex items-center gap-1.5">
+                  <Trophy className="w-4 h-4 text-amber-500 fill-amber-500 flex-shrink-0" />
+                  <span>{myTeamRank > 0 ? `Rank #${myTeamRank} / ${leaderboard.length}` : 'Unranked'}</span>
+                </h4>
+              </div>
+              <p className="text-[11px] text-muted leading-relaxed mt-3">
+                Current total score ranking out of all 18 teams. Tap the refresh button above to update your team's rank.
+              </p>
+            </div>
+          </div>
+
+          {/* List of Team Members */}
+          <div className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8 shadow-md">
+            <h3 className="text-sm sm:text-base font-bold text-foreground mb-4 flex items-center gap-2">
+              <Users className="w-4 h-4 text-muted" /> My Team Members ({teamMembers.length})
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {teamMembers.map((m) => {
+                const isLeader = m.isLeader || false
+                return (
+                  <div key={m.id} className={`p-4 rounded-xl border flex justify-between items-center gap-3 ${isLeader ? 'bg-amber-50/30 border-amber-250 shadow-sm' : 'bg-neutral-50/50 border-neutral-200'}`}>
+                    <div className="min-w-0">
+                      <span className="text-xs font-bold text-foreground flex items-center gap-1.5 truncate">
+                        {isLeader && <Shield className="w-3.5 h-3.5 text-amber-500 fill-amber-500 flex-shrink-0" />}
+                        <span>{m.fullName || 'Registered Student'}</span>
+                      </span>
+                      <span className="text-[10px] text-muted mt-0.5 block truncate">{m.email}</span>
+                    </div>
+                    {isLeader && (
+                      <span className="px-2 py-0.5 rounded bg-amber-100 text-[9px] font-black text-amber-800 uppercase tracking-wider flex-shrink-0">
+                        Leader
+                      </span>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </main>
+
+        <footer className="py-6 border-t border-border-light text-center text-xs text-muted bg-white">
+          © {new Date().getFullYear()} GLA University. BCA Orientation.
+        </footer>
+      </div>
+    )
+  }
+
+  // Render State 3: Survey complete and team assigned (Main Dashboard - Leaders Only)
   return (
     <div className="min-h-screen bg-[#fcfbf9] flex flex-col justify-between">
       {/* Sticky Header Wrapper - Responsive layout */}
@@ -680,30 +858,32 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
           </div>
 
           {/* Center: Segmented Controls Switcher - Hidden on mobile, shown on sm screens and up */}
-          <div className="hidden sm:flex bg-neutral-100 p-1 rounded-xl gap-1 flex-shrink-0 shadow-inner">
-            <button
-              onClick={() => setActiveTab('buzzer')}
-              className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer flex items-center gap-2 ${
-                activeTab === 'buzzer'
-                  ? 'bg-white text-blue-600 shadow-sm border border-neutral-200/30'
-                  : 'text-neutral-500 hover:text-foreground'
-              }`}
-            >
-              <Zap className="w-4 h-4" />
-              <span>Buzzer</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('leaderboard')}
-              className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer flex items-center gap-2 ${
-                activeTab === 'leaderboard'
-                  ? 'bg-white text-blue-600 shadow-sm border border-neutral-200/30'
-                  : 'text-neutral-500 hover:text-foreground'
-              }`}
-            >
-              <Trophy className="w-4 h-4" />
-              <span>Leaderboard</span>
-            </button>
-          </div>
+          {profile.isLeader && (
+            <div className="hidden sm:flex bg-neutral-100 p-1 rounded-xl gap-1 flex-shrink-0 shadow-inner">
+              <button
+                onClick={() => setActiveTab('buzzer')}
+                className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer flex items-center gap-2 ${
+                  activeTab === 'buzzer'
+                    ? 'bg-white text-blue-600 shadow-sm border border-neutral-200/30'
+                    : 'text-neutral-500 hover:text-foreground'
+                }`}
+              >
+                <Zap className="w-4 h-4" />
+                <span>Buzzer</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('leaderboard')}
+                className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer flex items-center gap-2 ${
+                  activeTab === 'leaderboard'
+                    ? 'bg-white text-blue-600 shadow-sm border border-neutral-200/30'
+                    : 'text-neutral-500 hover:text-foreground'
+                }`}
+              >
+                <Trophy className="w-4 h-4" />
+                <span>Leaderboard</span>
+              </button>
+            </div>
+          )}
 
           {/* Right: Team info & Logout */}
           <div className="flex items-center gap-2.5 flex-shrink-0">
@@ -721,32 +901,34 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
         </div>
 
         {/* Mobile segmented controls switcher - Hidden on sm screens and up */}
-        <div className="sm:hidden w-full bg-white px-4 pb-3 flex justify-center">
-          <div className="w-full max-w-sm bg-neutral-100 p-1 rounded-xl flex gap-1 shadow-inner">
-            <button
-              onClick={() => setActiveTab('buzzer')}
-              className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 ${
-                activeTab === 'buzzer'
-                  ? 'bg-white text-blue-600 shadow-sm border border-neutral-200/30'
-                  : 'text-neutral-500 hover:text-foreground'
-              }`}
-            >
-              <Zap className="w-3.5 h-3.5" />
-              <span>Buzzer</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('leaderboard')}
-              className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 ${
-                activeTab === 'leaderboard'
-                  ? 'bg-white text-blue-600 shadow-sm border border-neutral-200/30'
-                  : 'text-neutral-500 hover:text-foreground'
-              }`}
-            >
-              <Trophy className="w-3.5 h-3.5" />
-              <span>Leaderboard</span>
-            </button>
+        {profile.isLeader && (
+          <div className="sm:hidden w-full bg-white px-4 pb-3 flex justify-center">
+            <div className="w-full max-w-sm bg-neutral-100 p-1 rounded-xl flex gap-1 shadow-inner">
+              <button
+                onClick={() => setActiveTab('buzzer')}
+                className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 ${
+                  activeTab === 'buzzer'
+                    ? 'bg-white text-blue-600 shadow-sm border border-neutral-200/30'
+                    : 'text-neutral-500 hover:text-foreground'
+                }`}
+              >
+                <Zap className="w-3.5 h-3.5" />
+                <span>Buzzer</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('leaderboard')}
+                className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 ${
+                  activeTab === 'leaderboard'
+                    ? 'bg-white text-blue-600 shadow-sm border border-neutral-200/30'
+                    : 'text-neutral-500 hover:text-foreground'
+                }`}
+              >
+                <Trophy className="w-3.5 h-3.5" />
+                <span>Leaderboard</span>
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </header>
 
       {/* Dashboard Body */}
@@ -1066,6 +1248,23 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
         {/* Active Tab 2: Live Leaderboard View */}
         {activeTab === 'leaderboard' && (
           <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
+            {!profile.isLeader && (
+              <div className="bg-amber-50 border border-amber-200 text-amber-900 rounded-2xl p-4 sm:p-5 flex items-start gap-3 shadow-sm">
+                <Shield className="w-5 h-5 text-amber-500 fill-amber-500 flex-shrink-0 mt-0.5" />
+                <div className="space-y-0.5">
+                  <h4 className="text-xs sm:text-sm font-bold">Only the Team Leader can Buzz!</h4>
+                  <p className="text-[11px] sm:text-xs text-amber-800 leading-relaxed font-medium">
+                    {(() => {
+                      const leader = teamMembers.find((m) => m.isLeader)
+                      return leader 
+                        ? `Your designated team leader is ${leader.fullName || leader.email}. Only they have access to the Buzzer tab. `
+                        : "Your team has not designated a team leader yet. The admin can assign a leader from the control panel. "
+                    })()}
+                    Please follow the instructions from the host and watch the live standings below!
+                  </p>
+                </div>
+              </div>
+            )}
             <div className="bg-white border border-neutral-200/80 rounded-2xl p-6 sm:p-10 shadow-md">
               <div className="flex justify-between items-center mb-6 pb-4 border-b border-neutral-100">
                 <h3 className="font-display text-lg sm:text-xl font-bold text-foreground flex items-center gap-2">
@@ -1134,12 +1333,25 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
               <div className="bg-white border border-neutral-200/80 rounded-2xl p-6 sm:p-10 shadow-md">
                 <h4 className="text-sm sm:text-base font-bold text-foreground mb-4">My Team Members ({profile.teamName})</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {teamMembers.map((m) => (
-                    <div key={m.id} className="p-4 bg-neutral-50/50 rounded-xl border border-neutral-200 flex flex-col">
-                      <span className="text-sm font-bold text-foreground">{m.fullName || 'Registered Student'}</span>
-                      <span className="text-xs text-muted mt-1">{m.email}</span>
-                    </div>
-                  ))}
+                  {teamMembers.map((m) => {
+                    const isLeader = m.isLeader || false
+                    return (
+                      <div key={m.id} className={`p-4 rounded-xl border flex justify-between items-center gap-3 ${isLeader ? 'bg-amber-50/30 border-amber-200 shadow-sm' : 'bg-neutral-50/50 border-neutral-200'}`}>
+                        <div>
+                          <span className="text-xs font-bold text-foreground flex items-center gap-1.5">
+                            {isLeader && <Shield className="w-3.5 h-3.5 text-amber-500 fill-amber-500 flex-shrink-0" />}
+                            <span>{m.fullName || 'Registered Student'}</span>
+                          </span>
+                          <span className="text-[10px] text-muted mt-1 block">{m.email}</span>
+                        </div>
+                        {isLeader && (
+                          <span className="px-2 py-0.5 rounded bg-amber-100 text-[9px] font-black text-amber-800 uppercase tracking-wider flex-shrink-0">
+                            Leader
+                          </span>
+                        )}
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             )}

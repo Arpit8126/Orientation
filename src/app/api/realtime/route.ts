@@ -17,7 +17,7 @@ export async function GET(request: Request) {
           clearInterval(keepAliveInterval)
           sseClients.delete(controller)
         }
-      }, 15000)
+      }, 45000)
 
       // Remove from client registry when request is cancelled/aborted
       request.signal.addEventListener('abort', () => {

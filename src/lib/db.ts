@@ -1,20 +1,25 @@
 import { createClient } from '@supabase/supabase-js'
 
 // Initialize the database admin client using service role key
+let adminClient: any = null
+
 export function getAdminClient() {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    throw new Error('Missing Supabase environment variables for database operations')
-  }
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY,
-    {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: false
-      }
+  if (!adminClient) {
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      throw new Error('Missing Supabase environment variables for database operations')
     }
-  )
+    adminClient = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_ROLE_KEY,
+      {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false
+        }
+      }
+    )
+  }
+  return adminClient
 }
 
 // Interfaces
@@ -27,6 +32,7 @@ export interface StudentProfile {
   surveyAnswers: any | null
   registeredAt: string
   isAdmin: boolean
+  isLeader: boolean
 }
 
 export interface TeamScore {
@@ -107,14 +113,14 @@ export async function getLeaderboard(): Promise<TeamScore[]> {
     const { error: seedErr } = await admin.from('leaderboard').insert(payload)
     if (seedErr) throw seedErr
     
-    return payload.map((t) => ({
+    return payload.map((t: any) => ({
       teamName: t.team_name,
       game1: t.game_1, game2: t.game_2, game3: t.game_3, game4: t.game_4, game5: t.game_5,
       total: t.total
     }))
   }
 
-  return data.map((t) => ({
+  return data.map((t: any) => ({
     teamName: t.team_name,
     game1: t.game_1, game2: t.game_2, game3: t.game_3, game4: t.game_4, game5: t.game_5,
     total: t.total
@@ -175,7 +181,7 @@ export async function getBuzzerRanks(): Promise<BuzzerRank[]> {
   const { data, error } = await admin.from('buzzer_ranks').select('*').order('rank', { ascending: true })
   if (error) throw error
 
-  return (data || []).map((r) => ({
+  return (data || []).map((r: any) => ({
     rank: r.rank,
     teamName: r.team_name,
     userName: r.user_name,
@@ -192,8 +198,8 @@ export async function getStudentsList(): Promise<StudentProfile[]> {
   const ADMIN_EMAILS = ['admin@gla.ac.in']
 
   return (data || [])
-    .filter((s) => !s.is_admin && !ADMIN_EMAILS.includes(s.email.toLowerCase()))
-    .map((s) => ({
+    .filter((s: any) => !s.is_admin && !ADMIN_EMAILS.includes(s.email.toLowerCase()))
+    .map((s: any) => ({
       id: s.id,
       email: s.email,
       fullName: s.full_name,
@@ -201,7 +207,8 @@ export async function getStudentsList(): Promise<StudentProfile[]> {
       surveyCompleted: s.survey_completed,
       surveyAnswers: s.survey_answers,
       registeredAt: s.registered_at,
-      isAdmin: s.is_admin || false
+      isAdmin: s.is_admin || false,
+      isLeader: s.is_leader || false
     }))
 }
 
@@ -221,7 +228,8 @@ export async function getOrCreateStudent(id: string, email: string): Promise<Stu
       survey_completed: false,
       survey_answers: null,
       registered_at: new Date().toISOString(),
-      is_admin: false
+      is_admin: false,
+      is_leader: false
     }
     const { error: seedErr } = await admin.from('profiles').insert(newStudent)
     if (seedErr) throw seedErr
@@ -234,7 +242,8 @@ export async function getOrCreateStudent(id: string, email: string): Promise<Stu
       surveyCompleted: newStudent.survey_completed,
       surveyAnswers: newStudent.survey_answers,
       registeredAt: newStudent.registered_at,
-      isAdmin: newStudent.is_admin
+      isAdmin: newStudent.is_admin,
+      isLeader: newStudent.is_leader
     }
   }
 
@@ -246,7 +255,8 @@ export async function getOrCreateStudent(id: string, email: string): Promise<Stu
     surveyCompleted: data.survey_completed,
     surveyAnswers: data.survey_answers,
     registeredAt: data.registered_at,
-    isAdmin: data.is_admin || false
+    isAdmin: data.is_admin || false,
+    isLeader: data.is_leader || false
   }
 }
 
@@ -383,59 +393,61 @@ export async function deactivateBuzzer(): Promise<void> {
 export async function buzzTeam(userId: string, fullName: string, teamName: string): Promise<{ success: boolean; rank?: number; error?: string }> {
   const admin = getAdminClient()
 
-  // First, verify buzzer state
-  const { data: bState, error: stateErr } = await admin.from('buzzer_state').select('*').eq('id', 'active').single()
-  if (stateErr || !bState) {
-    return { success: false, error: 'Buzzer is not configured.' }
-  }
-
-  if (!bState.is_active) {
-    return { success: false, error: 'Buzzer is currently locked.' }
-  }
-
-  // Check if team already buzzed
-  const { data: existingBuzz, error: ranksErr } = await admin.from('buzzer_ranks').select('*').eq('team_name', teamName).maybeSingle()
-  if (ranksErr) {
-    return { success: false, error: 'Database check error.' }
-  }
-
-  if (existingBuzz) {
-    return { success: false, error: 'Your team has already buzzed for this question.' }
-  }
-
-  // Calculate rank (count existing ranks)
-  const { count, error: countErr } = await admin.from('buzzer_ranks').select('*', { count: 'exact', head: true })
-  if (countErr) {
-    return { success: false, error: 'Buzzer rank count error.' }
-  }
-
-  const nextRank = (count || 0) + 1
-
-  // Insert buzz log
-  const { error: insertErr } = await admin.from('buzzer_ranks').insert({
-    team_name: teamName,
-    rank: nextRank,
-    user_name: fullName,
-    pressed_at: new Date().toISOString()
+  // Call the atomic Postgres RPC function to prevent race conditions and rank duplication
+  const { data, error } = await admin.rpc('buzz_team_atomic', {
+    p_user_id: userId,
+    p_full_name: fullName,
+    p_team_name: teamName
   })
 
-  if (insertErr) {
-    return { success: false, error: 'Failed to record buzz.' }
+  if (error) {
+    console.error('Buzzer RPC error:', error)
+    return { success: false, error: error.message || 'Database error during buzzer click.' }
   }
 
-  // If this is rank #1, lock buzzer metadata and automatically deactivate the buzzer
-  if (!bState.buzzed_by_team) {
-    await admin.from('buzzer_state').update({
-      buzzed_by_user_id: userId,
-      buzzed_by_name: fullName,
-      buzzed_by_team: teamName,
-      is_active: false,
-      updated_at: new Date().toISOString()
-    }).eq('id', 'active')
+  const result = data?.[0]
+  if (!result || !result.success) {
+    return { success: false, error: result?.error_message || 'Failed to buzz.' }
   }
 
   notifyClients()
-  return { success: true, rank: nextRank }
+  return { success: true, rank: result.rank }
+}
+
+// 13.1 Assign team leader in database (demoting current leader of this team)
+export async function assignTeamLeader(studentId: string, teamName: string): Promise<void> {
+  const admin = getAdminClient()
+  
+  // Demote any student currently marked as leader for this specific team
+  const { error: demoteError } = await admin
+    .from('profiles')
+    .update({ is_leader: false })
+    .eq('team_name', teamName)
+    
+  if (demoteError) throw demoteError
+
+  // Promote the chosen student to leader
+  const { error: promoteError } = await admin
+    .from('profiles')
+    .update({ is_leader: true })
+    .eq('id', studentId)
+    
+  if (promoteError) throw promoteError
+
+  notifyClients()
+}
+
+// 13.2 Remove team leader role from a student
+export async function removeTeamLeader(studentId: string): Promise<void> {
+  const admin = getAdminClient()
+  const { error } = await admin
+    .from('profiles')
+    .update({ is_leader: false })
+    .eq('id', studentId)
+    
+  if (error) throw error
+
+  notifyClients()
 }
 
 // 14. Bulk assign teams to students in Supabase
@@ -466,7 +478,7 @@ export async function createBucketPromptImages() {
   try {
     const { data: buckets, error } = await admin.storage.listBuckets()
     if (error) throw error
-    const exists = buckets?.some((b) => b.name === 'prompt_images')
+    const exists = buckets?.some((b: any) => b.name === 'prompt_images')
     if (!exists) {
       await admin.storage.createBucket('prompt_images', {
         public: true,
@@ -489,7 +501,7 @@ export async function getTeamUploads(): Promise<TeamUpload[]> {
   
   if (error) throw error
 
-  return (data || []).map((u, idx) => ({
+  return (data || []).map((u: any, idx: number) => ({
     rank: idx + 1,
     teamName: u.team_name,
     imageUrl: u.image_url,

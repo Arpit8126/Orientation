@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { updateTeamScore, addTeam, removeTeam, assignStudentTeam, activateBuzzerQuestion, deactivateBuzzer, bulkAssignTeams } from '@/lib/db'
+import { updateTeamScore, addTeam, removeTeam, assignStudentTeam, activateBuzzerQuestion, deactivateBuzzer, bulkAssignTeams, assignTeamLeader, removeTeamLeader } from '@/lib/db'
 import { createClient } from '@/lib/supabase/server'
 
 export async function POST(request: Request) {
@@ -113,6 +113,24 @@ export async function POST(request: Request) {
       const count = await bulkAssignTeams(assignments)
       return NextResponse.json({ success: true, count })
     } 
+    
+    else if (action === 'assign_leader') {
+      const { studentId, teamName } = body
+      if (!studentId || !teamName) {
+        return NextResponse.json({ success: false, error: 'Missing studentId or teamName.' }, { status: 400 })
+      }
+      await assignTeamLeader(studentId, teamName)
+      return NextResponse.json({ success: true })
+    }
+    
+    else if (action === 'remove_leader') {
+      const { studentId } = body
+      if (!studentId) {
+        return NextResponse.json({ success: false, error: 'Missing studentId.' }, { status: 400 })
+      }
+      await removeTeamLeader(studentId)
+      return NextResponse.json({ success: true })
+    }
     
     else {
       return NextResponse.json({ success: false, error: 'Unknown action request.' }, { status: 400 })

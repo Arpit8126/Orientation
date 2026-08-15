@@ -14,6 +14,7 @@ interface StudentProfile {
   surveyCompleted: boolean
   surveyAnswers: any | null
   registeredAt: string
+  isLeader?: boolean
 }
 
 interface TeamScore {
@@ -349,6 +350,68 @@ export default function AdminPortal() {
       }
     } catch (err) {
       alert('Error transferring student')
+    }
+  }
+
+  // Teams: Assign student as team leader
+  const handleAssignLeader = async (studentId: string, teamName: string) => {
+    try {
+      const res = await fetch('/api/admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'assign_leader',
+          studentId,
+          teamName
+        })
+      })
+      const data = await res.json()
+      if (data.success) {
+        // Refresh local student search if we are currently searching
+        if (searchQuery.trim()) {
+          setSearchedStudents((prev) =>
+            prev.map((s) => {
+              if (s.id === studentId) return { ...s, isLeader: true }
+              if (s.teamName?.toLowerCase() === teamName.toLowerCase() && s.id !== studentId) {
+                return { ...s, isLeader: false }
+              }
+              return s
+            })
+          )
+        }
+        refreshState()
+      } else {
+        alert(data.error || 'Failed to assign team leader')
+      }
+    } catch (err) {
+      alert('Error assigning team leader')
+    }
+  }
+
+  // Teams: Remove team leader role from a student
+  const handleRemoveLeader = async (studentId: string) => {
+    try {
+      const res = await fetch('/api/admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'remove_leader',
+          studentId
+        })
+      })
+      const data = await res.json()
+      if (data.success) {
+        if (searchQuery.trim()) {
+          setSearchedStudents((prev) =>
+            prev.map((s) => (s.id === studentId ? { ...s, isLeader: false } : s))
+          )
+        }
+        refreshState()
+      } else {
+        alert(data.error || 'Failed to remove team leader')
+      }
+    } catch (err) {
+      alert('Error removing team leader')
     }
   }
 
@@ -1193,27 +1256,45 @@ export default function AdminPortal() {
                           </div>
                         ) : (
                           <div className="space-y-2">
-                            {members.map((m) => (
-                              <div key={m.id} className="rounded-xl border border-neutral-200 overflow-hidden">
-                                <div className="px-3 py-2.5 bg-neutral-50">
-                                  <p className="text-xs font-bold text-foreground truncate">{m.fullName || 'Student'}</p>
-                                  <p className="text-[10px] text-muted truncate mt-0.5">{m.email}</p>
+                            {members.map((m) => {
+                              const isLeader = m.isLeader || false
+                              return (
+                                <div key={m.id} className={`rounded-xl border overflow-hidden ${isLeader ? 'border-amber-300 shadow-sm shadow-amber-100' : 'border-neutral-200'}`}>
+                                  <div className={`px-3 py-2.5 flex justify-between items-start gap-2 ${isLeader ? 'bg-amber-50/40' : 'bg-neutral-50'}`}>
+                                    <div className="min-w-0">
+                                      <p className="text-xs font-bold text-foreground truncate flex items-center gap-1">
+                                        {isLeader && <Shield className="w-3.5 h-3.5 text-amber-500 fill-amber-500 flex-shrink-0" />}
+                                        <span>{m.fullName || 'Student'}</span>
+                                      </p>
+                                      <p className="text-[10px] text-muted truncate mt-0.5">{m.email}</p>
+                                    </div>
+                                    <button
+                                      onClick={() => isLeader ? handleRemoveLeader(m.id) : handleAssignLeader(m.id, m.teamName || '')}
+                                      className={`px-1.5 py-0.5 rounded text-[9px] font-black uppercase cursor-pointer tracking-wider transition ${
+                                        isLeader 
+                                          ? 'bg-amber-100 hover:bg-amber-200 text-amber-800' 
+                                          : 'bg-neutral-200 hover:bg-neutral-300 text-neutral-700'
+                                      }`}
+                                    >
+                                      {isLeader ? 'Leader' : 'Promote'}
+                                    </button>
+                                  </div>
+                                  <div className="px-3 py-2 bg-white border-t border-neutral-100 flex items-center gap-2">
+                                    <span className="text-[9px] text-muted font-bold uppercase tracking-wider flex-shrink-0">Move to:</span>
+                                    <select
+                                      value={m.teamName || ''}
+                                      onChange={(e) => handleMoveStudent(m.id, e.target.value || null)}
+                                      className="flex-1 text-[10px] bg-white border border-neutral-200 rounded-lg px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500 font-semibold"
+                                    >
+                                      <option value="">-- Unassigned --</option>
+                                      {leaderboard.map((t) => (
+                                        <option key={t.teamName} value={t.teamName}>{t.teamName}</option>
+                                      ))}
+                                    </select>
+                                  </div>
                                 </div>
-                                <div className="px-3 py-2 bg-white border-t border-neutral-100 flex items-center gap-2">
-                                  <span className="text-[9px] text-muted font-bold uppercase tracking-wider flex-shrink-0">Move to:</span>
-                                  <select
-                                    value={m.teamName || ''}
-                                    onChange={(e) => handleMoveStudent(m.id, e.target.value || null)}
-                                    className="flex-1 text-[10px] bg-white border border-neutral-200 rounded-lg px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500 font-semibold"
-                                  >
-                                    <option value="">-- Unassigned --</option>
-                                    {leaderboard.map((t) => (
-                                      <option key={t.teamName} value={t.teamName}>{t.teamName}</option>
-                                    ))}
-                                  </select>
-                                </div>
-                              </div>
-                            ))}
+                              )
+                            })}
                           </div>
                         )}
                       </div>
@@ -1437,6 +1518,8 @@ export default function AdminPortal() {
                         <div className="space-y-3">
                           {searchedStudents.map((s) => {
                             const isInSelectedTeam = s.teamName?.toLowerCase() === selectedDestinationTeam.toLowerCase()
+                            const isLeader = s.isLeader || false
+                            const hasTeam = !!s.teamName
                             return (
                               <div
                                 key={s.id}
@@ -1465,22 +1548,44 @@ export default function AdminPortal() {
                                       }`}>
                                         {s.teamName || 'Unassigned'}
                                       </span>
+                                      {hasTeam && (
+                                        <span className={`text-[10px] font-black px-2 py-0.5 rounded-full flex items-center gap-1 ${
+                                          isLeader ? 'bg-amber-100 text-amber-700' : 'bg-neutral-100 text-neutral-400'
+                                        }`}>
+                                          {isLeader && <Shield className="w-2.5 h-2.5 fill-amber-500 text-amber-500" />}
+                                          <span>{isLeader ? 'Leader' : 'Regular Member'}</span>
+                                        </span>
+                                      )}
                                     </div>
                                   </div>
 
-                                  <button
-                                    onClick={() => handleMoveStudent(s.id, selectedDestinationTeam || null)}
-                                    disabled={!selectedDestinationTeam || isInSelectedTeam}
-                                    className={`px-4 py-2.5 rounded-xl font-black text-xs transition cursor-pointer flex-shrink-0 ${
-                                      !selectedDestinationTeam
-                                        ? 'bg-neutral-100 text-neutral-400 cursor-not-allowed'
-                                        : isInSelectedTeam
-                                        ? 'bg-emerald-100 text-emerald-700 border border-emerald-200 cursor-default'
-                                        : 'bg-blue-600 hover:bg-blue-700 text-white shadow-sm'
-                                    }`}
-                                  >
-                                    {isInSelectedTeam ? '✓ Added' : s.teamName ? 'Transfer →' : 'Add to Team'}
-                                  </button>
+                                  <div className="flex items-center gap-2 flex-shrink-0">
+                                    {hasTeam && (
+                                      <button
+                                        onClick={() => isLeader ? handleRemoveLeader(s.id) : handleAssignLeader(s.id, s.teamName || '')}
+                                        className={`px-3 py-2.5 rounded-xl font-black text-xs transition cursor-pointer ${
+                                          isLeader
+                                            ? 'bg-amber-100 hover:bg-amber-200 text-amber-800'
+                                            : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-700 border border-neutral-200/50'
+                                        }`}
+                                      >
+                                        {isLeader ? 'Remove Leader' : 'Make Leader'}
+                                      </button>
+                                    )}
+                                    <button
+                                      onClick={() => handleMoveStudent(s.id, selectedDestinationTeam || null)}
+                                      disabled={!selectedDestinationTeam || isInSelectedTeam}
+                                      className={`px-4 py-2.5 rounded-xl font-black text-xs transition cursor-pointer ${
+                                        !selectedDestinationTeam
+                                          ? 'bg-neutral-100 text-neutral-400 cursor-not-allowed'
+                                          : isInSelectedTeam
+                                          ? 'bg-emerald-100 text-emerald-700 border border-emerald-200 cursor-default'
+                                          : 'bg-blue-600 hover:bg-blue-700 text-white shadow-sm'
+                                      }`}
+                                    >
+                                      {isInSelectedTeam ? '✓ Added' : s.teamName ? 'Transfer →' : 'Add to Team'}
+                                    </button>
+                                  </div>
                                 </div>
                               </div>
                             )

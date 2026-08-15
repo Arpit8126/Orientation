@@ -35,7 +35,8 @@ export async function GET(request: Request) {
           .map((s) => ({
             id: s.id,
             fullName: s.fullName,
-            email: s.email
+            email: s.email,
+            isLeader: s.isLeader
           }))
       }
     }
