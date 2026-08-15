@@ -319,8 +319,17 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
     }
 
     setUploadLoading(true)
+    
+    // Compress the image client-side to save Vercel payload bandwidth and server memory
+    let fileToUpload: File = selectedFile
+    try {
+      fileToUpload = await compressImage(selectedFile) as File
+    } catch (compressionErr) {
+      console.warn("Browser-side image compression failed. Falling back to original image.", compressionErr)
+    }
+
     const formData = new FormData()
-    formData.append('file', selectedFile)
+    formData.append('file', fileToUpload)
 
     try {
       const res = await fetch('/api/upload', {
@@ -1365,4 +1374,52 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
       </footer>
     </div>
   )
+}
+
+// Client-side image compression utility using HTML5 Canvas (dependency-free)
+function compressImage(file: File, maxWidth: number = 1600): Promise<File | Blob> {
+  return new Promise((resolve) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = (event) => {
+      const img = new window.Image()
+      img.src = event.target?.result as string
+      img.onload = () => {
+        const canvas = document.createElement('canvas')
+        let width = img.width
+        let height = img.height
+
+        // Calculate aspect ratio and resize if width exceeds maxWidth
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width)
+          width = maxWidth
+        }
+
+        canvas.width = width
+        canvas.height = height
+
+        const ctx = canvas.getContext('2d')
+        ctx?.drawImage(img, 0, 0, width, height)
+
+        // Export to JPEG with 80% quality (clearly visible and sharp, but ~85% smaller file size)
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, "") + ".jpg", {
+                type: 'image/jpeg',
+                lastModified: Date.now()
+              })
+              resolve(compressedFile)
+            } else {
+              resolve(file)
+            }
+          },
+          'image/jpeg',
+          0.8
+        )
+      }
+      img.onerror = () => resolve(file)
+    }
+    reader.onerror = () => resolve(file)
+  })
 }
