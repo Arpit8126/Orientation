@@ -26,6 +26,7 @@ export interface StudentProfile {
   surveyCompleted: boolean
   surveyAnswers: any | null
   registeredAt: string
+  isAdmin: boolean
 }
 
 export interface TeamScore {
@@ -195,7 +196,8 @@ export async function getStudentsList(): Promise<StudentProfile[]> {
     teamName: s.team_name,
     surveyCompleted: s.survey_completed,
     surveyAnswers: s.survey_answers,
-    registeredAt: s.registered_at
+    registeredAt: s.registered_at,
+    isAdmin: s.is_admin || false
   }))
 }
 
@@ -214,7 +216,8 @@ export async function getOrCreateStudent(id: string, email: string): Promise<Stu
       team_name: null,
       survey_completed: false,
       survey_answers: null,
-      registered_at: new Date().toISOString()
+      registered_at: new Date().toISOString(),
+      is_admin: false
     }
     const { error: seedErr } = await admin.from('profiles').insert(newStudent)
     if (seedErr) throw seedErr
@@ -226,7 +229,8 @@ export async function getOrCreateStudent(id: string, email: string): Promise<Stu
       teamName: newStudent.team_name,
       surveyCompleted: newStudent.survey_completed,
       surveyAnswers: newStudent.survey_answers,
-      registeredAt: newStudent.registered_at
+      registeredAt: newStudent.registered_at,
+      isAdmin: newStudent.is_admin
     }
   }
 
@@ -237,7 +241,8 @@ export async function getOrCreateStudent(id: string, email: string): Promise<Stu
     teamName: data.team_name,
     surveyCompleted: data.survey_completed,
     surveyAnswers: data.survey_answers,
-    registeredAt: data.registered_at
+    registeredAt: data.registered_at,
+    isAdmin: data.is_admin || false
   }
 }
 

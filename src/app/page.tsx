@@ -15,17 +15,18 @@ export default async function Home() {
     redirect('/login')
   }
 
+  // Fetch or initialize student record in our local JSON DB
+  const profile = await getOrCreateStudent(user.id, user.email || '')
+
   // Check if the user is an administrator
   const ADMIN_EMAILS = ['admin@gla.ac.in']
-  const isAdmin = !!user.email && ADMIN_EMAILS.includes(user.email.toLowerCase())
+  const isAdmin = profile.isAdmin || (!!user.email && ADMIN_EMAILS.includes(user.email.toLowerCase()))
 
   if (isAdmin) {
     return <AdminPortal />
   }
 
   // Otherwise, load Student Portal
-  // Fetch or initialize student record in our local JSON DB
-  const profile = await getOrCreateStudent(user.id, user.email || '')
 
   return <StudentPortal initialProfile={profile} />
 }

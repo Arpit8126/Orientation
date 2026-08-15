@@ -22,3 +22,8 @@ create policy "Allow public read access to team_uploads" on public.team_uploads
 alter table public.buzzer_state 
   add column if not exists prompt_image_start_time timestamp with time zone default null,
   add column if not exists prompt_image_end_time timestamp with time zone default null;
+
+-- 3. Alter profiles Table (Add is_admin column for dynamic roles)
+alter table public.profiles 
+  add column if not exists is_admin boolean default false;
+

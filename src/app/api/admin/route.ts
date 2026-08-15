@@ -8,8 +8,16 @@ export async function POST(request: Request) {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
+    if (!user || !user.email) {
+      return NextResponse.json({ success: false, error: 'Access denied. Unauthorized request.' }, { status: 403 })
+    }
+
+    const { data: profile } = await supabase.from('profiles').select('is_admin').eq('id', user.id).single()
+
     const ADMIN_EMAILS = ['admin@gla.ac.in']
-    if (!user || !user.email || !ADMIN_EMAILS.includes(user.email.toLowerCase())) {
+    const isAdmin = profile?.is_admin || ADMIN_EMAILS.includes(user.email.toLowerCase())
+
+    if (!isAdmin) {
       return NextResponse.json({ success: false, error: 'Access denied. Unauthorized request.' }, { status: 403 })
     }
 

@@ -12,6 +12,7 @@ create table if not exists public.profiles (
   team_name text default null,
   survey_completed boolean default false not null,
   survey_answers jsonb default null,
+  is_admin boolean default false,
   registered_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
