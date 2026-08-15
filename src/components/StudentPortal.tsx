@@ -331,7 +331,7 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
       key: 'goals',
       title: 'What are your primary goals for your time at GLA University?',
       options: [
-        '(Recommended) Learn advanced programming & AI systems',
+        'Learn advanced programming & AI systems',
         'Academic Excellence & High GPA',
         'Placement in top companies & Networking',
         'Participate in sports, clubs & cultural events',
