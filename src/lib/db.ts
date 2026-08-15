@@ -189,16 +189,20 @@ export async function getStudentsList(): Promise<StudentProfile[]> {
   const { data, error } = await admin.from('profiles').select('*').order('registered_at', { ascending: true })
   if (error) throw error
 
-  return (data || []).map((s) => ({
-    id: s.id,
-    email: s.email,
-    fullName: s.full_name,
-    teamName: s.team_name,
-    surveyCompleted: s.survey_completed,
-    surveyAnswers: s.survey_answers,
-    registeredAt: s.registered_at,
-    isAdmin: s.is_admin || false
-  }))
+  const ADMIN_EMAILS = ['admin@gla.ac.in']
+
+  return (data || [])
+    .filter((s) => !s.is_admin && !ADMIN_EMAILS.includes(s.email.toLowerCase()))
+    .map((s) => ({
+      id: s.id,
+      email: s.email,
+      fullName: s.full_name,
+      teamName: s.team_name,
+      surveyCompleted: s.survey_completed,
+      surveyAnswers: s.survey_answers,
+      registeredAt: s.registered_at,
+      isAdmin: s.is_admin || false
+    }))
 }
 
 // 5. Get student profile, initializing a new row if absent
