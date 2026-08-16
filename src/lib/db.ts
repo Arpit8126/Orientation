@@ -231,7 +231,7 @@ export async function getOrCreateStudent(id: string, email: string): Promise<Stu
       is_admin: false,
       is_leader: false
     }
-    const { error: seedErr } = await admin.from('profiles').insert(newStudent)
+    const { error: seedErr } = await admin.from('profiles').upsert(newStudent, { onConflict: 'id', ignoreDuplicates: true })
     if (seedErr) throw seedErr
 
     return {
