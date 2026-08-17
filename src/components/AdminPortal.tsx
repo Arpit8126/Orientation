@@ -95,6 +95,8 @@ export default function AdminPortal() {
   const [bulkAssignmentsJson, setBulkAssignmentsJson] = useState('')
   const [bulkSuccessMsg, setBulkSuccessMsg] = useState('')
   const [bulkErrorMsg, setBulkErrorMsg] = useState('')
+  const [isActivating, setIsActivating] = useState(false)
+  const [isApplyingBulk, setIsApplyingBulk] = useState(false)
 
   // Control Panel Active states
   const [selectedGame, setSelectedGame] = useState('guess the song')
@@ -245,6 +247,7 @@ export default function AdminPortal() {
 
   // Control: Activate question / upload timer
   const handleActivateQuestion = async () => {
+    setIsActivating(true)
     try {
       const isPromptGame = selectedGame === 'Prompt image creation'
       const payload: any = {
@@ -264,6 +267,8 @@ export default function AdminPortal() {
       }
     } catch (err) {
       alert('Error activating question')
+    } finally {
+      setIsActivating(false)
     }
   }
 
@@ -452,6 +457,7 @@ export default function AdminPortal() {
       return
     }
 
+    setIsApplyingBulk(true)
     try {
       const assignments = JSON.parse(bulkAssignmentsJson)
       if (!Array.isArray(assignments)) {
@@ -478,6 +484,8 @@ export default function AdminPortal() {
       }
     } catch (err: any) {
       setBulkErrorMsg('Failed to parse JSON. Please check spelling, brackets, and quotes.')
+    } finally {
+      setIsApplyingBulk(false)
     }
   }
 
@@ -1013,14 +1021,17 @@ export default function AdminPortal() {
                   <div className="space-y-4">
                     <button
                       onClick={handleActivateQuestion}
+                      disabled={isActivating}
                       className={`w-full py-4 rounded-xl text-sm font-black uppercase tracking-wider transition-all duration-200 cursor-pointer shadow-md flex items-center justify-center gap-2 border ${
-                        buzzerState.isActive
+                        isActivating
+                          ? 'bg-neutral-100 text-neutral-400 border-neutral-200 cursor-not-allowed'
+                          : buzzerState.isActive
                           ? 'bg-green-600 border-green-700 text-white animate-pulse'
                           : 'bg-red-600 border-red-700 hover:bg-red-500 text-white'
                       }`}
                     >
-                      <Zap className="w-4 h-4" />
-                      {buzzerState.isActive ? '🟢 Buzzer is Armed (Active)' : 'Activate Buzzer'}
+                      {isActivating ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
+                      {isActivating ? 'Processing...' : buzzerState.isActive ? '🟢 Buzzer is Armed (Active)' : 'Activate Buzzer'}
                     </button>
                     {buzzerState.isActive && (
                       <p className="text-[10px] text-green-700 font-semibold text-center animate-pulse">
@@ -1695,9 +1706,15 @@ export default function AdminPortal() {
 
                   <button
                     onClick={handleApplyBulkAssignments}
-                    className="w-full py-3 bg-foreground hover:opacity-90 text-btn-text-light rounded-xl text-sm font-black shadow-btn-inset transition flex items-center justify-center gap-2 cursor-pointer"
+                    disabled={isApplyingBulk || !bulkAssignmentsJson.trim()}
+                    className={`w-full py-3 rounded-xl text-sm font-black transition flex items-center justify-center gap-2 cursor-pointer ${
+                      isApplyingBulk || !bulkAssignmentsJson.trim()
+                        ? 'bg-neutral-100 text-neutral-400 border border-neutral-200 cursor-not-allowed'
+                        : 'bg-foreground hover:opacity-90 text-btn-text-light shadow-btn-inset'
+                    }`}
                   >
-                    <Upload className="w-4 h-4" /> Apply Mappings
+                    {isApplyingBulk ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                    {isApplyingBulk ? 'Applying...' : 'Apply Mappings'}
                   </button>
                 </div>
               </div>

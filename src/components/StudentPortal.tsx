@@ -77,6 +77,7 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
   const [buzzerRanks, setBuzzerRanks] = useState<BuzzerRank[]>([])
   const [teamUploads, setTeamUploads] = useState<TeamUpload[]>([])
   const [teamMembers, setTeamMembers] = useState<{ id: string; fullName: string | null; email: string; isLeader?: boolean }[]>([])
+  const [isRefreshing, setIsRefreshing] = useState(false)
 
   // Image upload states
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -746,6 +747,7 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
             <div className="pt-2">
               <button
                 onClick={async () => {
+                  setIsRefreshing(true)
                   try {
                     const res = await fetch('/api/game-state')
                     const data = await res.json()
@@ -756,11 +758,17 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
                     }
                   } catch (err) {
                     console.error(err)
+                  } finally {
+                    setIsRefreshing(false)
                   }
                 }}
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-foreground text-btn-text-light hover:opacity-90 rounded-xl text-xs font-bold transition shadow-btn-inset cursor-pointer"
+                disabled={isRefreshing}
+                className={`inline-flex items-center gap-1.5 px-4 py-2.5 bg-foreground text-btn-text-light hover:opacity-90 rounded-xl text-xs font-bold transition shadow-btn-inset cursor-pointer ${
+                  isRefreshing ? 'opacity-75 cursor-not-allowed' : ''
+                }`}
               >
-                <RefreshCw className="w-3.5 h-3.5" /> Refresh Dashboard
+                <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />
+                {isRefreshing ? 'Refreshing...' : 'Refresh Dashboard'}
               </button>
             </div>
           </div>
@@ -1165,8 +1173,8 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
                             className={`w-40 h-40 rounded-full flex flex-col items-center justify-center transition-all duration-150 relative overflow-hidden select-none outline-none group ${
                               !buzzerState.isActive
                                 ? 'bg-gradient-to-b from-red-800/80 via-red-900 to-red-950 border-t-2 border-red-900/30 shadow-[inset_0_4px_8px_rgba(0,0,0,0.6),inset_0_-8px_16px_rgba(0,0,0,0.8)] cursor-not-allowed text-red-200/40'
-                                : myTeamBuzz
-                                ? 'bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 border-t-2 border-white/30 shadow-[inset_0_4px_6px_rgba(255,255,255,0.3),inset_0_-8px_16px_rgba(0,0,0,0.4),0_0_25px_rgba(245,158,11,0.4)] cursor-not-allowed text-white'
+                                : (myTeamBuzz || buzzLoading)
+                                ? 'bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 border-t-2 border-white/30 shadow-[inset_0_4px_6px_rgba(255,255,255,0.3),inset_0_-8px_16px_rgba(0,0,0,0.4),0_0_25px_rgba(245,158,11,0.4)] cursor-not-allowed text-white translate-y-1.5 scale-[0.96]'
                                 : 'bg-gradient-to-b from-red-500 via-red-600 to-red-800 hover:from-red-400 hover:via-red-500 hover:to-red-700 cursor-pointer border-t-2 border-white/40 shadow-[inset_0_6px_10px_rgba(255,255,255,0.3),inset_0_-10px_20px_rgba(0,0,0,0.5),0_12px_24px_rgba(239,68,68,0.25),0_0_35px_rgba(239,68,68,0.4)] active:translate-y-1.5 active:shadow-[inset_0_10px_20px_rgba(0,0,0,0.6),0_3px_6px_rgba(0,0,0,0.2)] active:scale-[0.96]'
                             }`}
                           >
@@ -1186,7 +1194,7 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
                             <span className={`text-xs sm:text-sm font-black uppercase tracking-widest font-display drop-shadow-[0_2px_3px_rgba(0,0,0,0.3)] ${
                               !buzzerState.isActive ? 'text-red-200/30' : 'text-white'
                             }`}>
-                              {buzzLoading ? '...' : myTeamBuzz ? 'Buzzed' : 'Buzz!'}
+                              {buzzLoading ? 'Buzzing...' : myTeamBuzz ? 'Buzzed' : 'Buzz!'}
                             </span>
                           </button>
                         </div>
