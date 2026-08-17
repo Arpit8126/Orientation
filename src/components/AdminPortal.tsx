@@ -1249,63 +1249,64 @@ export default function AdminPortal() {
                     (s) => s.teamName?.toLowerCase() === teamScore.teamName.toLowerCase()
                   )
                   return (
-                    <div key={teamScore.teamName} className="bg-white border border-neutral-200 rounded-2xl shadow-sm overflow-hidden flex flex-col">
+                    <div key={teamScore.teamName} className="bg-neutral-50/30 border border-neutral-200/80 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.02)] overflow-hidden flex flex-col transition hover:shadow-[0_12px_30px_rgb(0,0,0,0.04)]">
                       {/* Card Header */}
-                      <div className="px-5 pt-4 pb-3 flex items-center justify-between gap-3">
-                        <h4 className="font-display font-extrabold text-foreground text-sm leading-tight">{teamScore.teamName}</h4>
-                        <span className={`text-[10px] font-black px-2.5 py-1 rounded-full flex-shrink-0 ${
+                      <div className="px-5 py-4 bg-gradient-to-r from-neutral-50 to-neutral-100/50 flex items-center justify-between gap-3 border-b border-neutral-250">
+                        <h4 className="font-display font-extrabold text-neutral-800 text-sm leading-tight tracking-tight">{teamScore.teamName}</h4>
+                        <span className={`text-[10px] font-black px-2.5 py-1 rounded-full flex-shrink-0 shadow-sm ${
                           members.length > 0
-                            ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                            : 'bg-neutral-100 text-neutral-500'
+                            ? 'bg-blue-100 text-blue-700 border border-blue-200/50'
+                            : 'bg-neutral-200/60 text-neutral-500 border border-neutral-300/30'
                         }`}>
                           {members.length} {members.length === 1 ? 'Member' : 'Members'}
                         </span>
                       </div>
 
-                      {/* Divider */}
-                      <div className="mx-5 border-t border-neutral-100" />
-
                       {/* Members List */}
                       <div className="p-4 flex-1">
                         {members.length === 0 ? (
-                          <div className="py-5 flex flex-col items-center gap-1.5">
-                            <Users className="w-5 h-5 text-neutral-300" />
-                            <p className="text-[11px] text-neutral-400 font-semibold">No members yet</p>
+                          <div className="py-10 flex flex-col items-center justify-center gap-2 border-2 border-dashed border-neutral-200 rounded-xl bg-white/40">
+                            <Users className="w-6 h-6 text-neutral-300" />
+                            <p className="text-[11px] text-neutral-450 font-bold tracking-tight">No members yet</p>
                           </div>
                         ) : (
-                          <div className="space-y-2">
+                          <div className="space-y-3">
                             {members.map((m) => {
                               const isLeader = m.isLeader || false
                               return (
-                                <div key={m.id} className={`rounded-xl border overflow-hidden ${isLeader ? 'border-amber-300 shadow-sm shadow-amber-100' : 'border-neutral-200'}`}>
-                                  <div className={`px-3 py-2.5 flex justify-between items-start gap-2 ${isLeader ? 'bg-amber-50/40' : 'bg-neutral-50'}`}>
-                                    <div className="min-w-0">
-                                      <p className="text-xs font-bold text-foreground truncate flex items-center gap-1">
-                                        {isLeader && <Shield className="w-3.5 h-3.5 text-amber-500 fill-amber-500 flex-shrink-0" />}
+                                <div key={m.id} className={`rounded-xl border overflow-hidden transition-all duration-200 ${
+                                  isLeader 
+                                    ? 'border-amber-300 bg-gradient-to-br from-amber-500/[0.04] via-amber-500/[0.01] to-white shadow-sm shadow-amber-100/60 hover:shadow-md' 
+                                    : 'border-neutral-200 bg-white hover:border-neutral-350 hover:shadow-sm'
+                                }`}>
+                                  <div className="px-3.5 py-3 flex justify-between items-start gap-3">
+                                    <div className="min-w-0 flex-1">
+                                      <p className="text-xs font-extrabold text-neutral-800 truncate flex items-center gap-1.5">
+                                        {isLeader && <Shield className="w-3.5 h-3.5 text-amber-500 fill-amber-400 flex-shrink-0 animate-pulse" />}
                                         <span>{m.fullName || 'Student'}</span>
                                       </p>
-                                      <p className="text-[10px] text-muted truncate mt-0.5">{m.email}</p>
+                                      <p className={`text-[10px] truncate mt-1 ${isLeader ? 'text-amber-800/80 font-medium' : 'text-neutral-500'}`}>{m.email}</p>
                                     </div>
                                     <button
                                       onClick={() => isLeader ? handleRemoveLeader(m.id) : handleAssignLeader(m.id, m.teamName || '')}
                                       disabled={assigningLeaders[m.id]}
-                                      className={`px-1.5 py-0.5 rounded text-[9px] font-black uppercase cursor-pointer tracking-wider transition ${
+                                      className={`px-2.5 py-1.5 rounded-lg text-[9px] font-black uppercase cursor-pointer tracking-wider transition-all duration-150 flex-shrink-0 ${
                                         assigningLeaders[m.id]
                                           ? 'bg-neutral-100 text-neutral-400 cursor-wait'
                                           : isLeader 
-                                          ? 'bg-amber-100 hover:bg-amber-200 text-amber-800' 
-                                          : 'bg-neutral-200 hover:bg-neutral-300 text-neutral-700'
+                                          ? 'bg-amber-100 hover:bg-amber-500 hover:text-white text-amber-800 border border-amber-250 shadow-sm' 
+                                          : 'bg-neutral-100 hover:bg-neutral-800 hover:text-white text-neutral-700 border border-neutral-250 shadow-sm'
                                       }`}
                                     >
-                                      {assigningLeaders[m.id] ? 'Updating...' : isLeader ? 'Leader' : 'Promote'}
+                                      {assigningLeaders[m.id] ? '...' : isLeader ? 'Leader ✓' : 'Promote'}
                                     </button>
                                   </div>
-                                  <div className="px-3 py-2 bg-white border-t border-neutral-100 flex items-center gap-2">
-                                    <span className="text-[9px] text-muted font-bold uppercase tracking-wider flex-shrink-0">Move to:</span>
+                                  <div className="px-3.5 py-2.5 bg-neutral-50/50 border-t border-neutral-100 flex items-center gap-2">
+                                    <span className="text-[9px] text-neutral-400 font-black uppercase tracking-wider flex-shrink-0">Move to:</span>
                                     <select
                                       value={m.teamName || ''}
                                       onChange={(e) => handleMoveStudent(m.id, e.target.value || null)}
-                                      className="flex-1 text-[10px] bg-white border border-neutral-200 rounded-lg px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500 font-semibold"
+                                      className="flex-1 text-[10px] bg-white border border-neutral-200 hover:border-neutral-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500 font-bold text-neutral-700 cursor-pointer shadow-sm transition"
                                     >
                                       <option value="">-- Unassigned --</option>
                                       {leaderboard.map((t) => (

@@ -28,9 +28,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: 'Image uploads are not open for this game.' }, { status: 400 })
     }
 
-    const now = new Date()
-    const start = bState.promptImageStartTime ? new Date(bState.promptImageStartTime) : null
-    const end = bState.promptImageEndTime ? new Date(bState.promptImageEndTime) : null
+    const parseTime = (timeStr: string) => {
+      const [hours, minutes] = timeStr.split(':').map(Number)
+      const d = new Date()
+      d.setHours(hours, minutes, 0, 0)
+      return d.getTime()
+    }
+
+    const start = bState.promptImageStartTime ? parseTime(bState.promptImageStartTime) : null
+    const end = bState.promptImageEndTime ? parseTime(bState.promptImageEndTime) : null
+    const now = Date.now()
 
     if (!start || !end || now < start || now > end) {
       return NextResponse.json({ success: false, error: 'Upload period is not active or has expired.' }, { status: 400 })
