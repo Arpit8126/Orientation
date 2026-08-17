@@ -553,13 +553,20 @@ export default function AdminPortal() {
     setPromptSaving(true)
     setPromptSaveMsg('')
     try {
+      const parseLocalTimeInput = (timeStr: string) => {
+        const [hours, minutes] = timeStr.split(':').map(Number)
+        const d = new Date()
+        d.setHours(hours, minutes, 0, 0)
+        return d.toISOString()
+      }
+
       const res = await fetch('/api/admin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'set_prompt_times',
-          startTime: promptStartInput,
-          endTime: promptEndInput
+          startTime: parseLocalTimeInput(promptStartInput),
+          endTime: parseLocalTimeInput(promptEndInput)
         })
       })
       const data = await res.json()
@@ -580,10 +587,21 @@ export default function AdminPortal() {
     buzzerState.activeGame === selectedGame &&
     buzzerState.activeQuestion === selectedQuestion;
 
-  const filteredHistoryRanks = buzzerLogs.filter(
-    (log) => log.game_name.toLowerCase() === selectedGame.toLowerCase() &&
-             log.question_id.toLowerCase() === selectedQuestion.toLowerCase()
-  ).sort((a, b) => a.rank - b.rank);
+  const filteredHistoryRanks = (() => {
+    const filtered = buzzerLogs.filter(
+      (log) => log.game_name.toLowerCase() === selectedGame.toLowerCase() &&
+               log.question_id.toLowerCase() === selectedQuestion.toLowerCase()
+    );
+    const uniqueTeams: Record<string, typeof filtered[0]> = {};
+    // Since buzzerLogs is fetched ORDER BY id DESC, the first one we find is the latest attempt
+    filtered.forEach((item) => {
+      const key = item.team_name.toLowerCase();
+      if (!uniqueTeams[key]) {
+        uniqueTeams[key] = item;
+      }
+    });
+    return Object.values(uniqueTeams).sort((a, b) => a.rank - b.rank);
+  })();
 
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col justify-between">
@@ -1264,7 +1282,7 @@ export default function AdminPortal() {
                             const isThird = log.rank === 3
                             return (
                               <div
-                                key={log.team_name}
+                                key={log.id}
                                 className={`transition-all duration-200 ${
                                   isFirst
                                     ? 'bg-gradient-to-r from-amber-500/10 via-yellow-500/5 to-transparent border-2 border-amber-500/60 rounded-2xl p-6 relative overflow-hidden shadow-md animate-fade-in'
@@ -1322,57 +1340,6 @@ export default function AdminPortal() {
 
               </div>
 
-              {/* History Logs Panel */}
-              <div className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8 shadow-md">
-                <div className="flex justify-between items-center pb-3 border-b border-neutral-100 mb-4">
-                  <h3 className="font-display text-sm font-black text-foreground uppercase tracking-wider flex items-center gap-2">
-                    <ListOrdered className="w-4 h-4 text-muted" /> Buzzer History Logs
-                  </h3>
-                  <button
-                    onClick={async () => {
-                      if (confirm('Are you sure you want to clear all history logs?')) {
-                        const supabase = createClient()
-                        const { error } = await supabase.from('buzzer_logs').delete().neq('team_name', '')
-                        if (!error) fetchBuzzerLogs()
-                      }
-                    }}
-                    className="text-[10px] text-red-600 hover:text-red-500 font-bold uppercase tracking-wider bg-red-50 hover:bg-red-100 border border-red-200/50 px-2.5 py-1.5 rounded-lg transition cursor-pointer"
-                  >
-                    Clear History
-                  </button>
-                </div>
-                
-                {buzzerLogs.length === 0 ? (
-                  <div className="text-center py-8 text-xs text-neutral-450 font-bold">
-                    No history logs recorded yet.
-                  </div>
-                ) : (
-                  <div className="max-h-60 overflow-y-auto space-y-2 pr-1 font-sans">
-                    {buzzerLogs.map((log) => (
-                      <div key={log.id} className="text-xs bg-neutral-50 border border-neutral-200/55 rounded-xl px-3.5 py-2.5 flex justify-between items-center">
-                        <div>
-                          <p className="font-extrabold text-neutral-800 capitalize">
-                            {log.game_name} — {log.question_id}
-                          </p>
-                          <p className="text-[10px] text-neutral-500 mt-0.5 font-semibold">
-                            Team: <span className="font-bold text-neutral-700">{log.team_name}</span> (Buzzed by: {log.user_name})
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <span className={`text-[9px] font-black px-2.5 py-0.5 rounded-full ${
-                            log.rank === 1 ? 'bg-amber-100 text-amber-700 border border-amber-255' : 'bg-neutral-200 text-neutral-650'
-                          }`}>
-                            Rank #{log.rank}
-                          </span>
-                          <p className="text-[8px] text-neutral-400 mt-1 font-semibold">
-                            {new Date(log.pressed_at).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit', second: '2-digit'})}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
               
             </div>
 

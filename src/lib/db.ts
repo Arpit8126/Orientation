@@ -350,6 +350,14 @@ export async function activateBuzzerQuestion(gameName: string, questionId: strin
     ? new Date(Date.now() + durationMinutes * 60000).toISOString() 
     : null
 
+  // Clear any historical buzzer logs for this specific game and question to prevent duplicates on restart
+  const { error: clearHistoryErr } = await admin
+    .from('buzzer_logs')
+    .delete()
+    .eq('game_name', gameName)
+    .eq('question_id', questionId)
+  if (clearHistoryErr) throw clearHistoryErr
+
   // Reset the active buzzer status
   const { error: updateErr } = await admin.from('buzzer_state').update({
     active_game: gameName,
