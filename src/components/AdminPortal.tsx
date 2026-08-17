@@ -104,6 +104,36 @@ export default function AdminPortal() {
   const [selectedGame, setSelectedGame] = useState('guess the song')
   const [selectedQuestion, setSelectedQuestion] = useState('Q1')
 
+  // Dynamic lists of games and questions with local persistence
+  const [gamesList, setGamesList] = useState<string[]>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('gla_games_list')
+      if (saved) return JSON.parse(saved)
+    }
+    return [
+      'guess the song',
+      'dont say yes or no',
+      'only wrong answer',
+      'Prompt image creation'
+    ]
+  })
+
+  const [questionList, setQuestionList] = useState<string[]>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('gla_questions_list')
+      if (saved) return JSON.parse(saved)
+    }
+    return Array.from({ length: 10 }, (_, i) => `Q${i + 1}`)
+  })
+
+  useEffect(() => {
+    localStorage.setItem('gla_games_list', JSON.stringify(gamesList))
+  }, [gamesList])
+
+  useEffect(() => {
+    localStorage.setItem('gla_questions_list', JSON.stringify(questionList))
+  }, [questionList])
+
   // Prompt Image Creation timing UI states
   const [promptStartInput, setPromptStartInput] = useState('') // HH:MM format
   const [promptEndInput, setPromptEndInput] = useState('') // HH:MM format
@@ -571,15 +601,6 @@ export default function AdminPortal() {
     }
   }
 
-  const gamesList = [
-    'guess the song',
-    'dont say yes or no',
-    'only wrong answer',
-    'Prompt image creation'
-  ]
-
-  const questionList = Array.from({ length: 10 }, (_, i) => `Q${i + 1}`)
-
   // Save custom start and end times for Prompt Image Creation game
   const handleSavePromptTimes = async () => {
     if (!promptStartInput || !promptEndInput) {
@@ -1012,21 +1033,67 @@ export default function AdminPortal() {
                 <h3 className="text-xs font-bold text-muted uppercase tracking-wider mb-3 pl-1">Select Game Activity</h3>
                 <div className="space-y-1">
                   {gamesList.map((g) => (
-                    <button
-                      key={g}
-                      onClick={() => {
-                        setSelectedGame(g)
-                        setSelectedQuestion('Q1')
-                      }}
-                      className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer capitalize ${
-                        selectedGame === g
-                          ? 'bg-foreground text-btn-text-light shadow-btn-inset'
-                          : 'text-foreground hover:bg-neutral-50'
-                      }`}
-                    >
-                      {g}
-                    </button>
+                    <div key={g} className="flex items-center justify-between group/game">
+                      <button
+                        onClick={() => {
+                          setSelectedGame(g)
+                          setSelectedQuestion('Q1')
+                        }}
+                        className={`flex-1 text-left px-4 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer capitalize truncate ${
+                          selectedGame === g
+                            ? 'bg-foreground text-btn-text-light shadow-btn-inset'
+                            : 'text-foreground hover:bg-neutral-50'
+                        }`}
+                      >
+                        {g}
+                      </button>
+                      {!['guess the song', 'dont say yes or no', 'only wrong answer', 'Prompt image creation'].includes(g.toLowerCase()) && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setGamesList(gamesList.filter((x) => x !== g))
+                            if (selectedGame === g) setSelectedGame('guess the song')
+                          }}
+                          className="p-1.5 text-neutral-400 hover:text-red-650 opacity-0 group-hover/game:opacity-100 transition cursor-pointer ml-1 text-xs"
+                          title="Delete custom game"
+                        >
+                          ✕
+                        </button>
+                      )}
+                    </div>
                   ))}
+                </div>
+
+                {/* Add Custom Game Form */}
+                <div className="pt-3.5 mt-3.5 border-t border-neutral-100 flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="New game name..."
+                    id="custom-game-input"
+                    className="flex-1 text-xs font-bold bg-neutral-50 hover:bg-neutral-100/50 border border-neutral-200 focus:border-neutral-350 focus:bg-white focus:outline-none rounded-lg px-2.5 py-1.5 transition"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        const val = e.currentTarget.value.trim()
+                        if (val && !gamesList.some((x) => x.toLowerCase() === val.toLowerCase())) {
+                          setGamesList([...gamesList, val])
+                          e.currentTarget.value = ''
+                        }
+                      }
+                    }}
+                  />
+                  <button
+                    onClick={() => {
+                      const input = document.getElementById('custom-game-input') as HTMLInputElement
+                      const val = input?.value.trim()
+                      if (val && !gamesList.some((x) => x.toLowerCase() === val.toLowerCase())) {
+                        setGamesList([...gamesList, val])
+                        if (input) input.value = ''
+                      }
+                    }}
+                    className="px-3 py-1.5 bg-neutral-900 hover:bg-neutral-800 text-white rounded-lg text-[10px] font-black uppercase tracking-wider transition cursor-pointer shadow-sm"
+                  >
+                    + Add
+                  </button>
                 </div>
               </div>
 
@@ -1036,18 +1103,64 @@ export default function AdminPortal() {
                   <h3 className="text-xs font-bold text-muted uppercase tracking-wider mb-3 pl-1">Question / Round</h3>
                   <div className="grid grid-cols-5 gap-1.5">
                     {questionList.map((q) => (
-                      <button
-                        key={q}
-                        onClick={() => setSelectedQuestion(q)}
-                        className={`py-2 rounded-lg text-xs font-bold text-center border transition cursor-pointer ${
-                          selectedQuestion === q
-                            ? 'bg-neutral-200 text-foreground border-neutral-300'
-                            : 'bg-white border-neutral-200 text-foreground hover:bg-neutral-50'
-                        }`}
-                      >
-                        {q}
-                      </button>
+                      <div key={q} className="relative group/q">
+                        <button
+                          onClick={() => setSelectedQuestion(q)}
+                          className={`w-full py-2 rounded-lg text-xs font-bold text-center border transition cursor-pointer ${
+                            selectedQuestion === q
+                              ? 'bg-neutral-200 text-foreground border-neutral-300'
+                              : 'bg-white border-neutral-200 text-foreground hover:bg-neutral-50'
+                          }`}
+                        >
+                          {q}
+                        </button>
+                        {!Array.from({ length: 10 }, (_, i) => `Q${i + 1}`).includes(q) && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              setQuestionList(questionList.filter((x) => x !== q))
+                              if (selectedQuestion === q) setSelectedQuestion('Q1')
+                            }}
+                            className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-red-100 hover:bg-red-200 border border-red-300 text-red-755 text-[8px] font-black rounded-full flex items-center justify-center opacity-0 group-hover/q:opacity-100 transition cursor-pointer shadow-sm"
+                            title="Delete custom question"
+                          >
+                            ✕
+                          </button>
+                        )}
+                      </div>
                     ))}
+                  </div>
+
+                  {/* Add Custom Question Form */}
+                  <div className="pt-3.5 mt-3.5 border-t border-neutral-100 flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="New Q (e.g. Q11)..."
+                      id="custom-question-input"
+                      className="flex-1 text-xs font-bold bg-neutral-50 hover:bg-neutral-100/50 border border-neutral-200 focus:border-neutral-350 focus:bg-white focus:outline-none rounded-lg px-2.5 py-1.5 transition"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          const val = e.currentTarget.value.trim()
+                          if (val && !questionList.some((x) => x.toLowerCase() === val.toLowerCase())) {
+                            setQuestionList([...questionList, val])
+                            e.currentTarget.value = ''
+                          }
+                        }
+                      }}
+                    />
+                    <button
+                      onClick={() => {
+                        const input = document.getElementById('custom-question-input') as HTMLInputElement
+                        const val = input?.value.trim()
+                        if (val && !questionList.some((x) => x.toLowerCase() === val.toLowerCase())) {
+                          setQuestionList([...questionList, val])
+                          if (input) input.value = ''
+                        }
+                      }}
+                      className="px-3 py-1.5 bg-neutral-900 hover:bg-neutral-800 text-white rounded-lg text-[10px] font-black uppercase tracking-wider transition cursor-pointer shadow-sm"
+                    >
+                      + Add
+                    </button>
                   </div>
                 </div>
               )}
