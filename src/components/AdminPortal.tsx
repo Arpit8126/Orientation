@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useTransition } from 'react'
+import React, { useState, useEffect, useTransition, useRef } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { signOutAction } from '@/app/auth/actions'
@@ -134,6 +134,22 @@ export default function AdminPortal() {
       console.error('Error fetching buzzer logs:', err)
     }
   }
+
+  // Ref to track last buzzer rank standings count
+  const prevRanksLengthRef = useRef(0)
+
+  // Play buzzer sound on the projector when a team buzzes in real-time
+  useEffect(() => {
+    if (buzzerRanks.length > prevRanksLengthRef.current) {
+      try {
+        const audio = new Audio('/eritnhut1992-buzzer-or-wrong-answer-20582.mp3')
+        audio.play()
+      } catch (e) {
+        console.error('Failed to play audio:', e)
+      }
+    }
+    prevRanksLengthRef.current = buzzerRanks.length
+  }, [buzzerRanks])
 
   // Fetch all database states
   const refreshState = async () => {
@@ -567,6 +583,15 @@ export default function AdminPortal() {
       setPromptSaving(false)
     }
   }
+
+  const isSelectedQuestionActive = buzzerState.isActive &&
+    buzzerState.activeGame === selectedGame &&
+    buzzerState.activeQuestion === selectedQuestion;
+
+  const filteredHistoryRanks = buzzerLogs.filter(
+    (log) => log.game_name.toLowerCase() === selectedGame.toLowerCase() &&
+             log.question_id.toLowerCase() === selectedQuestion.toLowerCase()
+  ).sort((a, b) => a.rank - b.rank);
 
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col justify-between">
@@ -1063,17 +1088,17 @@ export default function AdminPortal() {
                       className={`w-full py-4 rounded-xl text-sm font-black uppercase tracking-wider transition-all duration-200 cursor-pointer shadow-md flex items-center justify-center gap-2 border ${
                         isActivating
                           ? 'bg-neutral-100 text-neutral-400 border-neutral-200 cursor-not-allowed'
-                          : buzzerState.isActive
+                          : isSelectedQuestionActive
                           ? 'bg-green-600 border-green-700 text-white animate-pulse'
                           : 'bg-red-600 border-red-700 hover:bg-red-500 text-white'
                       }`}
                     >
                       {isActivating ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
-                      {isActivating ? 'Processing...' : buzzerState.isActive ? '🟢 Buzzer is Armed (Active)' : 'Activate Buzzer'}
+                      {isActivating ? 'Processing...' : isSelectedQuestionActive ? '🟢 Buzzer is Armed (Active)' : `Activate Buzzer for ${selectedQuestion}`}
                     </button>
-                    {buzzerState.isActive && (
+                    {isSelectedQuestionActive && (
                       <p className="text-[10px] text-green-700 font-semibold text-center animate-pulse">
-                        Waiting for student buzz... it will lock automatically on first buzz.
+                        Waiting for student buzz... it will log sequentially.
                       </p>
                     )}
                   </div>
@@ -1098,9 +1123,9 @@ export default function AdminPortal() {
                     </h3>
                   </div>
                   <span className={`px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
-                    buzzerState.isActive ? 'bg-green-50 text-green-700 animate-pulse' : 'bg-red-50 text-red-700'
+                    isSelectedQuestionActive ? 'bg-green-50 text-green-700 animate-pulse' : 'bg-red-50 text-red-700'
                   }`}>
-                    {buzzerState.isActive ? 'Buzzer Active' : 'Buzzer Locked'}
+                    {isSelectedQuestionActive ? 'Buzzer Active' : 'Buzzer Locked'}
                   </span>
                 </div>
 
@@ -1161,75 +1186,144 @@ export default function AdminPortal() {
                 ) : (
                   /* Standard Buzzer Game rankings */
                   <div>
-                    {buzzerRanks.length === 0 ? (
-                      <div className="text-center py-16 bg-neutral-50 rounded-2xl border border-neutral-200 border-dashed">
-                        <Zap className="w-10 h-10 text-muted mx-auto mb-2 opacity-40" />
-                        <p className="text-sm font-bold text-muted">Buzzer is Clear</p>
-                        <p className="text-xs text-muted/80 mt-0.5">Waiting for student team action...</p>
-                      </div>
-                    ) : (
-                      <div className="space-y-4">
-                        {buzzerRanks.map((log) => {
-                          const isFirst = log.rank === 1
-                          const isSecond = log.rank === 2
-                          const isThird = log.rank === 3
-                          return (
-                            <div
-                              key={log.teamName}
-                              className={`transition-all duration-200 ${
-                                isFirst
-                                  ? 'bg-gradient-to-r from-amber-500/10 via-yellow-500/5 to-transparent border-2 border-amber-500/60 rounded-2xl p-6 relative overflow-hidden shadow-md animate-fade-in'
-                                  : isSecond
-                                  ? 'bg-slate-50/80 border border-slate-300 rounded-xl p-4 flex items-center justify-between shadow-sm animate-fade-in'
-                                  : isThird
-                                  ? 'bg-orange-50/40 border border-orange-200 rounded-xl p-4 flex items-center justify-between shadow-sm animate-fade-in'
-                                  : 'bg-neutral-50/60 border border-neutral-200 rounded-xl p-3.5 flex items-center justify-between'
-                              }`}
-                            >
-                              {isFirst ? (
-                                <div className="flex items-center gap-4">
-                                  <div className="w-14 h-14 rounded-full bg-gradient-to-b from-amber-400 to-amber-600 flex items-center justify-center text-white text-2xl font-black shadow-lg">
-                                    👑
+                    {isSelectedQuestionActive ? (
+                      buzzerRanks.length === 0 ? (
+                        <div className="text-center py-16 bg-neutral-50 rounded-2xl border border-neutral-200 border-dashed animate-fade-in">
+                          <Zap className="w-10 h-10 text-muted mx-auto mb-2 opacity-40" />
+                          <p className="text-sm font-bold text-muted">Buzzer is Clear</p>
+                          <p className="text-xs text-muted/80 mt-0.5">Waiting for student team action...</p>
+                        </div>
+                      ) : (
+                        <div className="space-y-4 animate-fade-in">
+                          {buzzerRanks.map((log) => {
+                            const isFirst = log.rank === 1
+                            const isSecond = log.rank === 2
+                            const isThird = log.rank === 3
+                            return (
+                              <div
+                                key={log.teamName}
+                                className={`transition-all duration-200 ${
+                                  isFirst
+                                    ? 'bg-gradient-to-r from-amber-500/10 via-yellow-500/5 to-transparent border-2 border-amber-500/60 rounded-2xl p-6 relative overflow-hidden shadow-md animate-fade-in'
+                                    : isSecond
+                                    ? 'bg-slate-50/80 border border-slate-300 rounded-xl p-4 flex items-center justify-between shadow-sm animate-fade-in'
+                                    : isThird
+                                    ? 'bg-orange-50/40 border border-orange-200 rounded-xl p-4 flex items-center justify-between shadow-sm animate-fade-in'
+                                    : 'bg-neutral-50/60 border border-neutral-200 rounded-xl p-3.5 flex items-center justify-between'
+                                }`}
+                              >
+                                {isFirst ? (
+                                  <div className="flex items-center gap-4">
+                                    <div className="w-14 h-14 rounded-full bg-gradient-to-b from-amber-400 to-amber-600 flex items-center justify-center text-white text-2xl font-black shadow-lg">
+                                      👑
+                                    </div>
+                                    <div>
+                                      <div className="flex items-center gap-2">
+                                        <span className="text-[10px] text-amber-700 font-bold uppercase tracking-widest">
+                                          Fastest Buzz
+                                        </span>
+                                      </div>
+                                      <h4 className="font-display text-2xl sm:text-3xl font-black text-amber-950 tracking-tight mt-0.5">
+                                        {log.teamName}
+                                      </h4>
+                                      <p className="text-[10px] text-amber-900/70 font-semibold mt-1">
+                                        Buzzed by: <span className="font-bold text-amber-950">{log.userName}</span>
+                                      </p>
+                                    </div>
                                   </div>
-                                  <div>
-                                    <div className="flex items-center gap-2">
-                                      <span className="text-[10px] text-amber-700 font-bold uppercase tracking-widest">
-                                        Fastest Buzz
+                                ) : (
+                                  <div className="flex justify-between items-center w-full">
+                                    <div className="flex items-center gap-3">
+                                      <span className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
+                                        isSecond ? 'bg-slate-300 text-slate-800' : isThird ? 'bg-orange-300 text-orange-800' : 'bg-neutral-200 text-neutral-600'
+                                      }`}>
+                                        #{log.rank}
+                                      </span>
+                                      <span className={`font-display font-extrabold text-foreground ${isSecond ? 'text-lg' : 'text-base'}`}>
+                                        {log.teamName}
                                       </span>
                                     </div>
-                                    <h4 className="font-display text-2xl sm:text-3xl font-black text-amber-950 tracking-tight mt-0.5">
-                                      {log.teamName}
-                                    </h4>
-                                    <p className="text-[10px] text-amber-900/70 font-semibold mt-1">
-                                      Buzzed by: <span className="font-bold text-amber-950">{log.userName}</span>
-                                    </p>
-                                  </div>
-                                </div>
-                              ) : (
-                                <div className="flex justify-between items-center w-full">
-                                  <div className="flex items-center gap-3">
-                                    <span className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
-                                      isSecond
-                                        ? 'bg-slate-300 text-slate-800'
-                                        : isThird
-                                        ? 'bg-orange-300 text-orange-800'
-                                        : 'bg-neutral-200 text-neutral-600'
-                                    }`}>
-                                      #{log.rank}
-                                    </span>
-                                    <span className={`font-display font-extrabold text-foreground ${isSecond ? 'text-lg' : 'text-base'}`}>
-                                      {log.teamName}
+                                    <span className="text-[10px] text-muted font-medium">
+                                      Buzzed by: <span className="font-semibold text-foreground">{log.userName}</span>
                                     </span>
                                   </div>
-                                  <span className="text-[10px] text-muted font-medium">
-                                    Buzzed by: <span className="font-semibold text-foreground">{log.userName}</span>
-                                  </span>
-                                </div>
-                              )}
-                            </div>
-                          )
-                        })}
-                      </div>
+                                )}
+                              </div>
+                            )
+                          })}
+                        </div>
+                      )
+                    ) : (
+                      /* Past standings from logs */
+                      filteredHistoryRanks.length === 0 ? (
+                        <div className="text-center py-16 bg-neutral-50 rounded-2xl border border-neutral-200 border-dashed animate-fade-in">
+                          <Zap className="w-10 h-10 text-muted mx-auto mb-2 opacity-40" />
+                          <p className="text-sm font-bold text-muted">No History for this Question</p>
+                          <p className="text-xs text-muted/80 mt-0.5">Click "Activate Buzzer" to arm this question.</p>
+                        </div>
+                      ) : (
+                        <div className="space-y-4 animate-fade-in">
+                          <div className="bg-amber-50 border border-amber-200 text-[10px] text-amber-800 font-bold px-3 py-2 rounded-xl text-center mb-2">
+                            📜 Viewing Past Standings (Historical Record)
+                          </div>
+                          {filteredHistoryRanks.map((log) => {
+                            const isFirst = log.rank === 1
+                            const isSecond = log.rank === 2
+                            const isThird = log.rank === 3
+                            return (
+                              <div
+                                key={log.team_name}
+                                className={`transition-all duration-200 ${
+                                  isFirst
+                                    ? 'bg-gradient-to-r from-amber-500/10 via-yellow-500/5 to-transparent border-2 border-amber-500/60 rounded-2xl p-6 relative overflow-hidden shadow-md animate-fade-in'
+                                    : isSecond
+                                    ? 'bg-slate-50/80 border border-slate-300 rounded-xl p-4 flex items-center justify-between shadow-sm animate-fade-in'
+                                    : isThird
+                                    ? 'bg-orange-50/40 border border-orange-200 rounded-xl p-4 flex items-center justify-between shadow-sm animate-fade-in'
+                                    : 'bg-neutral-50/60 border border-neutral-200 rounded-xl p-3.5 flex items-center justify-between'
+                                }`}
+                              >
+                                {isFirst ? (
+                                  <div className="flex items-center gap-4">
+                                    <div className="w-14 h-14 rounded-full bg-gradient-to-b from-amber-400 to-amber-600 flex items-center justify-center text-white text-2xl font-black shadow-lg">
+                                      👑
+                                    </div>
+                                    <div>
+                                      <div className="flex items-center gap-2">
+                                        <span className="text-[10px] text-amber-700 font-bold uppercase tracking-widest">
+                                          Fastest Buzz
+                                        </span>
+                                      </div>
+                                      <h4 className="font-display text-2xl sm:text-3xl font-black text-amber-950 tracking-tight mt-0.5">
+                                        {log.team_name}
+                                      </h4>
+                                      <p className="text-[10px] text-amber-900/70 font-semibold mt-1">
+                                        Buzzed by: <span className="font-bold text-amber-950">{log.user_name}</span>
+                                      </p>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div className="flex justify-between items-center w-full">
+                                    <div className="flex items-center gap-3">
+                                      <span className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
+                                        isSecond ? 'bg-slate-300 text-slate-800' : isThird ? 'bg-orange-300 text-orange-800' : 'bg-neutral-200 text-neutral-600'
+                                      }`}>
+                                        #{log.rank}
+                                      </span>
+                                      <span className={`font-display font-extrabold text-foreground ${isSecond ? 'text-lg' : 'text-base'}`}>
+                                        {log.team_name}
+                                      </span>
+                                    </div>
+                                    <span className="text-[10px] text-muted font-medium">
+                                      Buzzed by: <span className="font-semibold text-foreground">{log.user_name}</span>
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                            )
+                          })}
+                        </div>
+                      )
                     )}
                   </div>
                 )}

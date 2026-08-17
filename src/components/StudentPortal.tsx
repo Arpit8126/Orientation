@@ -118,50 +118,33 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
     }
   }, [profile.isLeader, activeTab])
 
+  // Global state refresh handler
+  const refreshState = async () => {
+    try {
+      const res = await fetch('/api/game-state')
+      const data = await res.json()
+      if (data.success) {
+        if (data.profile) setProfile(data.profile)
+        if (data.leaderboard) setLeaderboard(data.leaderboard)
+        if (data.buzzerState) setBuzzerState(data.buzzerState)
+        if (data.buzzerRanks) setBuzzerRanks(data.buzzerRanks)
+        if (data.teamUploads) setTeamUploads(data.teamUploads)
+        if (data.teamMembers) setTeamMembers(data.teamMembers)
+      }
+    } catch (err) {
+      console.error('Error refreshing game state:', err)
+    }
+  }
+
   // 1. Fetch initial game-state on mount/refresh
   useEffect(() => {
     if (!profile.surveyCompleted) return
-
-    const fetchInitialState = async () => {
-      try {
-        const res = await fetch('/api/game-state')
-        const data = await res.json()
-        if (data.success) {
-          if (data.profile) setProfile(data.profile)
-          if (data.leaderboard) setLeaderboard(data.leaderboard)
-          if (data.buzzerState) setBuzzerState(data.buzzerState)
-          if (data.buzzerRanks) setBuzzerRanks(data.buzzerRanks)
-          if (data.teamUploads) setTeamUploads(data.teamUploads)
-          if (data.teamMembers) setTeamMembers(data.teamMembers)
-        }
-      } catch (err) {
-        console.error('Error fetching initial game state:', err)
-      }
-    }
-
-    fetchInitialState()
+    refreshState()
   }, [profile.surveyCompleted])
 
-  // 1. Real-time active buzzer state and updates using Supabase Realtime
+  // 2. Real-time active buzzer state and updates using Supabase Realtime
   useEffect(() => {
     if (!profile.surveyCompleted || !profile.teamName) return
-
-    const refreshState = async () => {
-      try {
-        const res = await fetch('/api/game-state')
-        const data = await res.json()
-        if (data.success) {
-          if (data.profile) setProfile(data.profile)
-          if (data.leaderboard) setLeaderboard(data.leaderboard)
-          if (data.buzzerState) setBuzzerState(data.buzzerState)
-          if (data.buzzerRanks) setBuzzerRanks(data.buzzerRanks)
-          if (data.teamUploads) setTeamUploads(data.teamUploads)
-          if (data.teamMembers) setTeamMembers(data.teamMembers)
-        }
-      } catch (err) {
-        console.error('Error refreshing game state:', err)
-      }
-    }
 
     refreshState()
 
@@ -335,6 +318,16 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
 
       if (!data.success) {
         setBuzzError(data.error || 'Failed to buzz.')
+      } else {
+        // Play buzzer sound
+        try {
+          const audio = new Audio('/eritnhut1992-buzzer-or-wrong-answer-20582.mp3')
+          audio.play()
+        } catch (e) {
+          console.error('Failed to play buzzer audio:', e)
+        }
+        // Instantly refresh local state to reflect the buzz
+        await refreshState()
       }
     } catch (err: any) {
       setBuzzError('Error submitting buzz action.')
