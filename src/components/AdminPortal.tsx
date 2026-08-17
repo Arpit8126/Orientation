@@ -1094,17 +1094,33 @@ export default function AdminPortal() {
                   <div className="space-y-4">
                     <button
                       onClick={handleActivateQuestion}
-                      disabled={isActivating}
+                      disabled={isActivating || isSelectedQuestionActive || filteredHistoryRanks.length > 0}
                       className={`w-full py-4 rounded-xl text-sm font-black uppercase tracking-wider transition-all duration-200 cursor-pointer shadow-md flex items-center justify-center gap-2 border ${
                         isActivating
                           ? 'bg-neutral-100 text-neutral-400 border-neutral-200 cursor-not-allowed'
                           : isSelectedQuestionActive
-                          ? 'bg-green-600 border-green-700 text-white animate-pulse'
+                          ? 'bg-green-600 border-green-700 text-white cursor-not-allowed'
+                          : filteredHistoryRanks.length > 0
+                          ? 'bg-neutral-200 border-neutral-300 text-neutral-400 cursor-not-allowed'
                           : 'bg-red-600 border-red-700 hover:bg-red-500 text-white'
                       }`}
                     >
-                      {isActivating ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
-                      {isActivating ? 'Processing...' : isSelectedQuestionActive ? '🟢 Buzzer is Armed (Active)' : `Activate Buzzer for ${selectedQuestion}`}
+                      {isActivating ? (
+                        <RefreshCw className="w-4 h-4 animate-spin" />
+                      ) : isSelectedQuestionActive ? (
+                        <Zap className="w-4 h-4 text-green-200 fill-green-200 animate-pulse" />
+                      ) : filteredHistoryRanks.length > 0 ? (
+                        <Shield className="w-4 h-4 text-neutral-400" />
+                      ) : (
+                        <Zap className="w-4 h-4" />
+                      )}
+                      {isActivating
+                        ? 'Processing...'
+                        : isSelectedQuestionActive
+                        ? '🟢 Buzzer is Armed (Active)'
+                        : filteredHistoryRanks.length > 0
+                        ? '🔒 Round Completed'
+                        : `Activate Buzzer for ${selectedQuestion}`}
                     </button>
                     {isSelectedQuestionActive && (
                       <p className="text-[10px] text-green-700 font-semibold text-center animate-pulse">
