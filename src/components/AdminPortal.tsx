@@ -1131,36 +1131,31 @@ export default function AdminPortal() {
                     ))}
                   </div>
 
-                  {/* Add Custom Question Form */}
-                  <div className="pt-3.5 mt-3.5 border-t border-neutral-100 flex gap-2">
-                    <input
-                      type="text"
-                      placeholder="New Q (e.g. Q11)..."
-                      id="custom-question-input"
-                      className="flex-1 text-xs font-bold bg-neutral-50 hover:bg-neutral-100/50 border border-neutral-200 focus:border-neutral-350 focus:bg-white focus:outline-none rounded-lg px-2.5 py-1.5 transition"
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          const val = e.currentTarget.value.trim()
-                          if (val && !questionList.some((x) => x.toLowerCase() === val.toLowerCase())) {
-                            setQuestionList([...questionList, val])
-                            e.currentTarget.value = ''
-                          }
+                  {/* Add Next Question Button */}
+                  <div className="pt-3.5 mt-3.5 border-t border-neutral-100">
+                    {(() => {
+                      const lastQ = questionList[questionList.length - 1]
+                      let nextNum = 1
+                      if (lastQ) {
+                        const match = lastQ.match(/\d+$/)
+                        if (match) {
+                          nextNum = parseInt(match[0], 10) + 1
                         }
-                      }}
-                    />
-                    <button
-                      onClick={() => {
-                        const input = document.getElementById('custom-question-input') as HTMLInputElement
-                        const val = input?.value.trim()
-                        if (val && !questionList.some((x) => x.toLowerCase() === val.toLowerCase())) {
-                          setQuestionList([...questionList, val])
-                          if (input) input.value = ''
-                        }
-                      }}
-                      className="px-3 py-1.5 bg-neutral-900 hover:bg-neutral-800 text-white rounded-lg text-[10px] font-black uppercase tracking-wider transition cursor-pointer shadow-sm"
-                    >
-                      + Add
-                    </button>
+                      }
+                      const nextQ = `Q${nextNum}`
+                      return (
+                        <button
+                          onClick={() => {
+                            if (!questionList.includes(nextQ)) {
+                              setQuestionList([...questionList, nextQ])
+                            }
+                          }}
+                          className="w-full py-2 bg-neutral-900 hover:bg-neutral-800 text-white rounded-xl text-xs font-black uppercase tracking-wider transition cursor-pointer shadow-sm flex items-center justify-center gap-1.5"
+                        >
+                          <span>➕ Add Question {nextQ}</span>
+                        </button>
+                      )
+                    })()}
                   </div>
                 </div>
               )}
