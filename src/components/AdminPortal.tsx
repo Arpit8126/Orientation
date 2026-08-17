@@ -190,8 +190,15 @@ export default function AdminPortal() {
       })
       .subscribe()
 
+    // Safety Fallback: Poll every 4 seconds in case firewalls block WebSockets
+    const fallbackPoll = setInterval(() => {
+      refreshState()
+      fetchBuzzerLogs()
+    }, 4000)
+
     return () => {
       supabase.removeChannel(channel)
+      clearInterval(fallbackPoll)
     }
   }, [])
 

@@ -162,8 +162,14 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
       })
       .subscribe()
 
+    // Safety Fallback: Poll every 4 seconds in case firewalls block WebSockets
+    const fallbackPoll = setInterval(() => {
+      refreshState()
+    }, 4000)
+
     return () => {
       supabase.removeChannel(channel)
+      clearInterval(fallbackPoll)
     }
   }, [profile.surveyCompleted, profile.teamName])
 

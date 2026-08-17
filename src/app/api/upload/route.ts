@@ -29,10 +29,19 @@ export async function POST(request: Request) {
     }
 
     const parseTime = (timeStr: string) => {
-      const [hours, minutes] = timeStr.split(':').map(Number)
-      const d = new Date()
-      d.setHours(hours, minutes, 0, 0)
-      return d.getTime()
+      if (!timeStr) return null
+      if (timeStr.includes('T') && timeStr.includes('-')) {
+        const d = new Date(timeStr)
+        return isNaN(d.getTime()) ? null : d.getTime()
+      }
+      const parts = timeStr.split(':').map(Number)
+      if (parts.length >= 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+        const d = new Date()
+        d.setHours(parts[0], parts[1], 0, 0)
+        return d.getTime()
+      }
+      const d = new Date(timeStr)
+      return isNaN(d.getTime()) ? null : d.getTime()
     }
 
     const start = bState.promptImageStartTime ? parseTime(bState.promptImageStartTime) : null
