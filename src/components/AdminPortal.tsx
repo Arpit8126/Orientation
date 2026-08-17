@@ -4,6 +4,7 @@ import React, { useState, useEffect, useTransition } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { signOutAction } from '@/app/auth/actions'
+import { createClient } from '@/lib/supabase/client'
 import { Shield, Trophy, Zap, Users, Download, Upload, LogOut, CheckCircle2, AlertCircle, Plus, Trash2, Search, ListOrdered, Clock, Image as ImageIcon, RefreshCw } from 'lucide-react'
 
 interface StudentProfile {
@@ -115,6 +116,25 @@ export default function AdminPortal() {
   const [isUpdatingAll, setIsUpdatingAll] = useState(false)
   const [updateAllDone, setUpdateAllDone] = useState(false)
 
+  // Buzzer history logs state
+  const [buzzerLogs, setBuzzerLogs] = useState<{ id: number; game_name: string; question_id: string; team_name: string; rank: number; user_name: string; pressed_at: string }[]>([])
+  
+  // Fetch buzzer history logs
+  const fetchBuzzerLogs = async () => {
+    try {
+      const supabase = createClient()
+      const { data, error } = await supabase
+        .from('buzzer_logs')
+        .select('*')
+        .order('id', { ascending: false })
+        .limit(100)
+      if (error) throw error
+      if (data) setBuzzerLogs(data)
+    } catch (err) {
+      console.error('Error fetching buzzer logs:', err)
+    }
+  }
+
   // Fetch all database states
   const refreshState = async () => {
     try {
@@ -132,19 +152,30 @@ export default function AdminPortal() {
     }
   }
 
-  // SSE Connection for realtime feedback
+  // Supabase Realtime Connection for instant database updates
   useEffect(() => {
-    const eventSource = new EventSource('/api/realtime')
     refreshState()
+    fetchBuzzerLogs()
 
-    eventSource.onmessage = (event) => {
-      if (event.data === 'update') {
+    const supabase = createClient()
+    const channel = supabase
+      .channel('schema-db-changes-admin')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'buzzer_state' }, () => {
         refreshState()
-      }
-    }
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'buzzer_ranks' }, () => {
+        refreshState()
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'team_uploads' }, () => {
+        refreshState()
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'buzzer_logs' }, () => {
+        fetchBuzzerLogs()
+      })
+      .subscribe()
 
     return () => {
-      eventSource.close()
+      supabase.removeChannel(channel)
     }
   }, [])
 
@@ -1203,6 +1234,58 @@ export default function AdminPortal() {
                   </div>
                 )}
 
+              </div>
+
+              {/* History Logs Panel */}
+              <div className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8 shadow-md">
+                <div className="flex justify-between items-center pb-3 border-b border-neutral-100 mb-4">
+                  <h3 className="font-display text-sm font-black text-foreground uppercase tracking-wider flex items-center gap-2">
+                    <ListOrdered className="w-4 h-4 text-muted" /> Buzzer History Logs
+                  </h3>
+                  <button
+                    onClick={async () => {
+                      if (confirm('Are you sure you want to clear all history logs?')) {
+                        const supabase = createClient()
+                        const { error } = await supabase.from('buzzer_logs').delete().neq('team_name', '')
+                        if (!error) fetchBuzzerLogs()
+                      }
+                    }}
+                    className="text-[10px] text-red-600 hover:text-red-500 font-bold uppercase tracking-wider bg-red-50 hover:bg-red-100 border border-red-200/50 px-2.5 py-1.5 rounded-lg transition cursor-pointer"
+                  >
+                    Clear History
+                  </button>
+                </div>
+                
+                {buzzerLogs.length === 0 ? (
+                  <div className="text-center py-8 text-xs text-neutral-450 font-bold">
+                    No history logs recorded yet.
+                  </div>
+                ) : (
+                  <div className="max-h-60 overflow-y-auto space-y-2 pr-1 font-sans">
+                    {buzzerLogs.map((log) => (
+                      <div key={log.id} className="text-xs bg-neutral-50 border border-neutral-200/55 rounded-xl px-3.5 py-2.5 flex justify-between items-center">
+                        <div>
+                          <p className="font-extrabold text-neutral-800 capitalize">
+                            {log.game_name} — {log.question_id}
+                          </p>
+                          <p className="text-[10px] text-neutral-500 mt-0.5 font-semibold">
+                            Team: <span className="font-bold text-neutral-700">{log.team_name}</span> (Buzzed by: {log.user_name})
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <span className={`text-[9px] font-black px-2.5 py-0.5 rounded-full ${
+                            log.rank === 1 ? 'bg-amber-100 text-amber-700 border border-amber-255' : 'bg-neutral-200 text-neutral-650'
+                          }`}>
+                            Rank #{log.rank}
+                          </span>
+                          <p className="text-[8px] text-neutral-400 mt-1 font-semibold">
+                            {new Date(log.pressed_at).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit', second: '2-digit'})}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
               
             </div>

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { saveStudentSurveyAction, signOutAction } from '@/app/auth/actions'
+import { createClient } from '@/lib/supabase/client'
 import { Shield, CheckCircle2, AlertCircle, LogOut, Trophy, Zap, RefreshCw, Upload, Image as ImageIcon, Clock, Users } from 'lucide-react'
 
 interface StudentProfile {
@@ -141,11 +142,9 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
     fetchInitialState()
   }, [profile.surveyCompleted])
 
-  // 2. Server-Sent Events (SSE) for Real-Time Updates (Leaders Only)
+  // 1. Real-time active buzzer state and updates using Supabase Realtime
   useEffect(() => {
-    if (!profile.surveyCompleted || !profile.teamName || !profile.isLeader) return
-
-    const eventSource = new EventSource('/api/realtime')
+    if (!profile.surveyCompleted || !profile.teamName) return
 
     const refreshState = async () => {
       try {
@@ -164,16 +163,26 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
       }
     }
 
-    eventSource.onmessage = (event) => {
-      if (event.data === 'update') {
+    refreshState()
+
+    const supabase = createClient()
+    const channel = supabase
+      .channel('schema-db-changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'buzzer_state' }, () => {
         refreshState()
-      }
-    }
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'buzzer_ranks' }, () => {
+        refreshState()
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'team_uploads' }, () => {
+        refreshState()
+      })
+      .subscribe()
 
     return () => {
-      eventSource.close()
+      supabase.removeChannel(channel)
     }
-  }, [profile.surveyCompleted, profile.teamName, profile.isLeader])
+  }, [profile.surveyCompleted, profile.teamName])
 
   // 2. Countdown timer effect for Prompt Image Upload
   useEffect(() => {
@@ -185,15 +194,28 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
 
     const getTimerStatusAndRemaining = () => {
       const parseTime = (timeStr: string) => {
-        const [hours, minutes] = timeStr.split(':').map(Number)
-        const d = new Date()
-        d.setHours(hours, minutes, 0, 0)
-        return d.getTime()
+        if (!timeStr) return null
+        if (timeStr.includes('T') && timeStr.includes('-')) {
+          const d = new Date(timeStr)
+          return isNaN(d.getTime()) ? null : d.getTime()
+        }
+        const parts = timeStr.split(':').map(Number)
+        if (parts.length >= 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+          const d = new Date()
+          d.setHours(parts[0], parts[1], 0, 0)
+          return d.getTime()
+        }
+        const d = new Date(timeStr)
+        return isNaN(d.getTime()) ? null : d.getTime()
       }
 
       const start = parseTime(buzzerState.promptImageStartTime!)
       const end = parseTime(buzzerState.promptImageEndTime!)
       const now = Date.now()
+
+      if (!start || !end) {
+        return { status: 'closed' as const, remaining: 0 }
+      }
 
       if (now < start) {
         return { status: 'pending' as const, remaining: 0 }
