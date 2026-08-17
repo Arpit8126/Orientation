@@ -108,6 +108,42 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
   const [buzzLoading, setBuzzLoading] = useState(false)
   const [buzzError, setBuzzError] = useState('')
 
+  // Online connection tracking state
+  const [isOnline, setIsOnline] = useState(true)
+
+  // Track online/offline status
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    setIsOnline(navigator.onLine)
+    const handleOnline = () => setIsOnline(true)
+    const handleOffline = () => setIsOnline(false)
+    window.addEventListener('online', handleOnline)
+    window.addEventListener('offline', handleOffline)
+    return () => {
+      window.removeEventListener('online', handleOnline)
+      window.removeEventListener('offline', handleOffline)
+    }
+  }, [])
+
+  // Helper function to format start and end times dynamically
+  const formatTimeDisplay = (timeStr: string) => {
+    if (!timeStr) return '—'
+    if (timeStr.includes('T')) {
+      const d = new Date(timeStr)
+      return isNaN(d.getTime()) ? '—' : d.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
+    }
+    const parts = timeStr.split(':')
+    if (parts.length >= 2) {
+      const h = Number(parts[0])
+      const m = Number(parts[1])
+      const ampm = h >= 12 ? 'PM' : 'AM'
+      const displayH = h % 12 || 12
+      const displayM = m < 10 ? `0${m}` : m
+      return `${displayH}:${displayM} ${ampm}`
+    }
+    return timeStr
+  }
+
   // Input references for the 8-digit OTP boxes (placeholder in this view)
   const otpRefs = useRef<(HTMLInputElement | null)[]>([])
 
@@ -1049,13 +1085,7 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
                       <div className="flex items-center justify-center gap-2 text-amber-700 font-bold text-sm bg-amber-50 p-4 rounded-xl border border-amber-200">
                         <Clock className="w-4 h-4 text-amber-600" />
                         <span>
-                          Upload opens at {(() => {
-                            const [h, m] = buzzerState.promptImageStartTime!.split(':').map(Number)
-                            const ampm = h >= 12 ? 'PM' : 'AM'
-                            const displayH = h % 12 || 12
-                            const displayM = m < 10 ? `0${m}` : m
-                            return `${displayH}:${displayM} ${ampm}`
-                          })()}
+                          Upload opens at {formatTimeDisplay(buzzerState.promptImageStartTime!)}
                         </span>
                       </div>
                     ) : (
@@ -1436,6 +1466,21 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
       <footer className="py-6 border-t border-border-light text-center text-xs text-muted bg-white">
         © {new Date().getFullYear()} GLA University. BCA Orientation.
       </footer>
+
+      {/* No Internet Connection overlay */}
+      {!isOnline && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
+          <div className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8 max-w-sm text-center shadow-2xl space-y-4">
+            <div className="w-12 h-12 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold animate-pulse">
+              ⚠️
+            </div>
+            <h3 className="font-display text-lg font-bold text-neutral-800">No Internet Connection</h3>
+            <p className="text-xs text-neutral-500 leading-relaxed font-semibold">
+              Please check your Wi-Fi or mobile data connection. Your orientation portal will automatically reconnect once you are back online.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

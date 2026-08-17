@@ -116,6 +116,42 @@ export default function AdminPortal() {
   const [isUpdatingAll, setIsUpdatingAll] = useState(false)
   const [updateAllDone, setUpdateAllDone] = useState(false)
 
+  // Online connection tracking state
+  const [isOnline, setIsOnline] = useState(true)
+
+  // Track online/offline status
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    setIsOnline(navigator.onLine)
+    const handleOnline = () => setIsOnline(true)
+    const handleOffline = () => setIsOnline(false)
+    window.addEventListener('online', handleOnline)
+    window.addEventListener('offline', handleOffline)
+    return () => {
+      window.removeEventListener('online', handleOnline)
+      window.removeEventListener('offline', handleOffline)
+    }
+  }, [])
+
+  // Helper function to format start and end times dynamically
+  const formatTimeDisplay = (timeStr: string) => {
+    if (!timeStr) return '—'
+    if (timeStr.includes('T')) {
+      const d = new Date(timeStr)
+      return isNaN(d.getTime()) ? '—' : d.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
+    }
+    const parts = timeStr.split(':')
+    if (parts.length >= 2) {
+      const h = Number(parts[0])
+      const m = Number(parts[1])
+      const ampm = h >= 12 ? 'PM' : 'AM'
+      const displayH = h % 12 || 12
+      const displayM = m < 10 ? `0${m}` : m
+      return `${displayH}:${displayM} ${ampm}`
+    }
+    return timeStr
+  }
+
   // Buzzer history logs state
   const [buzzerLogs, setBuzzerLogs] = useState<{ id: number; game_name: string; question_id: string; team_name: string; rank: number; user_name: string; pressed_at: string }[]>([])
   
@@ -1084,8 +1120,8 @@ export default function AdminPortal() {
                       <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 space-y-1">
                         <p className="text-[10px] font-bold text-blue-700 uppercase tracking-widest">Currently Live</p>
                         <div className="flex gap-4 text-xs font-semibold text-blue-900">
-                          <span>Start: <span className="font-black">{buzzerState.promptImageStartTime ? new Date(`1970-01-01T${buzzerState.promptImageStartTime}`).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) : '—'}</span></span>
-                          <span>End: <span className="font-black">{buzzerState.promptImageEndTime ? new Date(`1970-01-01T${buzzerState.promptImageEndTime}`).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) : '—'}</span></span>
+                          <span>Start: <span className="font-black">{formatTimeDisplay(buzzerState.promptImageStartTime!)}</span></span>
+                          <span>End: <span className="font-black">{formatTimeDisplay(buzzerState.promptImageEndTime!)}</span></span>
                         </div>
                       </div>
                     )}
@@ -2016,6 +2052,21 @@ export default function AdminPortal() {
       <footer className="py-5 border-t border-neutral-200 text-center text-xs text-muted bg-white">
         © {new Date().getFullYear()} GLA University. BCA Orientation Admin Console.
       </footer>
+
+      {/* No Internet Connection overlay */}
+      {!isOnline && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
+          <div className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8 max-w-sm text-center shadow-2xl space-y-4">
+            <div className="w-12 h-12 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold animate-pulse">
+              ⚠️
+            </div>
+            <h3 className="font-display text-lg font-bold text-neutral-800">No Internet Connection</h3>
+            <p className="text-xs text-neutral-500 leading-relaxed font-semibold">
+              Please check your Wi-Fi or mobile data connection. Your admin dashboard will automatically reconnect once you are back online.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
