@@ -97,6 +97,7 @@ export default function AdminPortal() {
   const [bulkErrorMsg, setBulkErrorMsg] = useState('')
   const [isActivating, setIsActivating] = useState(false)
   const [isApplyingBulk, setIsApplyingBulk] = useState(false)
+  const [assigningLeaders, setAssigningLeaders] = useState<Record<string, boolean>>({})
 
   // Control Panel Active states
   const [selectedGame, setSelectedGame] = useState('guess the song')
@@ -360,6 +361,7 @@ export default function AdminPortal() {
 
   // Teams: Assign student as team leader
   const handleAssignLeader = async (studentId: string, teamName: string) => {
+    setAssigningLeaders((prev) => ({ ...prev, [studentId]: true }))
     try {
       const res = await fetch('/api/admin', {
         method: 'POST',
@@ -390,11 +392,14 @@ export default function AdminPortal() {
       }
     } catch (err) {
       alert('Error assigning team leader')
+    } finally {
+      setAssigningLeaders((prev) => ({ ...prev, [studentId]: false }))
     }
   }
 
   // Teams: Remove team leader role from a student
   const handleRemoveLeader = async (studentId: string) => {
+    setAssigningLeaders((prev) => ({ ...prev, [studentId]: true }))
     try {
       const res = await fetch('/api/admin', {
         method: 'POST',
@@ -417,6 +422,8 @@ export default function AdminPortal() {
       }
     } catch (err) {
       alert('Error removing team leader')
+    } finally {
+      setAssigningLeaders((prev) => ({ ...prev, [studentId]: false }))
     }
   }
 
@@ -1281,13 +1288,16 @@ export default function AdminPortal() {
                                     </div>
                                     <button
                                       onClick={() => isLeader ? handleRemoveLeader(m.id) : handleAssignLeader(m.id, m.teamName || '')}
+                                      disabled={assigningLeaders[m.id]}
                                       className={`px-1.5 py-0.5 rounded text-[9px] font-black uppercase cursor-pointer tracking-wider transition ${
-                                        isLeader 
+                                        assigningLeaders[m.id]
+                                          ? 'bg-neutral-100 text-neutral-400 cursor-wait'
+                                          : isLeader 
                                           ? 'bg-amber-100 hover:bg-amber-200 text-amber-800' 
                                           : 'bg-neutral-200 hover:bg-neutral-300 text-neutral-700'
                                       }`}
                                     >
-                                      {isLeader ? 'Leader' : 'Promote'}
+                                      {assigningLeaders[m.id] ? 'Updating...' : isLeader ? 'Leader' : 'Promote'}
                                     </button>
                                   </div>
                                   <div className="px-3 py-2 bg-white border-t border-neutral-100 flex items-center gap-2">
@@ -1574,13 +1584,16 @@ export default function AdminPortal() {
                                     {hasTeam && (
                                       <button
                                         onClick={() => isLeader ? handleRemoveLeader(s.id) : handleAssignLeader(s.id, s.teamName || '')}
+                                        disabled={assigningLeaders[s.id]}
                                         className={`px-3 py-2.5 rounded-xl font-black text-xs transition cursor-pointer ${
-                                          isLeader
+                                          assigningLeaders[s.id]
+                                            ? 'bg-neutral-100 text-neutral-400 cursor-wait'
+                                            : isLeader
                                             ? 'bg-amber-100 hover:bg-amber-200 text-amber-800'
                                             : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-700 border border-neutral-200/50'
                                         }`}
                                       >
-                                        {isLeader ? 'Remove Leader' : 'Make Leader'}
+                                        {assigningLeaders[s.id] ? 'Updating...' : isLeader ? 'Remove Leader' : 'Make Leader'}
                                       </button>
                                     )}
                                     <button

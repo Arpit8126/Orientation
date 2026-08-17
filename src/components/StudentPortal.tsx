@@ -87,6 +87,7 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
 
   // Timer states
   const [timeRemaining, setTimeRemaining] = useState(0)
+  const [timerStatus, setTimerStatus] = useState<'pending' | 'active' | 'closed'>('closed')
 
   // Form states
   const [fullNameInput, setFullNameInput] = useState('')
@@ -176,29 +177,48 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
 
   // 2. Countdown timer effect for Prompt Image Upload
   useEffect(() => {
-    if (buzzerState.activeGame !== 'Prompt image creation' || !buzzerState.promptImageEndTime) {
+    if (buzzerState.activeGame !== 'Prompt image creation' || !buzzerState.promptImageStartTime || !buzzerState.promptImageEndTime) {
       setTimeRemaining(0)
+      setTimerStatus('closed')
       return
     }
 
-    const calculateRemaining = () => {
-      const end = new Date(buzzerState.promptImageEndTime!).getTime()
+    const getTimerStatusAndRemaining = () => {
+      const parseTime = (timeStr: string) => {
+        const [hours, minutes] = timeStr.split(':').map(Number)
+        const d = new Date()
+        d.setHours(hours, minutes, 0, 0)
+        return d.getTime()
+      }
+
+      const start = parseTime(buzzerState.promptImageStartTime!)
+      const end = parseTime(buzzerState.promptImageEndTime!)
       const now = Date.now()
-      return Math.max(0, Math.floor((end - now) / 1000))
+
+      if (now < start) {
+        return { status: 'pending' as const, remaining: 0 }
+      } else if (now >= start && now <= end) {
+        return { status: 'active' as const, remaining: Math.max(0, Math.floor((end - now) / 1000)) }
+      } else {
+        return { status: 'closed' as const, remaining: 0 }
+      }
     }
 
-    setTimeRemaining(calculateRemaining())
+    const initial = getTimerStatusAndRemaining()
+    setTimeRemaining(initial.remaining)
+    setTimerStatus(initial.status)
 
     const timerInterval = setInterval(() => {
-      const rem = calculateRemaining()
-      setTimeRemaining(rem)
-      if (rem <= 0) {
+      const current = getTimerStatusAndRemaining()
+      setTimeRemaining(current.remaining)
+      setTimerStatus(current.status)
+      if (current.status === 'closed') {
         clearInterval(timerInterval)
       }
     }, 1000)
 
     return () => clearInterval(timerInterval)
-  }, [buzzerState.activeGame, buzzerState.promptImageEndTime])
+  }, [buzzerState.activeGame, buzzerState.promptImageStartTime, buzzerState.promptImageEndTime])
 
   // Handle Logout
   const handleLogout = async () => {
@@ -979,12 +999,14 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
                     <div className="flex justify-between items-center pb-4 border-b border-neutral-100">
                       <h3 className="font-display text-lg sm:text-xl font-bold text-foreground flex items-center gap-2">
                         <ImageIcon className="w-5 h-5 text-foreground" /> Image Submission
-                      </h3>
-                      <span className={`px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
-                        timeRemaining > 0 ? 'bg-green-50 text-green-700 animate-pulse' : 'bg-red-50 text-red-700'
+                             <span className={`px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
+                        timerStatus === 'active' ? 'bg-green-50 text-green-700 animate-pulse' :
+                        timerStatus === 'pending' ? 'bg-amber-50 text-amber-700' : 'bg-red-50 text-red-700'
                       }`}>
-                        {timeRemaining > 0 ? 'Active' : 'Closed'}
+                        {timerStatus === 'active' ? 'Active' :
+                         timerStatus === 'pending' ? 'Pending' : 'Closed'}
                       </span>
+                      </h3>
                     </div>
 
                     <div className="bg-neutral-50 p-5 rounded-xl border border-neutral-200">
@@ -995,11 +1017,24 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
                     </div>
 
                     {/* Timer Display */}
-                    {timeRemaining > 0 ? (
+                    {timerStatus === 'active' ? (
                       <div className="flex items-center justify-center gap-2 text-green-700 font-bold text-sm bg-green-50 p-4 rounded-xl border border-green-200">
                         <Clock className="w-4 h-4 text-green-600 animate-spin" />
                         <span>
                           Upload Open: {Math.floor(timeRemaining / 60)}m {timeRemaining % 60}s remaining
+                        </span>
+                      </div>
+                    ) : timerStatus === 'pending' ? (
+                      <div className="flex items-center justify-center gap-2 text-amber-700 font-bold text-sm bg-amber-50 p-4 rounded-xl border border-amber-200">
+                        <Clock className="w-4 h-4 text-amber-600" />
+                        <span>
+                          Upload opens at {(() => {
+                            const [h, m] = buzzerState.promptImageStartTime!.split(':').map(Number)
+                            const ampm = h >= 12 ? 'PM' : 'AM'
+                            const displayH = h % 12 || 12
+                            const displayM = m < 10 ? `0${m}` : m
+                            return `${displayH}:${displayM} ${ampm}`
+                          })()}
                         </span>
                       </div>
                     ) : (
@@ -1010,7 +1045,7 @@ export default function StudentPortal({ initialProfile }: StudentPortalProps) {
                     )}
 
                     {/* Upload Form */}
-                    {timeRemaining > 0 ? (
+                    {timerStatus === 'active' ? (
                       <form onSubmit={handleImageUpload} className="space-y-4">
                         {uploadError && (
                           <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl flex items-start gap-2 shadow-sm">
