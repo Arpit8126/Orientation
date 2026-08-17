@@ -135,21 +135,6 @@ export default function AdminPortal() {
     }
   }
 
-  // Ref to track last buzzer rank standings count
-  const prevRanksLengthRef = useRef(0)
-
-  // Play buzzer sound on the projector when a team buzzes in real-time
-  useEffect(() => {
-    if (buzzerRanks.length > prevRanksLengthRef.current) {
-      try {
-        const audio = new Audio('/eritnhut1992-buzzer-or-wrong-answer-20582.mp3')
-        audio.play()
-      } catch (e) {
-        console.error('Failed to play audio:', e)
-      }
-    }
-    prevRanksLengthRef.current = buzzerRanks.length
-  }, [buzzerRanks])
 
   // Fetch all database states
   const refreshState = async () => {
