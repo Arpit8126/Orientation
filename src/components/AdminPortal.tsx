@@ -1418,14 +1418,14 @@ export default function AdminPortal() {
                     (s) => s.teamName?.toLowerCase() === teamScore.teamName.toLowerCase()
                   )
                   return (
-                    <div key={teamScore.teamName} className="bg-neutral-50/30 border border-neutral-200/80 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.02)] overflow-hidden flex flex-col transition hover:shadow-[0_12px_30px_rgb(0,0,0,0.04)]">
+                    <div key={teamScore.teamName} className="bg-slate-50/60 border border-slate-200 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.02)] overflow-hidden flex flex-col transition hover:shadow-[0_12px_30px_rgb(0,0,0,0.05)]">
                       {/* Card Header */}
-                      <div className="px-5 py-4 bg-gradient-to-r from-neutral-50 to-neutral-100/50 flex items-center justify-between gap-3 border-b border-neutral-250">
-                        <h4 className="font-display font-extrabold text-neutral-800 text-sm leading-tight tracking-tight">{teamScore.teamName}</h4>
+                      <div className="px-5 py-4 bg-gradient-to-r from-slate-100 to-slate-200/50 flex items-center justify-between gap-3 border-b border-slate-200">
+                        <h4 className="font-display font-extrabold text-slate-800 text-sm leading-tight tracking-tight">{teamScore.teamName}</h4>
                         <span className={`text-[10px] font-black px-2.5 py-1 rounded-full flex-shrink-0 shadow-sm ${
                           members.length > 0
                             ? 'bg-blue-100 text-blue-700 border border-blue-200/50'
-                            : 'bg-neutral-200/60 text-neutral-500 border border-neutral-300/30'
+                            : 'bg-slate-200/60 text-slate-500 border border-slate-300/30'
                         }`}>
                           {members.length} {members.length === 1 ? 'Member' : 'Members'}
                         </span>
@@ -1434,25 +1434,25 @@ export default function AdminPortal() {
                       {/* Members List */}
                       <div className="p-4 flex-1">
                         {members.length === 0 ? (
-                          <div className="py-10 flex flex-col items-center justify-center gap-2 border-2 border-dashed border-neutral-200 rounded-xl bg-white/40">
-                            <Users className="w-6 h-6 text-neutral-300" />
-                            <p className="text-[11px] text-neutral-450 font-bold tracking-tight">No members yet</p>
+                          <div className="py-10 flex flex-col items-center justify-center gap-2 border-2 border-dashed border-slate-200 rounded-xl bg-slate-100/40">
+                            <Users className="w-6 h-6 text-slate-450" />
+                            <p className="text-[11px] text-slate-500 font-bold tracking-tight">No members yet</p>
                           </div>
                         ) : (
                           <div className="space-y-3">
                             {members.map((m) => {
                               const isLeader = m.isLeader || false
                               return (
-                                <div key={m.id} className={`rounded-xl border overflow-hidden transition-all duration-200 ${
+                                <div key={m.id} className={`rounded-xl border overflow-hidden transition-all duration-200 shadow-sm ${
                                   isLeader 
-                                    ? 'border-amber-300 bg-gradient-to-br from-amber-500/[0.04] via-amber-500/[0.01] to-white shadow-sm shadow-amber-100/60 hover:shadow-md' 
-                                    : 'border-neutral-200 bg-white hover:border-neutral-350 hover:shadow-sm'
+                                    ? 'border-amber-300 bg-gradient-to-br from-amber-50 via-yellow-50/20 to-white hover:shadow-md' 
+                                    : 'border-blue-200 bg-gradient-to-br from-blue-50/40 via-neutral-50/20 to-white hover:border-blue-300 hover:shadow-md'
                                 }`}>
                                   <div className="px-3.5 py-3 flex justify-between items-start gap-3">
                                     <div className="min-w-0 flex-1">
                                       <p className="text-xs font-extrabold text-neutral-800 truncate flex items-center gap-1.5">
                                         {isLeader && <Shield className="w-3.5 h-3.5 text-amber-500 fill-amber-400 flex-shrink-0 animate-pulse" />}
-                                        <span>{m.fullName || 'Student'}</span>
+                                        <span className={isLeader ? 'text-amber-950 font-black' : 'text-neutral-900'}>{m.fullName || 'Student'}</span>
                                       </p>
                                       <p className={`text-[10px] truncate mt-1 ${isLeader ? 'text-amber-800/80 font-medium' : 'text-neutral-500'}`}>{m.email}</p>
                                     </div>
@@ -1463,19 +1463,23 @@ export default function AdminPortal() {
                                         assigningLeaders[m.id]
                                           ? 'bg-neutral-100 text-neutral-400 cursor-wait'
                                           : isLeader 
-                                          ? 'bg-amber-100 hover:bg-amber-500 hover:text-white text-amber-800 border border-amber-250 shadow-sm' 
-                                          : 'bg-neutral-100 hover:bg-neutral-800 hover:text-white text-neutral-700 border border-neutral-250 shadow-sm'
+                                          ? 'bg-amber-500 hover:bg-amber-600 text-white shadow-sm border border-amber-600' 
+                                          : 'bg-white hover:bg-blue-600 hover:text-white text-blue-700 border border-blue-200 shadow-sm'
                                       }`}
                                     >
                                       {assigningLeaders[m.id] ? '...' : isLeader ? 'Leader ✓' : 'Promote'}
                                     </button>
                                   </div>
-                                  <div className="px-3.5 py-2.5 bg-neutral-50/50 border-t border-neutral-100 flex items-center gap-2">
-                                    <span className="text-[9px] text-neutral-400 font-black uppercase tracking-wider flex-shrink-0">Move to:</span>
+                                  <div className={`px-3.5 py-2.5 border-t flex items-center gap-2 ${
+                                    isLeader ? 'bg-amber-100/20 border-amber-200/40' : 'bg-blue-50/20 border-blue-100/40'
+                                  }`}>
+                                    <span className={`text-[9px] font-black uppercase tracking-wider flex-shrink-0 ${
+                                      isLeader ? 'text-amber-700' : 'text-blue-700'
+                                    }`}>Move to:</span>
                                     <select
                                       value={m.teamName || ''}
                                       onChange={(e) => handleMoveStudent(m.id, e.target.value || null)}
-                                      className="flex-1 text-[10px] bg-white border border-neutral-200 hover:border-neutral-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500 font-bold text-neutral-700 cursor-pointer shadow-sm transition"
+                                      className="flex-1 text-[10px] bg-white border border-neutral-200 hover:border-neutral-350 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500 font-bold text-neutral-700 cursor-pointer shadow-sm transition"
                                     >
                                       <option value="">-- Unassigned --</option>
                                       {leaderboard.map((t) => (
