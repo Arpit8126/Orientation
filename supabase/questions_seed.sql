@@ -7156,15 +7156,99 @@ exec_globals["passed_cases"] = 5
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (158,'158. NumPy Zero Array','Create a 1D NumPy array `arr` of size 10 filled with zeros, except the 5th element (index 4) which must be set to 1.','easy',100,'numpy','import numpy as np
+VALUES (158,'158. Pascal''s Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print Pascal''s Triangle up to n rows. Pascal''s Triangle is a numerical triangle where each number is the sum of the two numbers directly above it.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">To keep the shape centered and symmetric, format each row with appropriate leading spaces, and separate adjacent numbers in a row by a single space. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
+  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 4</code></div>
+  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">   1
+  1 1
+ 1 2 1
+1 3 3 1</pre></div></div>
+  
+</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 2</h3>
+<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
+  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 1</code></div>
+  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>1</code></div>
+  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Each subsequent row is calculated by adding adjacent elements of the previous row (e.g. Row 2 [1,2,1] is derived from Row 1 [1,1]).</span></div>
+</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 3</h3>
+<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
+  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 0</code></div>
+  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> (Empty Output)</code></div>
+  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">For n=4, we format the rows with leading spaces to keep the triangle centered symmetrically: row 0 has 3 leading spaces, row 1 has 2, row 2 has 1, and row 3 has 0.</span></div>
+</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
+<ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
+  <li><code>n = 1 (Solitary cell showing only the top number 1)</code></li><li><code>n = 5 (Checks proper alignment and values for higher rows)</code></li><li><code>n = -3 (Negative boundary safety check)</code></li>
+</ul>','medium',200,'python-patterns','def pascal_triangle(n):
+    # Write your code here
+    pass','def ref_impl(*args):
+    n = args[0]
+    if n <= 0: return ""
+    lines = []
+    row = [1]
+    for i in range(n):
+        row_str = " ".join(str(x) for x in row)
+        spaces = " " * (n - 1 - i)
+        lines.append(spaces + row_str)
+        next_row = [1]
+        for j in range(len(row) - 1):
+            next_row.append(row[j] + row[j+1])
+        next_row.append(1)
+        row = next_row
+    return "\n".join(lines)
+
+assert "pascal_triangle" in exec_globals, "Function pascal_triangle not found"
+fn = exec_globals["pascal_triangle"]
+
+# Show live output for 2 sample sizes
+print("--- YOUR PATTERN FOR n=4 ---")
+try:
+    fn(4)
+except Exception as e:
+    print(f"Error: {e}")
+print("----------------------------")
+print("--- YOUR PATTERN FOR n=5 ---")
+try:
+    fn(5)
+except Exception as e:
+    print(f"Error: {e}")
+print("----------------------------")
+
+def capture(func, n):
+    import io, sys
+    buf = io.StringIO()
+    old = sys.stdout
+    sys.stdout = buf
+    try:
+        func(n)
+    finally:
+        sys.stdout = old
+    return buf.getvalue()
+
+def normalize(s):
+    lines = [l.rstrip() for l in s.splitlines()]
+    while lines and not lines[-1]: lines.pop()
+    while lines and not lines[0]: lines.pop(0)
+    return lines
+
+test_cases = [1, 3, 5, -2]
+passed = 0
+for tc in test_cases:
+    exp = normalize(ref_impl(tc))
+    got = normalize(capture(fn, tc))
+    assert exp == got, f"Mismatch n={tc}\nExpected:\n" + "\n".join(exp) + "\nGot:\n" + "\n".join(got)
+    passed += 1
+exec_globals["passed_cases"] = passed
+exec_globals["total_cases"] = 4',NULL);
+
+INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
+VALUES (159,'159. NumPy Zero Array','Create a 1D NumPy array `arr` of size 10 filled with zeros, except the 5th element (index 4) which must be set to 1.','easy',100,'numpy','import numpy as np
 # Assign array to variable "arr"','',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (159,'159. Reshape 1D to 2D Matrix','Create a 1D NumPy array containing values from 10 to 18 (inclusive), and reshape it into a 3x3 matrix. Save this matrix as `mat`.','easy',100,'numpy','import numpy as np
+VALUES (160,'160. Reshape 1D to 2D Matrix','Create a 1D NumPy array containing values from 10 to 18 (inclusive), and reshape it into a 3x3 matrix. Save this matrix as `mat`.','easy',100,'numpy','import numpy as np
 # Assign matrix to variable "mat"','',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (160,'160. Line Chart Trend','### 📊 Dataset Reference
+VALUES (161,'161. Line Chart Trend','### 📊 Dataset Reference
 * **File Name**: `stock_market.csv`
 * **Task**: Generate a standard line chart of the `Close` price over `Date` using Matplotlib. Add a title `"Stock Trend"` and x-label `"Date"`.','medium',200,'matplotlib-seaborn','import matplotlib.pyplot as plt
 import pandas as pd
@@ -7172,7 +7256,7 @@ df = pd.read_csv("stock_market.csv")
 # Write your plotting code here','','stock_market.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (161,'161. Bar Chart Categories','### 📊 Dataset Reference
+VALUES (162,'162. Bar Chart Categories','### 📊 Dataset Reference
 * **File Name**: `superstore.csv`
 * **Task**: Create a bar plot showing the total sales generated in each category using Seaborn (`sns.barplot`). Add a title `"Sales by Category"`.','medium',200,'matplotlib-seaborn','import seaborn as sns
 import matplotlib.pyplot as plt
@@ -7181,7 +7265,7 @@ df = pd.read_csv("superstore.csv")
 # Write your plotting code here','','superstore.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (162,'162. Simple Student Marks Bar Plot','
+VALUES (163,'163. Simple Student Marks Bar Plot','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Your teacher wants a visual representation of student performance. Write a Python function <code>plot_student_marks(df: pd.DataFrame)</code> that generates a basic bar plot comparing student names against their marks:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Plot Generation:</strong> Create a bar plot using Matplotlib or Pandas where the x-axis displays the student <code>Name</code> and the y-axis displays their corresponding <code>Marks</code>.</li><li class="py-0.5"><strong>Axis Labeling:</strong> Set the x-axis label to <code>"Student Name"</code> and the y-axis label to <code>"Marks"</code>.</li><li class="py-0.5"><strong>Title Assignment:</strong> Set the chart title to <code>"Student Marks Overview"</code>.</li><li class="py-0.5"><strong>Return Object:</strong> Return the Matplotlib <code>Axes</code> object (<code>ax</code>).</li></ul>
@@ -7229,7 +7313,7 @@ def plot_student_marks(df: pd.DataFrame):
     return ax','',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (163,'163. Age vs Marks Scatter Plot','
+VALUES (164,'164. Age vs Marks Scatter Plot','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">To investigate whether older students score differently than younger students, write a Python function <code>plot_age_vs_marks(df: pd.DataFrame)</code> that generates a simple scatter plot:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Plot Generation:</strong> Plot <code>Age</code> on the x-axis and <code>Marks</code> on the y-axis using a scatter plot.</li><li class="py-0.5"><strong>Axis Labeling:</strong> Set the x-axis label to <code>"Age"</code> and the y-axis label to <code>"Marks"</code>.</li><li class="py-0.5"><strong>Title Assignment:</strong> Set the chart title to <code>"Age vs Marks Distribution"</code>.</li><li class="py-0.5"><strong>Return Object:</strong> Return the Matplotlib <code>Axes</code> object (<code>ax</code>).</li></ul>
@@ -7277,7 +7361,7 @@ def plot_age_vs_marks(df: pd.DataFrame):
     return ax','',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (164,'164. Average Marks by Age Group Bar Plot','
+VALUES (165,'165. Average Marks by Age Group Bar Plot','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Your teacher wants to compare the average exam mark for each age group in the class. Write a Python function <code>plot_avg_marks_by_age(df: pd.DataFrame)</code> that aggregates data before plotting:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Data Aggregation:</strong> Group the DataFrame by <code>Age</code> and calculate the mean (average) <code>Marks</code> for each age.</li><li class="py-0.5"><strong>Bar Chart Plotting:</strong> Plot a bar chart showing <code>Age</code> on the x-axis and the calculated average <code>Marks</code> on the y-axis.</li><li class="py-0.5"><strong>Labels &amp; Title:</strong> Set the x-axis label to <code>"Age"</code>, y-axis label to <code>"Average Marks"</code>, and chart title to <code>"Average Marks by Age"</code>.</li><li class="py-0.5"><strong>Return Object:</strong> Return the Matplotlib <code>Axes</code> object (<code>ax</code>).</li></ul>
@@ -7325,7 +7409,7 @@ def plot_avg_marks_by_age(df: pd.DataFrame):
     return ax','',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (165,'165. Isolate Student Identity Columns','
+VALUES (166,'166. Isolate Student Identity Columns','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Your teacher has provided a class roster containing academic performance metrics. Before performing any data analysis, you need to isolate only the basic identification fields of the students to create an administrative contact list. Write a Python function extract_student_identity(df: pd. DataFrame) -> pd. DataFrame that extracts a specific vertical slice of the dataset:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Column Selection:</strong> Extract only the Name and Age columns from the input DataFrame.</li><li class="py-0.5"><strong>Order Preservation:</strong> Ensure that the columns remain in the exact order requested (Name first, Age second).</li><li class="py-0.5"><strong>Row Retention:</strong> Keep all rows intact, including rows that contain missing values (NaN).</li></ul>
@@ -7381,7 +7465,7 @@ def extract_student_identity(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (166,'166. Fill Missing Grade Entries','
+VALUES (167,'167. Fill Missing Grade Entries','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A class roster contains some missing final grades. Write a Python function fill_missing_grades(df: pd. DataFrame) -> pd. DataFrame that cleanses the dataset:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Null Grade Identification:</strong> Scan the Marks column to find any missing (NaN) values.</li><li class="py-0.5"><strong>Value Imputation:</strong> Fill those missing cells with a baseline default float value of 0.0.</li><li class="py-0.5"><strong>Data Modification:</strong> Modify the Marks column directly or reassign it, returning the updated DataFrame.</li></ul>
@@ -7439,7 +7523,7 @@ def fill_missing_grades(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (167,'167. Count Missing Grade Entries','
+VALUES (168,'168. Count Missing Grade Entries','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The school wants to know how many final exam grades are currently missing from the roster database. Write a Python function count_missing_grades(df: pd. DataFrame) -> int that counts missing values:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Null Detection:</strong> Scan the Marks column to identify any missing (NaN) values.</li><li class="py-0.5"><strong>Sum Tally:</strong> Calculate the total number of missing cells in that column.</li><li class="py-0.5"><strong>Return Type:</strong> Return the count as a standard Python integer.</li></ul>
@@ -7493,7 +7577,7 @@ def count_missing_grades(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (168,'168. Purge Duplicate Student Records','
+VALUES (169,'169. Purge Duplicate Student Records','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Due to duplicate submission errors, some student records were entered multiple times in the database roster. Write a Python function remove_duplicate_students(df: pd. DataFrame) -> pd. DataFrame that cleans the ledger:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Duplicate Purging:</strong> Remove any rows that are exact duplicates of previous rows.</li><li class="py-0.5"><strong>First Instance Preservation:</strong> Retain only the first occurrence of each duplicate record.</li><li class="py-0.5"><strong>Output Structure:</strong> Return the clean DataFrame without shifting or resetting index numbers.</li></ul>
@@ -7550,7 +7634,7 @@ def remove_duplicate_students(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (169,'169. Count Duplicate Student Records','
+VALUES (170,'170. Count Duplicate Student Records','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Due to duplicate submission errors, some student records were entered multiple times in the database roster. Write a Python function count_duplicate_students(df: pd. DataFrame) -> int that identifies duplicates:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Duplicate Detection:</strong> Find the number of duplicate rows in the DataFrame where all columns (Name, Age, Marks) are identical to a previous row.</li><li class="py-0.5"><strong>Return Type:</strong> Return the count as a standard Python integer.</li></ul>
@@ -7604,7 +7688,7 @@ def count_duplicate_students(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (170,'170. Drop Empty Student Names','
+VALUES (171,'171. Drop Empty Student Names','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An administrative record requires every student to have a valid name. If a row is missing the student''s name, that record must be deleted. Write a Python function remove_empty_names(df: pd. DataFrame) -> pd. DataFrame that cleanses the dataset:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Null Name Identification:</strong> Scan the Name column to find any missing (NaN or null) entries.</li><li class="py-0.5"><strong>Row Dropping:</strong> Remove all rows where the student''s Name is missing.</li><li class="py-0.5"><strong>Data Preservation:</strong> Retain rows where the Age or Marks values are missing, as long as the Name is present.</li></ul>
@@ -7661,7 +7745,7 @@ def remove_empty_names(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (171,'171. Filter Mature Student Cohorts','
+VALUES (172,'172. Filter Mature Student Cohorts','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The university is organizing a specialized seminar intended exclusively for students who are 22 years of age or older. You need to filter the master roster down to this specific group. Write a Python function filter_mature_students(df: pd. DataFrame) -> pd. DataFrame that performs basic row filtering:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Conditional Filtering:</strong> Filter the rows to retain only students where their Age is greater than or equal to 22 ($\text{Age} \ge 22$).</li><li class="py-0.5"><strong>Missing Data Handling:</strong> Completely exclude rows where the student''s Age is missing (NaN), as they cannot be verified.</li><li class="py-0.5"><strong>Structure Output:</strong> Return the filtered DataFrame with all original columns intact.</li></ul>
@@ -7719,7 +7803,7 @@ def filter_mature_students(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (172,'172. Count Unique Student Cohorts','
+VALUES (173,'173. Count Unique Student Cohorts','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The academic office needs to know how many distinct student names are registered in the course roster database. Write a Python function count_unique_students(df: pd. DataFrame) -> int that counts unique entries:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Uniqueness Detection:</strong> Find the total number of unique values in the Name column.</li><li class="py-0.5"><strong>Return Type:</strong> Return the count as a standard Python integer.</li></ul>
@@ -7773,7 +7857,7 @@ def count_unique_students(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (173,'173. Purge Completely Corrupted Student Records','
+VALUES (174,'174. Purge Completely Corrupted Student Records','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Due to a minor database glitch during a weekly update loop, some rows were saved without both the student''s age and their exam mark. A row is considered completely corrupted if it contains missing values in both columns at the same time. Write a Python function purge_corrupted_records(df: pd. DataFrame) -> pd. DataFrame that checks for multiple missing values:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Double Null Isolation:</strong> Identify rows where the Age column AND the Marks column are missing (NaN) at the same time.</li><li class="py-0.5"><strong>Row Removal:</strong> Drop those specific double-null rows from the dataset.</li><li class="py-0.5"><strong>Partial Record Safe Harbor:</strong> Retain rows where at least one of the two metrics is valid (e.g., if age is missing but marks are valid, or vice-versa, do not drop the row).</li></ul>
@@ -7832,7 +7916,7 @@ def purge_corrupted_records(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (174,'174. Reset Structural Data Alignment Indices','
+VALUES (175,'175. Reset Structural Data Alignment Indices','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">When you drop rows from a DataFrame, the row numbers (indices) keep their original positions, leaving gaps in the sequence (e.g., jumping from row 0 directly to row 2). Before exporting data to a clean Excel spreadsheet, you need to reset these row numbers so they run continuously again. Write a Python function reset_dataframe_index(df: pd. DataFrame) -> pd. DataFrame that fixes index sequences:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Index Rebuilding:</strong> Rebuild the row numbers so they run in a continuous, unbroken sequence starting from 0 to $N-1$.</li><li class="py-0.5"><strong>Old Index Cleanup:</strong> Ensure the old, broken index numbers are completely dropped and not saved as a new data column (Hint: check the parameters of your index reset function).</li><li class="py-0.5"><strong>Return Matrix:</strong> Return the re-indexed DataFrame.</li></ul>
@@ -7882,7 +7966,7 @@ def reset_dataframe_index(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (175,'175. Fix Product Registry','
+VALUES (176,'176. Fix Product Registry','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">You are building an automated pipeline for an e-commerce platform''s transaction registry using the dirty_store_transactions.csv dataset. Due to software integration glitches, the incoming stream contains corrupted data layers. Write a Python function clean_product_registry(df: pd. DataFrame) -> pd. DataFrame that cleanses the structural anomalies by enforcing the following four data regulations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Whitespace Elimination:</strong> Strip all leading and trailing whitespaces from strings within the product_name column.</li><li class="py-0.5"><strong>Absolute Pricing Resolution:</strong> System synchronization bugs have inverted some valuations. Convert any negative values in the price column to their absolute, positive equivalents.</li><li class="py-0.5"><strong>Identity Verification:</strong> Drop all records where the product_id field is missing (NaN or null).</li><li class="py-0.5"><strong>Type Enforcement:</strong> Cast the remaining valid product_id column explicitly into a standard integer type (int64).</li></ul>
@@ -7941,7 +8025,7 @@ def clean_product_registry(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (176,'176. Standardize Employee Directory','
+VALUES (177,'177. Standardize Employee Directory','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A human resources tracking module processes corporate identifiers using the student_performance_factors.csv infrastructure mapping engine. Data entries compiled across multi-regional divisions exhibit heavy input variations. Write a Python function standardize_directory(df: pd. DataFrame) -> pd. DataFrame to format the registry based on three systemic rules:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Title-Case Alignment:</strong> Standardize the name column such that only the first letter of each separate word is capitalized, converting all remaining characters to lowercase (Title Case).</li><li class="py-0.5"><strong>Normalized Communication Channels:</strong> Force all character components in the email column into absolute lowercase.</li><li class="py-0.5"><strong>Domain Authorization:</strong> Filter and retain only rows where the user''s email explicitly finishes with the valid company suffix: "@company.com". Drop all other domains.</li></ul>
@@ -7999,7 +8083,7 @@ def standardize_directory(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (177,'177. Correct Invalid Transaction Types','
+VALUES (178,'178. Correct Invalid Transaction Types','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Financial accounting systems audit corporate ledgers by isolating processing issues inside the dirty_store_transactions.csv collection. A core pipeline requires identifying valid transactions while segregating records containing invalid or system-breaking variables. Write a Python function filter_transaction_types(df: pd. DataFrame) -> pd. DataFrame that flags structural processing anomalies by executing these validations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Null Categorical Exclusion:</strong> Remove any transaction where PaymentMethod or ProductCategory fields contain empty, null, or missing data entries.</li><li class="py-0.5"><strong>Boolean Transaction Verification:</strong> Filter out transactions where Quantity or UnitPrice fields drop below or equal $0$. Return only records representing true positive economic exchange.</li><li class="py-0.5"><strong>Calculated Field Evaluation:</strong> Introduce a new column named CalculatedGross computed by multiplying Quantity by UnitPrice.</li></ul>
@@ -8060,7 +8144,7 @@ def filter_transaction_types(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (178,'178. Parse Raw Sensor Streams','
+VALUES (179,'179. Parse Raw Sensor Streams','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Telemetry infrastructure units broadcast raw log strings containing multi-variant metadata layers in the sensor_readings_noisy.csv grid system. Downstream analytics engines crash when trying to interpret unparsed data streams. Write a Python function parse_sensor_stream(df: pd. DataFrame) -> pd. DataFrame that extracts distinct target information from composite data fields based on these parameters:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Component String Breakdown:</strong> The input column RawReading contains comma-separated data packets structured exactly as: "SensorName,MetricValue". Split this column into two distinct, standalone columns named SensorName (String) and MetricValue (Float64).</li><li class="py-0.5"><strong>Missing Element Protection:</strong> Drop the original source column RawReading once the data extraction operation is complete.</li><li class="py-0.5"><strong>Invalid Component Resolution:</strong> If a text record cannot be split or contains empty strings within its parameters, discard that row from the final output table.</li></ul>
@@ -8118,7 +8202,7 @@ def parse_sensor_stream(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (179,'179. Filter and Threshold Missing Demographics','
+VALUES (180,'180. Filter and Threshold Missing Demographics','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">When processing student performance records from the student_performance_factors.csv dataset, records with excessive missing values corrupt downstream statistical models. Write a Python function filter_null_threshold(df: pd. DataFrame, max_allowed_missing: int) -> pd. DataFrame that cleanses the dataset by evaluating individual rows:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Null Counting:</strong> Count the total number of missing (NaN) values across the numeric tracking columns (StudyHours, AttendanceRate, SleepHours, ScreenTime, and ExamScore) for each row.</li><li class="py-0.5"><strong>Threshold Filtering:</strong> Drop any row where the count of missing values strictly exceeds the max_allowed_missing parameter.</li><li class="py-0.5"><strong>Index Reset:</strong> Ensure the resulting DataFrame has a clean, continuous, and reset integer index starting from 0.</li></ul>
@@ -8176,7 +8260,7 @@ def filter_null_threshold(df, max_allowed_missing):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (180,'180. Standardize Mixed Discount Percentages','
+VALUES (181,'181. Standardize Mixed Discount Percentages','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">In the dirty_store_transactions.csv dataset, the Discount column contains messy, heterogeneous data types: raw floating-point numbers (e.g., 0.15) mixed with formatted string percentage representations (e.g., "15%", " 20% "). Write a Python function standardize_discounts(df: pd. DataFrame) -> pd. DataFrame that transforms this column into a uniform data standard:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>String Percentage Conversion:</strong> Identify any string entries ending with %, strip all surrounding whitespaces, remove the % symbol, convert the remaining value to a float, and divide by 100 to yield a standard decimal format (e.g., " 20% " $\rightarrow$ 0.20).</li><li class="py-0.5"><strong>Type Harmonization:</strong> Ensure all numeric float values remain unchanged in their decimal form.</li><li class="py-0.5"><strong>Null Imputation:</strong> If a discount entry is missing (NaN) or completely malformed/unparseable, replace it with a default baseline float value of 0.0.</li><li class="py-0.5"><strong>Type Casting:</strong> Ensure the final Discount column is explicitly typed as float64.</li></ul>
@@ -8237,7 +8321,7 @@ def standardize_discounts(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (181,'181. Purge Exact Duplicate Transaction Logs','
+VALUES (182,'182. Purge Exact Duplicate Transaction Logs','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Software system glitches in dirty_store_transactions.csv cause exact, full-line redundant rows to be inserted consecutively at specific indices (e.g., duplicating row entries multiple times). Write a Python function purge_transaction_duplicates(df: pd. DataFrame) -> pd. DataFrame that cleans the ledger by executing these rules:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Exact Row Deduplication:</strong> Identify rows where every column value matches an identical preceding row.</li><li class="py-0.5"><strong>Instance Preservation:</strong> Retain only the first occurrence of any duplicated block and drop all subsequent identical rows.</li><li class="py-0.5"><strong>Index Cleanup:</strong> Rebuild and reset the DataFrame index so it runs sequentially from $0$ to $N-1$ without missing index gaps.</li></ul>
@@ -8296,7 +8380,7 @@ def purge_transaction_duplicates(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (182,'182. Isolate Frozen and Out-of-Bound Sensor Metrics','
+VALUES (183,'183. Isolate Frozen and Out-of-Bound Sensor Metrics','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Telemetry streams recorded in sensor_readings_noisy.csv occasionally register hardware freezes where sensors output fixed systemic error values, or extreme meteorological spikes. Write a Python function isolate_sensor_failures(df: pd. DataFrame) -> pd. DataFrame that filters and tags operational anomalies:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Frozen Sensor Exclusion:</strong> Remove any row where Temperature equals -99.0 and Humidity equals 0.0 simultaneously (representing complete hardware freezes).</li><li class="py-0.5"><strong>Thermal Spike Flagging:</strong> Add a new boolean column named IsThermalSpike which evaluates to True if the Temperature value is strictly greater than 80.0, and False otherwise.</li><li class="py-0.5"><strong>Integrity Preservation:</strong> Keep all other active records intact while maintaining original data types for numerical columns.</li></ul>
@@ -8354,7 +8438,7 @@ def isolate_sensor_failures(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (183,'183. Clamp Impossible Outliers','
+VALUES (184,'184. Clamp Impossible Outliers','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Data compilation channels for the store analytics engine (dirty_store_transactions.csv) and student registry datasets contain highly impossible numeric metrics caused by front-end entry forms lacking validation limits (e.g., negative ages, triple-digit human ages, or extreme overflow scores). Write a Python function clamp_demographic_outliers(df: pd. DataFrame) -> pd. DataFrame that caps outliers by executing the following transformations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Age Truncation:</strong> For the column CustomerAge, any value strictly less than 0 must be replaced with a lower boundary value of 0. Any value strictly greater than 100 must be replaced with an upper boundary value of 100.</li><li class="py-0.5"><strong>Satisfaction Normalization:</strong> The standard SatisfactionRating scale must operate strictly within the bounds of 1 to 5. Clamp any value lower than 1 to 1, and clamp any value higher than 5 to 5.</li><li class="py-0.5"><strong>Null Preservation:</strong> Do not overwrite true NaN values with boundary elements during the clamping process; missing markers must remain missing.</li></ul>
@@ -8415,7 +8499,7 @@ def clamp_demographic_outliers(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (184,'184. Standardize Messy Categorical Alignments','
+VALUES (185,'185. Standardize Messy Categorical Alignments','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The ProductCategory column within the dirty_store_transactions.csv file contains heavy casing discrepancies, excess padding noise, and truncated abbreviations due to historical schema shifts. This fragmentation breaks structural grouping routines. Write a Python function standardize_categories(df: pd. DataFrame) -> pd. DataFrame that clean-maps text categories down to an absolute, canonical standard set based on these rules:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Whitespace Purge:</strong> Strip all trailing and leading space characters from the text.</li><li class="py-0.5"><strong>Abbreviation Expansion:</strong> Map specific structural shorthand markers to their full expanded forms:If the text matches "Elec." or "electronics" (regardless of original spacing/case), map it to "Electronics". If the text matches "Office" or "office supplies", map it to "Office Supplies".</li><li class="py-0.5"><strong>Title Casing:</strong> If a category does not match an abbreviation rule but has mixed-casing (e.g., "CLOTHING", "Home & kitchen"), transform it into true Title Case ("Clothing", "Home & Kitchen").</li><li class="py-0.5"><strong>Missing Preservation:</strong> Leave any true missing row values (NaN) as null.</li></ul>
@@ -8478,7 +8562,7 @@ def standardize_categories(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (185,'185. High-Performing VIP Segment Breakdown','
+VALUES (186,'186. High-Performing VIP Segment Breakdown','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">For reporting operations within the customer tracking module, you must extract a specific snapshot of top-tier accounts matching strict regional spend thresholds. Write a Python function isolate_vip_metrics(df: pd. DataFrame) -> pd. DataFrame that queries the transaction space under the following logical parameters:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Compound Segment Filter:</strong> Retain rows where the account tier is strictly equal to "VIP" AND the monthly_spend value is strictly greater than 10000.</li><li class="py-0.5"><strong>Alternative Regional Qualifier:</strong> Proactively include any row where the country column matches "USA", regardless of their tier, provided their monthly_spend is strictly greater than 15000.</li><li class="py-0.5"><strong>Dimensional Projection:</strong> The resulting DataFrame must discard all other tracking variables, returning only two specific columns in this exact sequence: client_id followed by monthly_spend.</li></ul>
@@ -8538,7 +8622,7 @@ def isolate_vip_metrics(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (186,'186. Identify Outlier Academic Variances','
+VALUES (187,'187. Identify Outlier Academic Variances','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">In the student_performance_factors.csv engine, typical correlation models are heavily skewed by anomalous regression outliers—specifically, students displaying high inputs but extremely low outputs (failure outliers), or zero input paired with maximum performance outputs (genius outliers). Write a Python function isolate_academic_anomalies(df: pd. DataFrame) -> pd. DataFrame that flags these specific tracking records:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Failure Outlier Extraction:</strong> Identify records where StudyHours is strictly greater than 25.0 but the final ExamScore is strictly less than 20.0.</li><li class="py-0.5"><strong>Genius Outlier Extraction:</strong> Identify records where StudyHours is strictly less than 1.0 but the final ExamScore is strictly greater than 95.0.</li><li class="py-0.5"><strong>Union Unionization:</strong> Return a single consolidated DataFrame containing all rows that meet either the failure outlier criteria or the genius outlier criteria. The index of the source rows must be preserved.</li></ul>
@@ -8597,7 +8681,7 @@ def isolate_academic_anomalies(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (187,'187. Detect Suspicious Telemetry Patterns','
+VALUES (188,'188. Detect Suspicious Telemetry Patterns','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Network operations teams auditing the sensor_readings_noisy.csv pipeline need to flag hardware instances that log corrupted environmental metrics. An input stream is considered highly suspicious if it reports extreme environmental combinations caused by sensor short-circuits. Write a Python function detect_suspicious_telemetry(df: pd. DataFrame) -> pd. DataFrame that screens for these occurrences:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Critical Anomaly Screening:</strong> Isolate rows where the Temperature is strictly greater than 80.0 OR the localized Pressure surge is strictly greater than 1000.0.</li><li class="py-0.5"><strong>Normal State Exception:</strong> From that filtered subset, explicitly exclude any row where the Status column matches "Normal" or "active" (ignoring leading/trailing whitespaces and casing variants).</li><li class="py-0.5"><strong>Index Ordering:</strong> Sort the final matching DataFrame by Temperature in descending order. If temperatures are equal, sort by Pressure in ascending order.</li></ul>
@@ -8656,7 +8740,7 @@ def detect_suspicious_telemetry(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (188,'188. Dynamic Column Dropping and Projection','
+VALUES (189,'189. Dynamic Column Dropping and Projection','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Upstream analytical pipelines feeding the store ledger engine require flexible formatting scripts that dynamically drop empty or metadata-heavy tracking attributes depending on the operational context. Write a Python function drop_unwanted_features(df: pd. DataFrame, target_columns: list) -> pd. DataFrame that alters the structural profile of a dataset:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Dynamic Drop Execution:</strong> Remove all columns listed inside the target_columns array from the incoming DataFrame.</li><li class="py-0.5"><strong>Missing Feature Resilience:</strong> If the target_columns array contains column names that do not exist within the current DataFrame schema, the function must ignore those specific names and drop the valid ones without throwing an exception or error.</li><li class="py-0.5"><strong>Minimum Shape Check:</strong> If the dropping operation results in zero remaining columns, return an empty DataFrame with an entirely blank layout.</li></ul>
@@ -8712,7 +8796,7 @@ def drop_unwanted_features(df, target_columns):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (189,'189. Select Even-Indexed Analytical Runs','
+VALUES (190,'190. Select Even-Indexed Analytical Runs','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Laboratory automation tests recording microsecond ticks inside high_frequency_stock_ticks.csv require downsampling validation runs by extracting alternate rows to verify model throughput stability. Write a Python function extract_even_segments(df: pd. DataFrame) -> pd. DataFrame that filters rows strictly by their positional orientation:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Positional Filtering:</strong> Select and retain only the rows located at even-indexed positions of the incoming DataFrame (i.e., row position index 0, 2, 4, 6, etc.).</li><li class="py-0.5"><strong>Index Separation:</strong> This selection must look strictly at the integer positional row index from the top of the table, completely independent of whatever arbitrary values are currently set as the DataFrame''s custom index labels.</li><li class="py-0.5"><strong>Structure Retention:</strong> Do not reset or modify the original index labels or data configurations of the extracted rows.</li></ul>
@@ -8762,7 +8846,7 @@ def extract_even_segments(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (190,'190. Temporal Business Hours Snapshot','
+VALUES (191,'191. Temporal Business Hours Snapshot','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Operations managers auditing telemetry flows inside sensor_readings_noisy.csv need to extract a chronological window of sensor events to analyze shift performance during standard corporate operational hours. Write a Python function extract_business_hours_snapshot(df: pd. DataFrame, target_date: str) -> pd. DataFrame that isolates records based on datetime indexes:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Index Initialization:</strong> Convert the Timestamp column to a true Pandas datetime format and establish it as the definitive index of the DataFrame.</li><li class="py-0.5"><strong>Chronological Sorting:</strong> Sort the DataFrame explicitly by this new datetime index in ascending order.</li><li class="py-0.5"><strong>Window Extraction:</strong> Extract and return all records that occurred on the specified target_date strictly between the core operating hours of 09:00:00 and 17:00:00 (inclusive of both boundary seconds).</li></ul>
@@ -8821,7 +8905,7 @@ def extract_business_hours_snapshot(df, target_date):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (191,'191. Identify Underperforming Products','
+VALUES (192,'192. Identify Underperforming Products','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Inventory coordinators auditing sales data in dirty_store_transactions.csv need to identify specific products that are stalling or causing systemic losses. A product name entry is classified as underperforming if its net yields drop significantly across multiple transactional metrics. Write a Python function locate_underperforming_products(df: pd. DataFrame) -> pd. DataFrame that queries the ledger based on these three filtering parameters:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Low-Volume High-Loss Mask:</strong> Filter for records where the transaction Quantity is strictly less than 3 AND the resulting Profit is strictly less than -100.00.</li><li class="py-0.5"><strong>Systemic Error Clean:</strong> Discard any rows where the UnitPrice is logged at the known system error configuration of 9999.99.</li><li class="py-0.5"><strong>Projection Output:</strong> Return the filtered DataFrame retaining only the TransactionID, ProductName, Quantity, and Profit columns, sorted by Profit in ascending order (worst losses first).</li></ul>
@@ -8879,7 +8963,7 @@ def locate_underperforming_products(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (192,'192. Locate Multi-Country Supply Nodes','
+VALUES (193,'193. Locate Multi-Country Supply Nodes','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Global client distributors require regional isolation matrices to separate logistics networks. You must pull transaction indicators spanning specific regional nodes without generating multiple disjoint query iterations. Write a Python function isolate_regional_nodes(df: pd. DataFrame, target_countries: list) -> pd. DataFrame that targets active geographic profiles:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Dynamic Vector Membership:</strong> Select all rows from the DataFrame where the value in the country column matches any of the string names supplied within the target_countries array list.</li><li class="py-0.5"><strong>Case-Insensitive Normalization:</strong> Ensure the match operation is robust against minor data differences by evaluating the country strings in a case-insensitive manner (e.g., if "usa" is in the target list, it should match "USA", "Usa", and "usa").</li><li class="py-0.5"><strong>Index Ordering:</strong> Do not change the original row indices or delete unrelated data rows that successfully match the validation array.</li></ul>
@@ -8938,7 +9022,7 @@ def isolate_regional_nodes(df, target_countries):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (193,'193. Filter Outliers by Absolute Variance','
+VALUES (194,'194. Filter Outliers by Absolute Variance','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">In the educational diagnostic tracking system (student_performance_factors.csv), individual records showing extreme absolute deviation from typical baseline midpoints must be flagged for secondary counselor review. Write a Python function filter_absolute_variance(df: pd. DataFrame) -> pd. DataFrame that separates variance indicators:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Baseline Deviation Scan:</strong> Extract all rows where the student''s ExamScore deviates from the global median score of the entire input dataset by an absolute value of strictly greater than 35.0 scale points.</li><li class="py-0.5"><strong>Missing Element Safe:</strong> Exclude any records where the ExamScore value is logged as missing (NaN).</li><li class="py-0.5"><strong>Index Sorting:</strong> Sort the resulting anomaly DataFrame by the absolute variance from the median in descending order.</li></ul>
@@ -8997,7 +9081,7 @@ def filter_absolute_variance(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (194,'194. Select Records by Dynamic Value Arrays','
+VALUES (195,'195. Select Records by Dynamic Value Arrays','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Data analysts frequently pass dynamic external criterion masks down to the transaction space to sample operational flows. You must design a flexible filtering module that matches internal indices against dynamic integer parameter maps. Write a Python function select_by_index_bounds(df: pd. DataFrame, allowed_keys: list) -> pd. DataFrame that implements the following operations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Index Assignment:</strong> Move the TransactionID column out of the data space and set it as the explicit row index of the DataFrame.</li><li class="py-0.5"><strong>Label Filtering:</strong> Query this new index to isolate and retain only those rows whose index label matches an integer present in the allowed_keys array list.</li><li class="py-0.5"><strong>Missing Label Management:</strong> If an integer within the allowed_keys array list does not map to any existing row label in the DataFrame index, ignore it without raising a runtime key exception.</li></ul>
@@ -9053,7 +9137,7 @@ def select_by_index_bounds(df, allowed_keys):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (195,'195. Compute Store Department Averages','
+VALUES (196,'196. Compute Store Department Averages','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Retail operations management requires regular performance report updates across all active segments in the dirty_store_transactions.csv ledger. Write a Python function compute_department_averages(df: pd. DataFrame) -> pd. DataFrame that condenses the transactional metrics through the following analytical steps:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Categorical Normalization:</strong> Prior to grouping, strip all leading and trailing whitespaces from the ProductCategory column, and force all characters to lowercase.</li><li class="py-0.5"><strong>Missing Attribute Removal:</strong> Exclude any records where the Profit metric or the normalized ProductCategory is missing (NaN).</li><li class="py-0.5"><strong>Group Aggregation:</strong> Group the dataset by the cleaned ProductCategory column and calculate the mathematical mean of the Profit column for each category.</li><li class="py-0.5"><strong>Output Alignment:</strong> Return a new DataFrame containing exactly two columns: ProductCategory (acting as a standard data column, not the index) and AverageProfit. Round the AverageProfit metrics to exactly 2 decimal places.</li></ul>
@@ -9113,7 +9197,7 @@ def compute_department_averages(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (196,'196. Calculate Fleet Fuel Efficiency Metrics','
+VALUES (197,'197. Calculate Fleet Fuel Efficiency Metrics','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Logistics tracking engines evaluate transport fleet efficiency variables. You are given a dense operational performance ledger tracking asset runs over different routes. Write a Python function calculate_fuel_efficiency(df: pd. DataFrame) -> pd. DataFrame that converts raw log metrics into operational performance factors:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Aggregation Operations:</strong> Group the dataset by VehicleID and RouteType simultaneously.</li><li class="py-0.5"><strong>Multi-Column Summarization:</strong> For each composite group, compute the following two distinct metrics:The total cumulative sum of the DistanceTraveled column. The total cumulative sum of the FuelConsumed column.</li><li class="py-0.5"><strong>Calculated Column Injection:</strong> Create a new column named MilesPerGallon defined precisely as the total cumulative distance traveled divided by the total cumulative fuel consumed for that specific group.</li><li class="py-0.5"><strong>Index Flattening:</strong> Rebuild the structural shape of the output so that VehicleID and RouteType become flat, standard data columns, sorted by VehicleID in ascending order. Round the calculated metrics to 2 decimal places.</li></ul>
@@ -9175,7 +9259,7 @@ def calculate_fuel_efficiency(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (197,'197. Find Maximum Monthly Sales Representatives','
+VALUES (198,'198. Find Maximum Monthly Sales Representatives','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Corporate revenue managers parsing the dirty_store_transactions.csv regional operations logs need to identify peak-performing sales representatives across distinct calendar windows. Write a Python function find_top_sales_reps(df: pd. DataFrame) -> pd. DataFrame that extracts top performance milestones:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Temporal Truncation:</strong> Parse the Date column into standard datetimes, and introduce a new tracking column named YearMonth formatted as a string matching the format "YYYY-MM".</li><li class="py-0.5"><strong>Aggregation Processing:</strong> Group the dataset by YearMonth and SalesRepID to calculate the cumulative sum of the Profit column generated by each individual representative within that month.</li><li class="py-0.5"><strong>Extreme Identification:</strong> For each unique YearMonth group, isolate the specific SalesRepID who achieved the absolute maximum cumulative profit.</li><li class="py-0.5"><strong>Tie Resolution:</strong> If multiple representatives tie for the maximum profit within a specific month, retain the representative with the lower numerical SalesRepID. The final output must be sorted chronologically by YearMonth.</li></ul>
@@ -9235,7 +9319,7 @@ def find_top_sales_reps(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (198,'198. Count Distinct Class Categories Per School','
+VALUES (199,'199. Count Distinct Class Categories Per School','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Educational analytics units processing records structurally similar to student_performance_factors.csv need to audit class diversification matrices across multiple physical school sites. Write a Python function count_distinct_classes(df: pd. DataFrame) -> pd. DataFrame that processes structural configurations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Uniqueness Quantification:</strong> Group the dataset by the SchoolID column.</li><li class="py-0.5"><strong>Cardinality Aggregation:</strong> For each unique school, count the number of unique, distinct values present inside the ClassSubject column.</li><li class="py-0.5"><strong>Missing Category Protection:</strong> Do not count missing data points (NaN) as valid distinct subject items.</li><li class="py-0.5"><strong>Column Alignment:</strong> Name the final aggregated count column UniqueSubjectCount. Ensure the result is returned as a standard flat DataFrame with SchoolID as a column, sorted by UniqueSubjectCount in descending order.</li></ul>
@@ -9295,7 +9379,7 @@ def count_distinct_classes(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (199,'199. Calculate Multi-Column Inventory Aggregates','
+VALUES (200,'200. Calculate Multi-Column Inventory Aggregates','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Inventory coordinators managing stock portfolios across distributed storefronts require consolidated summaries of warehouse allocations derived from the dirty_store_transactions.csv ledger architecture. Write a Python function calculate_inventory_metrics(df: pd. DataFrame) -> pd. DataFrame that condenses asset records by performing multiple group calculations simultaneously:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Multi-Column Target Aggregation:</strong> Group the incoming table by the ProductCategory column.</li><li class="py-0.5"><strong>Distinct Mathematical Operations:</strong> For each category group, execute three distinct aggregations concurrently:Calculate the total sum of the Quantity column. Calculate the mathematical mean of the UnitPrice column. Calculate the maximum value found within the Discount column.</li><li class="py-0.5"><strong>Canonical Structural Renaming:</strong> The resulting summary columns must be explicitly named TotalQuantity, AveragePrice, and MaxDiscount respectively.</li><li class="py-0.5"><strong>Index Flattening:</strong> Convert the grouped index level into a standard flat column, and ensure the entire output table is sorted by TotalQuantity in descending order.</li></ul>
@@ -9354,7 +9438,7 @@ def calculate_inventory_metrics(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (200,'200. Extract First and Last Transaction Dates','
+VALUES (201,'201. Extract First and Last Transaction Dates','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Corporate auditors auditing user lifecycle milestones require tracking timelines to trace operational durations from active transaction logs. Write a Python function extract_transaction_bounds(df: pd. DataFrame) -> pd. DataFrame that performs chronological sorting and boundary mapping:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Timestamp Normalization:</strong> Convert the Date column into a standard Pandas datetime format. Exclude any rows where the Date value is missing (NaN or empty).</li><li class="py-0.5"><strong>Aggregation Processing:</strong> Group the dataset by the CustomerID column.</li><li class="py-0.5"><strong>Boundary Extraction:</strong> For each customer, determine the absolute earliest transaction date and the absolute latest transaction date.</li><li class="py-0.5"><strong>Layout Normalization:</strong> Name the output tracking columns FirstTransaction and LastTransaction respectively. Return a flat DataFrame where CustomerID is a regular column, sorted by CustomerID in ascending order.</li></ul>
@@ -9413,7 +9497,7 @@ def extract_transaction_bounds(df):
     pass','','store_dim_customers.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (201,'201. Quantify Total Active Users Per Region','
+VALUES (202,'202. Quantify Total Active Users Per Region','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Regional distribution planning panels querying the customer dimension matrix (store_dim_customers.csv) must compile unique density maps showing where high-value profiles cluster. Write a Python function count_active_regional_users(df: pd. DataFrame) -> pd. DataFrame that filters and computes distinct user footprints:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Clean Alignment:</strong> Strip all leading and trailing space noise from the Region column, and force all characters to upper case.</li><li class="py-0.5"><strong>Null Elimination:</strong> Remove any records where the cleaned Region or the VIP_Tier field contains missing values (NaN).</li><li class="py-0.5"><strong>Aggregation Operations:</strong> Group the dataset by the cleaned Region column and count the number of unique, distinct CustomerID elements matching that partition.</li><li class="py-0.5"><strong>Output Framing:</strong> Name the final tally column ActiveUserCount. Return the data as a flat DataFrame sorted by ActiveUserCount in descending order.</li></ul>
@@ -9473,7 +9557,7 @@ def count_active_regional_users(df):
     pass','','store_dim_customers.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (202,'202. Find the Most Common Log Error Codes','
+VALUES (203,'203. Find the Most Common Log Error Codes','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Operations engineering infrastructure processing noisy sensor networks (sensor_readings_noisy.csv) must isolate frequent system failure alerts to schedule preventive hardware maintenance routines. Write a Python function identify_frequent_errors(df: pd. DataFrame) -> pd. DataFrame that processes structural string frequencies:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Anomaly Filtration:</strong> Filter for rows where the Status column indicates an error condition. This includes text records matching "Error", "error", "ACTIVE", or "Err" (ignoring whitespaces).</li><li class="py-0.5"><strong>Frequency Count:</strong> Calculate the total frequency count of occurrences for each unique string configuration remaining within this filtered Status space.</li><li class="py-0.5"><strong>Output Formatting:</strong> Rename the output tracking columns to ErrorCode (containing the original string values) and OccurrenceCount. Sort the output table by OccurrenceCount in descending order.</li></ul>
@@ -9534,7 +9618,7 @@ def identify_frequent_errors(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (203,'203. Compute Weighted Passenger Fare Averages','
+VALUES (204,'204. Compute Weighted Passenger Fare Averages','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Standard mathematical means fail to accurately reflect unit dynamics when transaction volumes vary heavily across transactional segments. In the dirty_store_transactions.csv structure, computing a true category cost baseline requires weighting item unit prices against the volumes purchased. Write a Python function compute_weighted_prices(df: pd. DataFrame) -> pd. DataFrame that builds a custom mathematical aggregation layer:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Clean Anomaly Masks:</strong> Exclude rows where ProductCategory is null, or where Quantity or UnitPrice is missing, negative, or equal to zero.</li><li class="py-0.5"><strong>Weighted Valuation:</strong> For each row, calculate the total gross spend (Quantity $\times$ UnitPrice).</li><li class="py-0.5"><strong>Group Operation:</strong> Group the table by the ProductCategory column.</li><li class="py-0.5"><strong>Weighted Formula:</strong> For each category group, calculate its true weighted average price using the formula:$$\text{Weighted Average Price} = \frac{\sum (\text{Quantity} \times \text{UnitPrice})}{\sum \text{Quantity}}$$Output</li><li class="py-0.5"><strong>Standardization:</strong> Return a flat DataFrame with columns ProductCategory and WeightedPrice. Sort alphabetically by ProductCategory. Round the WeightedPrice to exactly 2 decimal places.</li></ul>
@@ -9593,7 +9677,7 @@ def compute_weighted_prices(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (204,'204. Determine Warehouse Capacity Utilization','
+VALUES (205,'205. Determine Warehouse Capacity Utilization','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Logistics managers evaluating layout allocations require an operational profile of warehouse density metrics. You are provided an unsummarized stock log showing structural load balances across facilities. Write a Python function analyze_warehouse_capacity(df: pd. DataFrame) -> pd. DataFrame that constructs utilization matrices:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Multi-Factor Aggregation:</strong> Group the asset table by WarehouseID and Zone simultaneously.</li><li class="py-0.5"><strong>Aggregated Capacity Metrics:</strong> For each unique facility partition, compute:The total sum of the CurrentVolume column. The absolute maximum value found within the MaxCapacity column.</li><li class="py-0.5"><strong>Utilization Index:</strong> Calculate a new column named UtilizationRate defined as the total accumulated volume divided by the maximum capacity value, multiplied by 100 to yield a percentage.</li><li class="py-0.5"><strong>Critical Flagging:</strong> Add a boolean column named IsOverloaded that evaluates to True if UtilizationRate is strictly greater than 95.0, and False otherwise.</li><li class="py-0.5"><strong>Output Flatness:</strong> Flatten the hierarchical indexes. Sort the resulting table by UtilizationRate in descending order. Round all float outputs to 2 decimal places.</li></ul>
@@ -9653,7 +9737,7 @@ def analyze_warehouse_capacity(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (205,'205. Broadcast Departmental Variance to Employees','
+VALUES (206,'206. Broadcast Departmental Variance to Employees','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">HR analysts evaluating performance data inside student_performance_factors.csv structures must broadcast group-level baselines back onto individual records to evaluate how individual entities deviate from localized cohort trends. Write a Python function broadcast_group_metrics(df: pd. DataFrame) -> pd. DataFrame that performs advanced vector broadcasting:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Missing Data Scrub:</strong> Remove rows where ParentEducation or ExamScore is missing (NaN).</li><li class="py-0.5"><strong>Broadcast Group Baseline:</strong> For each row, calculate the mathematical mean of the ExamScore column for that specific student''s corresponding ParentEducation group.</li><li class="py-0.5"><strong>Vector Vectorization:</strong> Append this group-level calculated metric back onto the source rows as a new column named GroupMeanScore.</li><li class="py-0.5"><strong>Deviation Vector Calculation:</strong> Create an additional column named ScoreDeviation computed by subtracting GroupMeanScore from the individual student''s ExamScore.</li><li class="py-0.5"><strong>Structural Preservation:</strong> The original number of rows (post-scrub) and the original row sequences must remain entirely unchanged. Do not drop non-target columns.</li></ul>
@@ -9712,7 +9796,7 @@ def broadcast_group_metrics(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (206,'206. Filter Teams by Average Performance Thresholds','
+VALUES (207,'207. Filter Teams by Average Performance Thresholds','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Project optimization frameworks require evaluating performance indices across working divisions. When processing group metrics, you must discard entire cohort segments if their aggregate metrics fail to pass structural filters. Write a Python function filter_underperforming_cohorts(df: pd. DataFrame) -> pd. DataFrame that drops whole categorical subsets based on group criteria:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Aggregate Condition Evaluation:</strong> Group the incoming table by the Gender and ParentEducation columns combined.</li><li class="py-0.5"><strong>Cohort Filtration Rule:</strong> Evaluate the mathematical mean of the ExamScore column for each composite partition block. If the calculated mean score of a group is less than or equal to 60.0, the entire group must be purged from the final dataset.</li><li class="py-0.5"><strong>Data Preservation:</strong> For groups whose average score is strictly greater than 60.0, all original rows belonging to those groups must be returned completely intact, along with all their original descriptive attributes.</li><li class="py-0.5"><strong>Index Alignment:</strong> Keep the original row indices of the preserved entries unchanged.</li></ul>
@@ -9768,7 +9852,7 @@ def filter_underperforming_cohorts(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (207,'207. Calculate Running Regional Revenue Subtotals','
+VALUES (208,'208. Calculate Running Regional Revenue Subtotals','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Financial accounting systems audit corporate transactional ledgers by tracking liquidity inflows over time. When analyzing records from the dirty_store_transactions.csv file, static aggregate profits fail to capture spatial momentum. Write a Python function calculate_regional_running_totals(df: pd. DataFrame) -> pd. DataFrame that builds chronological tracking structures:Temporal Cleaning &</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Sorting:</strong> Parse the Date column into a standard datetime data type. Remove any rows where Date, ProductCategory, or Profit contains missing (NaN) values. Sort the entire dataset chronologically by the verified Date column in ascending order.</li><li class="py-0.5"><strong>Cumulative Windows:</strong> Partition the sorted dataset by the ProductCategory column.</li><li class="py-0.5"><strong>Running Metrics:</strong> For each separate category partition, compute the cumulative running sum of the Profit column across the sorted timeline.</li><li class="py-0.5"><strong>Calculated Field Mapping:</strong> Assign these sequential values to a new column named RunningTotalProfit.</li><li class="py-0.5"><strong>Structural Preservation:</strong> The final returned table must preserve the chronological sorted order established in Step 1, retaining all original columns alongside the new running metric.</li></ul>
@@ -9829,7 +9913,7 @@ def calculate_regional_running_totals(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (208,'208. Find the N-th Highest Earning Freelancer Per Category','
+VALUES (209,'209. Find the N-th Highest Earning Freelancer Per Category','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Talent operations boards track freelance compensation matrices across diverse service fields. You are provided a transaction ledger mapping project payouts to independent contractors. Write a Python function find_nth_highest_earner(df: pd. DataFrame, n: int) -> pd. DataFrame that extracts precise localized rank achievements:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Aggregate Earnings Mapping:</strong> Group the input data by Category and FreelancerID combined, and calculate the total cumulative sum of the Payout column achieved by each freelancer inside that field.</li><li class="py-0.5"><strong>Dense Rank Assignment:</strong> Within each separate Category, rank the freelancers based on their total cumulative earnings in descending order (highest earnings ranked 1). Use the dense ranking method (i.e., ties receive identical ranks, and the next rank number is consecutive).</li><li class="py-0.5"><strong>Target Rank Extraction:</strong> Filter the ranked partitions to isolate the freelancer who achieved exactly the $N$-th rank within each category.</li><li class="py-0.5"><strong>Empty Handling:</strong> If a category does not contain enough unique earners to reach the requested $N$-th rank tier, omit that category from the output table entirely.</li><li class="py-0.5"><strong>Output Structure:</strong> Return a flat DataFrame containing the columns Category, FreelancerID, and TotalEarnings, sorted alphabetically by Category.</li></ul>
@@ -9888,7 +9972,7 @@ def find_nth_highest_earner(df, n):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (209,'209. Calculate Customer Segment Z-Scores','
+VALUES (210,'210. Calculate Customer Segment Z-Scores','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Statistical monitoring systems clean input variables inside the student_performance_factors.csv repository by standardizing metrics against subgroup parameters to detect non-standard performance deviations. Write a Python function calculate_segment_z_scores(df: pd. DataFrame) -> pd. DataFrame that constructs normalized statistical attributes:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Statistical Metrics Extraction:</strong> Group the dataset by the Gender and SchoolSupport columns combined.</li><li class="py-0.5"><strong>Z-Score Formula:</strong> For each row, calculate the statistical Z-score of its ExamScore against the mean ($\mu$) and standard deviation ($\sigma$) of that row''s corresponding group partition using the standard formula:$$Z = \frac{\text{ExamScore} - \mu}{\sigma}$$Anomalous</li><li class="py-0.5"><strong>Flagging Mapping:</strong> Append these calculated metrics as a new column named Score_ZScore. If a group partition contains an identical set of values causing the standard deviation to equal 0, fill the resulting Score_ZScore entry with a default value of 0.0.</li><li class="py-0.5"><strong>Data Integrity:</strong> Return the original DataFrame intact, retaining all source columns along with the newly appended Z-score values.</li></ul>
@@ -9946,7 +10030,7 @@ def calculate_z_scores(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (210,'210. Identify Bounded Inter-Group Running Maximums','
+VALUES (211,'211. Identify Bounded Inter-Group Running Maximums','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Logistics infrastructure nodes processing time-stamped streams inside sensor_readings_noisy.csv monitor sudden shifts by comparing current operational values against the historical ceiling reached by that specific unit. Write a Python function track_sensor_peak_bounds(df: pd. DataFrame) -> pd. DataFrame that evaluates rolling extreme records:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Temporal Structuring:</strong> Ensure the table is sorted chronologically by the Timestamp column in ascending order.</li><li class="py-0.5"><strong>Historical Ceiling Partition:</strong> Group the sorted records by the SensorID column.</li><li class="py-0.5"><strong>Cumulative Peak Tracking:</strong> For each sensor group, calculate the expanding cumulative maximum of the Temperature column up to the current row index point.</li><li class="py-0.5"><strong>Peak Column Mapping:</strong> Assign these metrics to a new column named HistoricalMaxTemp.</li><li class="py-0.5"><strong>Out-of-Bounds Flagging:</strong> Introduce a final boolean column named IsNewPeak that evaluates to True if the current row''s Temperature value is strictly equal to HistoricalMaxTemp AND is strictly greater than all previous temperature entries for that sensor. Otherwise, set it to False.</li></ul>
@@ -10007,7 +10091,7 @@ def compute_terminal_velocities(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (211,'211. Custom User-Defined Group Aggregations','
+VALUES (212,'212. Custom User-Defined Group Aggregations','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Standard descriptive summaries fail when financial auditing groups require custom mathematical spreads to evaluate liquidity distributions. Inside dirty_store_transactions.csv, evaluating risk margins requires computing a custom metric across categorized segments. Write a Python function compute_custom_group_spread(df: pd. DataFrame) -> pd. DataFrame that builds a custom multi-step aggregation engine:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Sanitization Mask:</strong> Drop any records where ProductCategory is null, or where Profit is missing (NaN).</li><li class="py-0.5"><strong>Custom Operational Metrics:</strong> Group the dataset by the sanitized ProductCategory column.</li><li class="py-0.5"><strong>Mathematical Spread Formula:</strong> For each distinct category group, calculate a custom metric named RiskSpread defined exactly as:$$\text{RiskSpread} = \frac{\text{Maximum Profit} - \text{Minimum Profit}}{\text{Median Profit} + 1.00}$$Data</li><li class="py-0.5"><strong>Normalization:</strong> Return a flat DataFrame containing the columns ProductCategory and the calculated RiskSpread. Sort the results alphabetically by ProductCategory. Round the RiskSpread values to exactly 2 decimal places.</li></ul>
@@ -10067,7 +10151,7 @@ def calculate_risk_spread(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (212,'212. Impute Missing Values with Group Medians','
+VALUES (213,'213. Impute Missing Values with Group Medians','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Machine learning training blocks mapped to the student_performance_factors.csv engine will fail if structural features contain null fields. Rather than dropping columns or running flat global fills, you must run high-fidelity localized statistical imputations. Write a Python function impute_group_medians(df: pd. DataFrame) -> pd. DataFrame that processes variable gaps:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Target Feature Traversal:</strong> The operational target columns requiring imputation are StudyHours, SleepHours, and ScreenTime.</li><li class="py-0.5"><strong>Group Metric Formulation:</strong> Group the DataFrame by the composite attributes Gender and ParentEducation combined.</li><li class="py-0.5"><strong>Localized Anomaly Filling:</strong> For each target column, detect missing values (NaN) and replace them with the median value of that specific column calculated strictly within that row''s matching Gender + ParentEducation cohort.</li><li class="py-0.5"><strong>Subgroup Depletion Fallback:</strong> If an entire cohort partition possesses missing values for a target feature, preventing a group median from being calculated, fill those specific fields with a flat global fallback value of 0.0.</li><li class="py-0.5"><strong>Preservation Layout:</strong> Return the entire original DataFrame structure with missing spaces patched, retaining all other source attributes and original row ordering.</li></ul>
@@ -10127,7 +10211,7 @@ def identify_churn_signals(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (213,'213. Isolate Top N Dynamic Records Per Group','
+VALUES (214,'214. Isolate Top N Dynamic Records Per Group','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">E-commerce retail systems must extract active tracking logs to find top transaction tiers for regional fulfillment analysis without running costly loops over multi-million row datasets. Write a Python function extract_top_n_per_category(df: pd. DataFrame, n: int) -> pd. DataFrame that executes partitioned sorting slices:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Aggregated Group Sorting:</strong> Sort the incoming transaction ledger globally by ProductCategory in alphabetical order, and then by Quantity in descending order.</li><li class="py-0.5"><strong>Partition Segment Slicing:</strong> Within each unique ProductCategory group, isolate and retain the first $N$ rows containing the largest Quantity metrics.</li><li class="py-0.5"><strong>Volume Tie-Breaking:</strong> If multiple transaction records share identical Quantity values within a category group, break ties by selecting the transaction with the higher Profit value.</li><li class="py-0.5"><strong>Index Ordering:</strong> The final output table must return a flat structure containing all original columns, retaining the index numbers from the source dataset.</li></ul>
@@ -10186,7 +10270,7 @@ def find_top_sales_percentile(df, percentile):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (214,'214. Calculate Group-Level Retention Rates','
+VALUES (215,'215. Calculate Group-Level Retention Rates','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Subscription management layers require historical tracking vectors to measure lifecycle drop-offs across user cohorts. You are provided an unsummarized user database recording signups and subsequent event logs. Write a Python function calculate_cohort_retention(df: pd. DataFrame) -> pd. DataFrame that constructs systemic behavioral rates:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Multi-Column Category Grouping:</strong> Group the source dataset by the columns SignupYear and AcquisitionChannel.</li><li class="py-0.5"><strong>Volume Tally Formulation:</strong> For each cohort partition, execute two distinct metrics:Tally the total unique count of users who registered, using the UserID column (name this summary column TotalRegistered). Sum the total number of users who remained active beyond 90 days, indicated by a 1 in the IsRetained boolean column (name this summary column TotalRetained).</li><li class="py-0.5"><strong>Retention Matrix Calculation:</strong> Create a final column named RetentionRate defined as TotalRetained divided by TotalRegistered, multiplied by 100 to yield a percentage.</li><li class="py-0.5"><strong>Output Framing:</strong> Flatten the MultiIndex headers. Sort the final output structure chronologically by SignupYear in ascending order, then by RetentionRate in descending order. Round all float rates to exactly 2 decimal places.</li></ul>
@@ -10248,7 +10332,7 @@ def bin_student_grades(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (215,'215. Relational Database Inner Reconciliation','
+VALUES (216,'216. Relational Database Inner Reconciliation','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Data warehouses frequently store records in normalized partitions. To build comprehensive sales profiles, you must join transaction logs with demographic metadata tables. Write a Python function reconcile_transaction_demographics(df_transactions: pd. DataFrame, df_customers: pd. DataFrame) -> pd. DataFrame that performs a tight relational pairing:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Inner Intersection Execution:</strong> Merge df_transactions with df_customers using their shared CustomerID attribute as the join key. Perform a strict Inner Join (discarding any records that do not exist in both tables).</li><li class="py-0.5"><strong>Ambiguity Resolution:</strong> If both DataFrames contain columns with overlapping names (excluding the join key), append the suffix _ledger to the column coming from df_transactions and _dim to the column coming from df_customers.</li><li class="py-0.5"><strong>Index Ordering:</strong> Sort the unified output table by TransactionID in ascending order, resetting the positional index back to a clean sequential range starting from 0.</li></ul>
@@ -10311,7 +10395,7 @@ def melt_financials_to_long(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (216,'216. Complete Outer Inventory Alignment','
+VALUES (217,'217. Complete Outer Inventory Alignment','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">To identify inventory data drift, supply chain managers require an absolute mapping of all catalog components alongside active warehouse supply sheets, ensuring that disconnected stock lines are caught immediately. Write a Python function align_full_inventory(df_catalog: pd. DataFrame, df_warehouse: pd. DataFrame) -> pd. DataFrame that executes an expansive match matrix:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Full Relational Union:</strong> Perform a Full Outer Join between df_catalog and df_warehouse using ProductID as the relational key.</li><li class="py-0.5"><strong>Defensive Structural Imputation:</strong> Post-merge, if a record was present in the warehouse sheet but lacked a matching catalog entry, the resulting ProductName will be null. Replace these specific null cells with the string "UNREGISTERED_PRODUCT".</li><li class="py-0.5"><strong>Numeric Discrepancy Zeroing:</strong> For rows where stock balances or pricing values are missing due to structural join mismatches, fill those fields with a flat default value of 0.0.</li><li class="py-0.5"><strong>Sorting Profile:</strong> Sort the complete joined matrix by ProductID in ascending order.</li></ul>
@@ -10373,7 +10457,7 @@ def pivot_monthly_performance(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (217,'217. Left Join Audits with Origin Flags','
+VALUES (218,'218. Left Join Audits with Origin Flags','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Auditors evaluating transaction data integrity must isolate exactly which transactions fail to connect to active user demographic files. Your platform contains intentional mismatch client IDs (specifically the C1500 to C1549 block inside store_dim_customers.csv) designed to test this exact edge tracking scenario. Write a Python function audit_transaction_origins(df_transactions: pd. DataFrame, df_customers: pd. DataFrame) -> pd. DataFrame that builds tracking indicators:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Preservation Merge Operation:</strong> Perform a Left Join mapping df_transactions to df_customers using CustomerID as the anchor key, keeping all ledger lines intact.</li><li class="py-0.5"><strong>Relational Source Tracking:</strong> Use the structural indicator=True parameter within the merge execution to track the lineage origins of each row.</li><li class="py-0.5"><strong>Indicator Custom Mapping:</strong> Rename the resulting indicator column to AuditStatus. Map its structural string output values as follows:If a transaction successfully matched a customer account, map it to "MATCHED". If a transaction has no matching record in the customer directory, map it to "ORPHANED_TRANSACTION".</li><li class="py-0.5"><strong>Data Slicing:</strong> Return the entire left-joined DataFrame containing all original metrics alongside the new AuditStatus column.</li></ul>
@@ -10433,7 +10517,7 @@ def unstack_nested_metrics(df):
     pass','','store_dim_customers.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (218,'218. Timestamp Match Using Asynchronous Tolerances','
+VALUES (219,'219. Timestamp Match Using Asynchronous Tolerances','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">In high-frequency monitoring networks like sensor_readings_noisy.csv, events logged across separate physical units occur asynchronously. Standard joins fail because timestamps rarely align perfectly. You must pair event logs with closest matching baseline parameters within an explicit time tolerance window. Write a Python function merge_asynchronous_telemetry(df_readings: pd. DataFrame, df_baselines: pd. DataFrame) -> pd. DataFrame that executes an asynchronous timeline alignment:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Index Preparation:</strong> Ensure the Timestamp column in both DataFrames is converted into a true Pandas datetime format and sorted in ascending chronological order.</li><li class="py-0.5"><strong>Asynchronous Alignment:</strong> Execute a rolling timeline merge using pd.merge_asof(). Match each row in df_readings to the closest preceding baseline record in df_baselines based on their timestamps.</li><li class="py-0.5"><strong>Directional Boundary Matching:</strong> The alignment direction must look strictly backward (matching the closest baseline timestamp that is less than or equal to the reading timestamp).</li><li class="py-0.5"><strong>Tolerance Constraints:</strong> Enforce a strict maximum time window tolerance of 2 seconds. If a baseline event occurred more than 2 seconds prior to the reading timestamp, do not join it (leave the inherited baseline columns as NaN).</li></ul>
@@ -10493,7 +10577,7 @@ def reshape_sensor_readings(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (219,'219. Cartesian Product Resource Assignment','
+VALUES (220,'220. Cartesian Product Resource Assignment','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Operations teams planning resource allocation strategies must evaluate every possible combination of standalone units against active operational zones. This requires executing a full relational Cartesian product without shared lookup keys. Write a Python function generate_resource_matrix(df_teams: pd. DataFrame, df_zones: pd. DataFrame) -> pd. DataFrame that builds a complete cross-combination array:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Cartesian Multiplication:</strong> Generate a cross-join (Cartesian product) representing every single mathematical combination between rows in df_teams and rows in df_zones.</li><li class="py-0.5"><strong>Column Retention:</strong> The final combined output must retain all descriptive attributes from both source tables.</li><li class="py-0.5"><strong>Sorting Protocol:</strong> Sort the final DataFrame primary-keyed by TeamID in ascending order, and secondary-keyed by ZoneCode in alphabetical order.</li><li class="py-0.5"><strong>Index Reset:</strong> Rebuild the positional row numbers so they run continuously from 0 to $N-1$.</li></ul>
@@ -10556,7 +10640,7 @@ def multi_index_corporate_financials(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (220,'220. Multi-Key Index Merging','
+VALUES (221,'221. Multi-Key Index Merging','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">In advanced analytical pipelines, datasets are frequently stored using MultiIndexed formats to keep complex dimensional relationships organized. To align information correctly, you must run an exact merge using multiple key tracking layers simultaneously. Write a Python function merge_multikey_indices(df_left: pd. DataFrame, df_right: pd. DataFrame) -> pd. DataFrame that executes a composite index alignment:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Multi-Key Intersection:</strong> Merge df_left and df_right using a strict Inner Join.</li><li class="py-0.5"><strong>Composite Binding:</strong> The merge operations must map concurrently across two separate structural elements: the Company data column and the Year index level of the datasets.</li><li class="py-0.5"><strong>Index Restoration:</strong> Ensure the final unified table maintains a clean structural layout where Company and Year act as flat, standard data columns, sorted alphabetically by Company first and chronologically by Year second.</li></ul>
@@ -10610,7 +10694,7 @@ def melt_stock_volume_wide(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (221,'221. Conditional Overlap Fill and Merge','
+VALUES (222,'222. Conditional Overlap Fill and Merge','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Data compilation networks frequently face issues with fragmented tables where primary tracking columns contain structural missing values. You must patch empty cells in a main log by overlaying valid records from a secondary baseline file using an overlapping layout strategy. Write a Python function patch_transaction_gaps(df_main: pd. DataFrame, df_backup: pd. DataFrame) -> pd. DataFrame that implements a repair routine:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Alignment Anchor Setup:</strong> Set the TransactionID attribute as the definitive index anchor in both input tables.</li><li class="py-0.5"><strong>Overlay Remediation:</strong> Use df_main.combine_first(df_backup) to fill missing cells (NaN) in the main dataset with matching row-and-column values found inside the backup dataset.</li><li class="py-0.5"><strong>Index Preservation:</strong> Ensure that rows present in df_main but missing from df_backup keep their original values completely intact, while any entirely new rows unique to df_backup are added to the final table.</li><li class="py-0.5"><strong>Structural Output:</strong> Return a flat DataFrame where TransactionID is restored as a regular data column, sorted in ascending numerical order.</li></ul>
@@ -10672,7 +10756,7 @@ def pivot_aggregate_sales(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (222,'222. Evaluate Delta Deviations Across Tables','
+VALUES (223,'223. Evaluate Delta Deviations Across Tables','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Financial compliance systems cross-reference internal transaction data grids against monthly statements generated by external banks. You must parse both tables to generate a variance audit log that isolates discrepancies between them. Write a Python function audit_statement_variances(df_internal: pd. DataFrame, df_bank: pd. DataFrame) -> pd. DataFrame that evaluates variances across files:2.</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Relational Pairing:</strong> Perform an Inner Join between df_internal and df_bank using the unique TransactionID column as the shared key.3.</li><li class="py-0.5"><strong>Variance Vector Calculation:</strong> Create a new column named PriceVariance computed by subtracting the bank''s record (UnitPrice_bank) from the internal ledger''s record (UnitPrice_internal).4.</li><li class="py-0.5"><strong>Discrepancy Filtration:</strong> Filter the combined table to retain only rows where PriceVariance is not equal to 0.00 (ignoring records that match perfectly).5.</li><li class="py-0.5"><strong>Output Cleanliness:</strong> The output table must contain only four columns: TransactionID, UnitPrice_internal, UnitPrice_bank, and PriceVariance, sorted by the absolute value of PriceVariance in descending order.</li></ul>
@@ -10735,7 +10819,7 @@ def flatten_hierarchical_financials(df):
     pass','','corporate_financials_wide.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (223,'223. Track Historical Schema Changes','
+VALUES (224,'224. Track Historical Schema Changes','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Legacy financial systems occasionally export data tables where standard column names have drifted over different quarters (e.g., changing from Cost to Expense or Rev to Revenue). To analyze this data, you must map historical schema layouts back to a unified master structure before combining them. Write a Python function normalize_and_combine_schemas(df_q1: pd. DataFrame, df_q2: pd. DataFrame) -> pd. DataFrame that standardizes distinct table structures:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Schema Renaming:</strong> In df_q1, rename the column Rev to Revenue and Cost to Expense. In df_q2, rename the column Gross Income to Revenue.</li><li class="py-0.5"><strong>Vertical Stack Composition:</strong> Perform a vertical concatenation (pd.concat(axis=0)) placing df_q1 on top of df_q2.</li><li class="py-0.5"><strong>Missing Value Homogenization:</strong> Because the schemas originally differed, the stacked DataFrame will contain NaN values where column structures did not perfectly overlap. Fill all resulting missing values across numeric columns with a flat 0.0.</li><li class="py-0.5"><strong>Index Reset:</strong> Rebuild the positional row numbers sequentially so the combined DataFrame operates smoothly from $0$ to $N-1$.</li></ul>
@@ -10794,7 +10878,7 @@ def unpivot_sensor_telemetry(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (224,'224. Merge Mismatched Categorical Columns','
+VALUES (225,'225. Merge Mismatched Categorical Columns','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Integrating regional marketing logs into the corporate financial ledger is difficult because demographic inputs use different categorical codes for identical concepts (e.g., "M" vs "Male" vs "1"). Write a Python function merge_categorical_crosswalk(df_financials: pd. DataFrame, df_demographics: pd. DataFrame, crosswalk_dict: dict) -> pd. DataFrame that standardizes and joins data:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Dictionary Crosswalk Mapping:</strong> Within the df_demographics table, map the values inside the ClientGender column against the provided crosswalk_dict to standardize them (e.g., converting "M" to "Male"). If a value is missing from the crosswalk dictionary, leave it completely unchanged.</li><li class="py-0.5"><strong>Relational Join Execution:</strong> Perform a Left Join mapping df_financials to the newly standardized df_demographics using the column ClientID as the shared key.</li><li class="py-0.5"><strong>Missing Value Isolation:</strong> Filter the resulting combined DataFrame to retain only the rows where ClientGender remains missing (NaN) post-merge, isolating unresolved profiles.</li><li class="py-0.5"><strong>Output Framing:</strong> Return the filtered DataFrame sorted by ClientID in ascending order.</li></ul>
@@ -10856,7 +10940,7 @@ def stack_stock_price_trends(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (225,'225. Unpivot Quarterly Financial Summary Tables','
+VALUES (226,'226. Unpivot Quarterly Financial Summary Tables','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The corporate_financials_wide.csv dataset logs revenue and profit metrics horizontally across columns (e.g., Q1_Revenue, Q1_Profit, Q2_Revenue). Time-series machine learning models cannot process this "wide" format; they require a vertical, "long" format architecture. Write a Python function unpivot_quarterly_financials(df: pd. DataFrame) -> pd. DataFrame that performs advanced data melting:Vertical Melting (pd.melt): Unpivot the wide structural DataFrame so that the original horizontal column names are collapsed into a new string column named QuarterMetric, and their numeric values drop into a new column named Value. Preserve Company and Year as persistent identifier variables.</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>String Breakdown:</strong> Split the newly formed string identifiers inside the QuarterMetric column on the underscore _ (e.g., dividing "Q1_Revenue" into "Q1" and "Revenue").</li><li class="py-0.5"><strong>Column Reassignment:</strong> Map these split components into two distinct new tracking columns named Quarter and MetricType. Drop the original QuarterMetric column once the split is successfully completed.</li><li class="py-0.5"><strong>Missing Quarters Purge:</strong> Because Q4 metrics are often empty for active fiscal years, remove any rows where Value is currently logged as NaN.</li></ul>
@@ -10913,7 +10997,7 @@ def resample_to_hourly_averages(df):
     pass','','corporate_financials_wide.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (226,'226. Generate Variable-Width Analytical Bins','
+VALUES (227,'227. Generate Variable-Width Analytical Bins','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">To build categorical machine learning classifiers out of student_performance_factors.csv, continuous tracking metrics like exam grades must be bucketed into distinct, ordinal strings representing letter grades. Write a Python function generate_grade_bins(df: pd. DataFrame) -> pd. DataFrame that discretizes continuous variables into formatted strings:Dynamic Bin Cutting (pd.cut): Segregate the continuous ExamScore float numbers into exactly five distinct bins mapped across the following hard numerical boundaries:$\text{Score} < 60.0 \rightarrow$ "F"$60.0 \le \text{Score} < 70.0 \rightarrow$ "D"$70.0 \le \text{Score} < 80.0 \rightarrow$ "C"$80.0 \le \text{Score} < 90.0 \rightarrow$ "B"$\text{Score} \ge 90.0 \rightarrow$ "A"Column</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Creation:</strong> Apply these resulting string grades to a new column called LetterGrade.</li><li class="py-0.5"><strong>Invalid Range Imputation:</strong> Because some extreme systemic outliers in the dataset fall outside the standard $0-100$ boundary (e.g., $-25.0$ or $180.0$), they must evaluate to an NaN bin. Impute any resulting NaN grades by filling them with the explicit string "Invalid".</li><li class="py-0.5"><strong>Output Framing:</strong> Return the DataFrame holding all its initial metrics with the finalized LetterGrade tracking column attached to the far right.</li></ul>
@@ -10974,7 +11058,7 @@ def compute_rolling_volatility(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (227,'227. One-Hot Encode Categorical Model Pipelines','
+VALUES (228,'228. One-Hot Encode Categorical Model Pipelines','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Machine learning frameworks require categorical text columns to be converted into binary numeric matrices (One-Hot Encoding) before entering training models. When engineering pipelines for the student_performance_factors.csv dataset, you must convert the student categorical features while handling value noise cleanly. Write a Python function encode_categorical_pipeline(df: pd. DataFrame) -> pd. DataFrame that performs binary vector transformations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Value Cleaning:</strong> Prior to encoding, strip all leading/trailing whitespaces from the SchoolSupport column and force all characters to lowercase (e.g., "  Yes" $\rightarrow$ "yes"). One-Hot Encoding (pd.get_dummies): Generate binary indicator columns for the cleaned SchoolSupport column.</li><li class="py-0.5"><strong>Prefix Enforcement:</strong> Enforce an explicit prefix string of "support" on the newly generated columns. The resulting columns must be named precisely "support_yes" and "support_no".</li><li class="py-0.5"><strong>Data Type Casting:</strong> Cast these newly generated indicator columns explicitly into standard integers (int64), where 1 represents presence and 0 represents absence.</li><li class="py-0.5"><strong>Concatenation Output:</strong> Drop the original raw text SchoolSupport column and return the modified DataFrame retaining all original columns with the two binary indicator columns appended.</li></ul>
@@ -11033,7 +11117,7 @@ def align_asynchronous_ticks(df1, df2):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (228,'228. Resample Daily Financial Data to Monthly Averages','
+VALUES (229,'229. Resample Daily Financial Data to Monthly Averages','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">High-frequency streams inside sensor_readings_noisy.csv capture metrics across varied intervals. To conduct higher-level macro analysis, analysts downsample raw, irregular timestamps into consolidated regular blocks. Write a Python function downsample_sensor_stream(df: pd. DataFrame) -> pd. DataFrame that implements chronological downsampling:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Index Standardization:</strong> Convert the Timestamp column into a true Pandas datetime format. Remove any rows where Timestamp or Temperature is missing (NaN). Set Timestamp as the explicit index anchor of the DataFrame.</li><li class="py-0.5"><strong>Chronological Sorting:</strong> Sort the DataFrame explicitly by the datetime index in ascending order. Downsampling Resample (.resample()): Downsample the time-series matrix from its original irregular frequency down to a uniform Daily Frequency (assigned using the rule code ''D'').</li><li class="py-0.5"><strong>Multi-Column Down-Aggregation:</strong> For each daily window, compute:The mathematical mean of the Temperature column (name this output column MeanTemperature). The maximum value found within the Humidity column (name this output column MaxHumidity).</li><li class="py-0.5"><strong>Output Cleanliness:</strong> Round all calculated float values to exactly 2 decimal places. Return a flat DataFrame where the index date is reset to a regular column named Date containing true date-only markers.</li></ul>
@@ -11091,7 +11175,7 @@ def compute_ewma_temperatures(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (229,'229. Calculate Rolling 7-Day Asset Volatility','
+VALUES (230,'230. Calculate Rolling 7-Day Asset Volatility','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Quantitative trading engines tracking microsecond price feeds in high_frequency_stock_ticks.csv use moving standard deviations to evaluate structural market risks. Static global stats hide sudden price shocks (such as the 5% TSLA surge or 6% AAPL crash embedded in your sandbox file). Write a Python function calculate_rolling_volatility(df: pd. DataFrame, window_size: int) -> pd. DataFrame that calculates moving historical window calculations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Sorting Protocol:</strong> Sort the incoming dataset globally by Ticker in alphabetical order, and then by Timestamp in ascending chronological order.</li><li class="py-0.5"><strong>Rolling Partition Matrix:</strong> Group the sorted dataset by the Ticker column. Rolling Window Function (.rolling()): For each ticker, execute a moving rolling window calculation across the Price column. Set the window to look back across exactly $N$ rows specified by the window_size parameter.</li><li class="py-0.5"><strong>Statistical Standard Deviation:</strong> Calculate the rolling sample standard deviation within this moving window. Set the min_periods=1 parameter so the calculation yields a valid value from the very first row instead of generating leading NaN cells.</li><li class="py-0.5"><strong>Column Appending:</strong> Append the calculated metrics back onto the source dataset as a new column named RollingPriceStd. Round the output metrics to exactly 4 decimal places. Return the complete DataFrame.</li></ul>
@@ -11150,7 +11234,7 @@ def ohlc_stock_candles(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (230,'230. Compute Multi-Column Percentage Change Deltas (Intermediate)','
+VALUES (231,'231. Compute Multi-Column Percentage Change Deltas (Intermediate)','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Asset portfolio analysts measure price momentum over sequential tracking cycles. To establish velocity vectors quickly across massive matrices, you must compute percentage change sequences across adjacent rows natively. Write a Python function compute_percentage_deltas(df: pd. DataFrame) -> pd. DataFrame that executes native delta adjustments:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Index Assignment:</strong> Move the Timestamp column into the explicit index anchor of the DataFrame. Ensure the index is sorted chronologically. Percentage Step Calculation (.pct_change()): Calculate the percentage change of the numeric columns Price and Volume between the current row and the immediate preceding row.</li><li class="py-0.5"><strong>Leading Null Imputation:</strong> The very first row will evaluate to NaN because it lacks a prior row reference. Replace these resulting leading null cells with a flat default value of 0.0000.</li><li class="py-0.5"><strong>Structural Output:</strong> Rename the modified columns to Price_PctChange and Volume_PctChange. Return a flat DataFrame containing these two calculated tracking parameters with the Timestamp column fully restored as a regular data column.</li></ul>
@@ -11208,7 +11292,7 @@ def detect_stale_telemetry_periods(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (231,'231. Multi-Level Index Cross-Section Extractions','
+VALUES (232,'232. Multi-Level Index Cross-Section Extractions','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">When database matrices are deeply nested using MultiIndex structures across both rows and columns, standard label extraction using .loc[] becomes highly complex. You must build a flexible retrieval utility to isolate a clean cross-section of data across intermediate structural levels regardless of higher-tier values. Write a Python function extract_index_cross_section(df: pd. DataFrame, target_year: int) -> pd. DataFrame that targets deep hierarchical index slices:Cross-Section Isolation (.xs()): Query the incoming multi-indexed DataFrame to extract all records corresponding to the specific level value matching target_year.</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Level Target Specifier:</strong> Target the level named Year explicitly within the row index structure.</li><li class="py-0.5"><strong>Drop Configuration Maintenance:</strong> Ensure the target level Year is dropped from the index of the resulting DataFrame while keeping all other index layers intact.</li><li class="py-0.5"><strong>Column Flattening:</strong> If the columns exhibit a MultiIndex structure, flatten them into a single-level string index by joining the levels with a single underscore _ (e.g., "Q1", "Revenue" $\rightarrow$ "Q1_Revenue").</li></ul>
@@ -11262,7 +11346,7 @@ def calculate_session_drawdowns(df):
     pass','','corporate_financials_wide.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (232,'232. Calculate Cumulative Moving Limits','
+VALUES (233,'233. Calculate Cumulative Moving Limits','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Financial risk management systems processing transaction logs in dirty_store_transactions.csv monitor risk boundaries by tracking individual lifetime transaction counts while maintaining an absolute historical threshold filter. Write a Python function calculate_moving_caps(df: pd. DataFrame) -> pd. DataFrame that performs high-fidelity conditional accumulation tracking:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Cron Sorting Matrix:</strong> Sort the input ledger globally by CustomerID in ascending alphabetical order, and then by Date chronologically in ascending order.</li><li class="py-0.5"><strong>Cumulative Event Expansion:</strong> Group the sorted rows by CustomerID.</li><li class="py-0.5"><strong>Sequence Counting:</strong> Generate a new tracking column named TransactionSequence which calculates the expanding cumulative counter of transactions for each customer (i.e., first transaction = 1, second = 2, etc.).</li><li class="py-0.5"><strong>Threshold Filtration:</strong> Create a final boolean tracking column named IsWithinCap that evaluates to True if the individual''s TransactionSequence is less than or equal to 5 AND their expanding cumulative sum of Quantity does not exceed 150. Otherwise, evaluate to False.</li></ul>
@@ -11320,7 +11404,7 @@ def hourly_temperature_deviations(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (233,'233. Cross-Tabulate Multi-Factor Frequency Tables','
+VALUES (234,'234. Cross-Tabulate Multi-Factor Frequency Tables','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">To evaluate demographic preferences inside the student_performance_factors.csv workspace, marketing research units require contingency analysis arrays showing how multi-layer variables overlap across groups. Write a Python function generate_frequency_contingency(df: pd. DataFrame) -> pd. DataFrame that builds contingency frequency distributions:Cross-Tabulation Frequency Matrix (pd.crosstab): Generate a cross-tabulation table evaluating the frequencies of categorical pairings.</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Hierarchical Dimensions:</strong> The row constraints must track the ParentEducation column. The column constraints must exhibit a MultiIndex combining the Gender and InternetAccess attributes simultaneously.</li><li class="py-0.5"><strong>Margins Totals Integration:</strong> Include global row and column totals within the matrix by passing the margins=True parameter flag. Name the totals row and column index header string label "Total" exactly.</li><li class="py-0.5"><strong>Missing Representation:</strong> Any resulting blank frequency cells inside the contingency space must evaluate explicitly to a standard integer 0.</li></ul>
@@ -11374,7 +11458,7 @@ def resample_interpolate_sensor(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (234,'234. Explode Nested JSON Array Columns into Rows','
+VALUES (235,'235. Explode Nested JSON Array Columns into Rows','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Software logistics streams capture relational attributes inside unified payload fields. When parsing these objects, columns containing Python lists break structural processing routines. You must split these inline arrays out into flat, relational database rows. Write a Python function explode_nested_records(df: pd. DataFrame) -> pd. DataFrame that implements array expansion routines:Structural List Explosion (.explode()): Target the column named ItemsPurchased (which contains lists of string elements). Explode this column vertically so that each individual list item receives its own standalone row entry.</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Null Element Management:</strong> If a row''s ItemsPurchased attribute is an empty list or completely missing (NaN), ensure the row is preserved in the output table with the exploded cell logging an absolute NaN value.</li><li class="py-0.5"><strong>Whitespace Cleansing:</strong> Strip all leading and trailing space elements from the newly exploded text strings inside ItemsPurchased.</li><li class="py-0.5"><strong>Index Verification:</strong> Keep the original row index labels unchanged post-explosion, allowing downstream tracking blocks to map rows back to their source data logs.</li></ul>
@@ -11429,7 +11513,7 @@ def rolling_volume_weighted_price(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (235,'235. Extract Valid Nested Email Domains','
+VALUES (236,'236. Extract Valid Nested Email Domains','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A data hygiene pipeline processing corporate communication records needs to audit incoming contact logs. The system must parse corporate email routing paths to verify that domains comply with strict character restrictions. Write a Python function extract_valid_domains(df: pd. DataFrame) -> pd. DataFrame that evaluates communication matrices:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Regex Domain Capture:</strong> Use a regular expression pattern inside a vectorized .str.extract() routine to isolate the domain portion of strings within the email column (i.e., everything immediately following the @ symbol up to the end of the string).</li><li class="py-0.5"><strong>Structural Validation Filter:</strong> A domain string is considered structurally valid only if it consists entirely of lowercase alphanumeric characters, dots, and hyphens (e.g., company.com or sales-hub.net). It must not contain special symbols or trailing extensions (like .com.net nested blocks). Filtering &</li><li class="py-0.5"><strong>Output:</strong> Filter out rows containing unparseable or invalid domains. Return a flat DataFrame containing only three specific columns in this sequence: name, email, and the newly extracted domain named ExtractedDomain.</li></ul>
@@ -11488,7 +11572,7 @@ def extract_valid_domains(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (236,'236. Parse Raw Unstructured Log Strings via Regex Captures','
+VALUES (237,'237. Parse Raw Unstructured Log Strings via Regex Captures','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">System components inside sensor_readings_noisy.csv occasionally emit raw text message logs during failures. These lines mix error categories, localized status details, and hardware codes together in a single unparsed text block. Write a Python function parse_unstructured_logs(df: pd. DataFrame) -> pd. DataFrame that builds relational columns out of text blocks:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Regex Component Extraction:</strong> The input column RawLog contains unstructured text blocks that follow the syntax standard: "[STATUS_CODE] MessageBody (SystemID:X101)". Use a regular expression containing named capture groups to separate this text into three individual columns:StatusCode (The token inside the brackets, e.g., ERROR, WARN). LogMessage (The main description body following the brackets). SystemID (The identifier key nested inside the parenthesis following the prefix</li><li class="py-0.5"><strong>SystemID:</strong>).</li><li class="py-0.5"><strong>Missing Component Cleanup:</strong> If an incoming log line does not perfectly match this exact syntax pattern, it will generate null values across the capture groups. Drop all rows that fail to match the pattern.</li><li class="py-0.5"><strong>Output Structure:</strong> Remove the original RawLog column, returning all other initial fields along with the three newly extracted text columns.</li></ul>
@@ -11546,7 +11630,7 @@ def mask_confidential_names(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (237,'237. Sanitize and Standardize Variable Phone Formats','
+VALUES (238,'238. Sanitize and Standardize Variable Phone Formats','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Customer contact directories paired with the dirty_store_transactions.csv ledger store telephone metrics containing significant formatting discrepancies (e.g., extra dashes, parenthetical area codes, space adjustments, or missing country prefixes). Write a Python function sanitize_phone_numbers(df: pd. DataFrame) -> pd. DataFrame that standardizes variable text characters:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Non-Numeric Stripping:</strong> Remove all non-numeric characters (dashes, spaces, periods, parentheses) from the PhoneNumber string column using a vectorized regular expression replacement pattern.</li><li class="py-0.5"><strong>Length Validation Filtering:</strong> A phone number is considered valid only if the resulting stripped digit string contains exactly 10 digits (standard domestic line length) or exactly 11 digits (if it includes a leading country code prefix of 1).</li><li class="py-0.5"><strong>Country Code Normalization:</strong> For valid 11-digit numbers starting with 1, strip the leading 1 so that all numbers are consistently saved as a standard 10-digit string.</li><li class="py-0.5"><strong>Invalid Number Imputation:</strong> If a record fails the length validation criteria or is missing, replace its cell with the placeholder string "INVALID_NUMBER".</li></ul>
@@ -11607,7 +11691,7 @@ def split_multi_variant_codes(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (238,'238. Vectorized Substring Tokenization and Counting','
+VALUES (239,'239. Vectorized Substring Tokenization and Counting','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">To evaluate feedback trends in dirty_store_transactions.csv, text analysts isolate specific key indicators from unstructured product descriptions. Standard string matching breaks down when evaluating compound requirements across multi-word patterns. Write a Python function tokenize_and_tally_keywords(df: pd. DataFrame, target_keywords: list) -> pd. DataFrame that builds feature frequency matrices:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Vectorized Substring Search:</strong> Evaluate the ProductName text column. For each keyword present inside the target_keywords list, create a new column named count_[keyword] (e.g., count_keyboard).</li><li class="py-0.5"><strong>Case-Insensitive Regex Tally:</strong> The value of this new column must represent the total count of occurrences of that keyword within the row''s ProductName string. The search must be case-insensitive and match only whole words (using regex word boundaries \b).</li><li class="py-0.5"><strong>Null Defending:</strong> If ProductName is missing (NaN), assign a score value of 0 across all dynamic keyword count fields.</li><li class="py-0.5"><strong>Aggregation Output:</strong> Return the complete initial DataFrame with the dynamic keyword frequency counter columns attached to the right.</li></ul>
@@ -11666,7 +11750,7 @@ def standardize_phone_numbers(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (239,'239. Identify Partial Match Anomalies in Product Descriptions','
+VALUES (240,'240. Identify Partial Match Anomalies in Product Descriptions','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Inventory audit models scanning dirty_store_transactions.csv require isolating description strings that contain catalog classification contradictions. A transaction is considered anomalous if its descriptive string maps to one category label while containing character tokens that exclusively belong to a different department. Write a Python function detect_description_contradictions(df: pd. DataFrame) -> pd. DataFrame that flags these text discrepancies:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Contradiction Rule Layer:</strong> Identify records where the ProductCategory is logged as "Electronics" (ignoring padding and casing noise) BUT the ProductName text contains a partial string match for any of the following clothing-related tokens: "shirt", "shoes", "dress", or "pants".</li><li class="py-0.5"><strong>Alternative Contradiction Layer:</strong> Proactively include records where ProductCategory maps to "Clothing" BUT the ProductName string contains any of these technical tokens: "device", "drive", "cable", or "chip".</li><li class="py-0.5"><strong>Case-Insensitive Search:</strong> Ensure all token substring searches are entirely case-insensitive.</li><li class="py-0.5"><strong>Projection Output:</strong> Return the filtered rows preserving their initial indices, retaining only three specific columns in this exact sequence: TransactionID, ProductCategory, and ProductName.</li></ul>
@@ -11724,7 +11808,7 @@ def detect_description_contradictions(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (240,'240. Mask Sensitive Personally Identifiable Information','
+VALUES (241,'241. Mask Sensitive Personally Identifiable Information','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Security protocols dictate that before transaction files from dirty_store_transactions.csv enter public model testing grids, all columns containing personally identifiable information (PII) must be scrambled or masked to preserve user anonymity. Write a Python function mask_customer_pii(df: pd. DataFrame) -> pd. DataFrame that applies text masking patterns:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Account Index Masking:</strong> For the CustomerID string column, preserve the first character and the last two characters completely intact. Replace all intermediate characters with exactly three asterisks <strong>* (e.g., "C12345" $\rightarrow$ "C</strong>*45").</li><li class="py-0.5"><strong>Missing Token Resilience:</strong> If a row''s CustomerID field is completely missing (NaN), preserve the null marker without applying string masking substitutions.</li><li class="py-0.5"><strong>Short String Handling:</strong> If a valid string entry is too short to follow the default masking rule (e.g., length is less than or equal to 3 characters), replace the entire string with a flat value of "C***".</li><li class="py-0.5"><strong>Structure Retention:</strong> Return the original modified DataFrame holding all its initial features with the masked CustomerID values substituted in place.</li></ul>
@@ -11785,7 +11869,7 @@ def parse_nested_json_parameters(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (241,'241. Title-Case Multi-Word Exceptions in Names','
+VALUES (242,'242. Title-Case Multi-Word Exceptions in Names','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Standard string methods like .str.title() fail to format employee listings properly when surnames incorporate specific structural lowercase particles (such as "de", "van", or "von") or uppercase Roman numerals that must remain fully capitalized. Write a Python function format_exceptional_names(df: pd. DataFrame) -> pd. DataFrame that builds custom casing rules:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Initial Title Standardization:</strong> Capitalize the first letter of every space-separated word segment inside the name column, transforming all other characters to lowercase.</li><li class="py-0.5"><strong>Particle Correction Rule:</strong> Identify any standalone word components within the modified string that match corporate particle tokens: "De", "Van", or "Von". Transform these specific standalone words to absolute lowercase ("de", "van", "von").</li><li class="py-0.5"><strong>Suffix Capitalization Rule:</strong> If a word segment matches a standard generational suffix tier (such as "Ii", "Iii", or "Iv"), force the entire word segment to absolute uppercase ("II", "III", "IV").</li><li class="py-0.5"><strong>Data Protection:</strong> Ensure this custom formatting does not affect names lacking these specific components. Return the modified DataFrame.</li></ul>
@@ -11844,7 +11928,7 @@ def format_currency_values(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (242,'242. Split Variable-Length Delimited Fields into Matrix Columns','
+VALUES (243,'243. Split Variable-Length Delimited Fields into Matrix Columns','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">E-commerce tracking logs frequently store transactional metadata as a single comma-separated text string to save space. To run multi-dimensional analytical models, you must parse these variable-length strings and break them out into structured matrix columns. Write a Python function expand_delimited_properties(df: pd. DataFrame) -> pd. DataFrame that splits text columns:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Vectorized Matrix Splitting:</strong> Parse the ProductAttributes text column by splitting each string entry on every comma , character.</li><li class="py-0.5"><strong>Dynamic Column Generation:</strong> Expand these split tokens horizontally into distinct new columns. The newly generated columns must follow the explicit naming pattern attr_0, attr_1, attr_2, matching the positional sequence of the split elements.</li><li class="py-0.5"><strong>Variable Length Padding:</strong> Because different rows contain a variable number of attributes, short rows will generate missing cells at the higher levels. Ensure these missing slots evaluate cleanly to a standard string placeholder "NONE".</li><li class="py-0.5"><strong>Cleanup Protocol:</strong> Drop the original source column ProductAttributes once the horizontal expansion matrix is attached, returning all other initial fields.</li></ul>
@@ -11903,7 +11987,7 @@ def extract_url_parameters(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (243,'243. Flatten Deeply Nested Multi-Indexed Columns Post-Aggregation','
+VALUES (244,'244. Flatten Deeply Nested Multi-Indexed Columns Post-Aggregation','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Executing multiple disparate aggregation routines across separate fields using .groupby().agg() frequently results in a DataFrame with a MultiIndex (hierarchical) column structure. These multi-tiered headers break standard output writers (like database loaders or clean CSV builders). You must flatten these multi-tier headers into a single flat string layer. Write a Python function flatten_hierarchical_columns(df: pd. DataFrame) -> pd. DataFrame that cleans up multi-tiered data frames:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Multi-Column Processing:</strong> Group the incoming transaction ledger by the ProductCategory and PaymentMethod columns combined.</li><li class="py-0.5"><strong>Distinct Segment Operations:</strong> Calculate the following three aggregate statistics simultaneously:The sum of the Quantity column. The mean of the Profit column. The standard deviation of the Profit column.</li><li class="py-0.5"><strong>Column Index Flattening:</strong> The operations above generate a two-level column layout. Collapse this matrix layout into a single flat layer by joining the levels with an underscore character _ (e.g., Level 0: "Profit", Level 1: "mean" $\rightarrow$ "Profit_mean").</li><li class="py-0.5"><strong>Layout Normalization:</strong> Return the flat DataFrame with ProductCategory and PaymentMethod restored as normal data columns, sorted alphabetically by ProductCategory first. Round all calculated float columns to exactly 2 decimal places.</li></ul>
@@ -11958,7 +12042,7 @@ def clean_escaped_characters(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (244,'244. Construct Hierarchical Indexes from Dynamic String Cuts','
+VALUES (245,'245. Construct Hierarchical Indexes from Dynamic String Cuts','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Data engineering systems often parse flat operational log codes to generate MultiIndexed dimensions. This structures complex row spaces without requiring separate lookups. Write a Python function build_hierarchical_index(df: pd. DataFrame) -> pd. DataFrame that converts flat strings into structural rows:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>String Component Extraction:</strong> Look at the string column BatchCode. It follows a specific structural naming syntax: "REGION-YEAR-RUN" (e.g., "EAST-2026-R1").</li><li class="py-0.5"><strong>Index Generation:</strong> Split this string on the hyphen character -. Set the resulting three distinct elements as the definitive row MultiIndex of the DataFrame.</li><li class="py-0.5"><strong>Index Level Naming:</strong> Label these index levels exactly as Region, Year, and RunID from top to bottom.</li><li class="py-0.5"><strong>Cleanup Protocol:</strong> Delete the original source column BatchCode post-extraction, returning the rest of the numerical attributes intact.</li></ul>
@@ -12013,7 +12097,7 @@ def fuzzy_match_departments(df1, df2):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (245,'245. Cross-Sectional Analysis Across Asymmetric Index Levels','
+VALUES (246,'246. Cross-Sectional Analysis Across Asymmetric Index Levels','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">When running cross-sectional queries over a MultiIndexed DataFrame, accessing specific data values across inner tiers typically requires long chain commands or deep indexing hacks. You must isolate a clean slice of data across an absolute tier without destroying the higher organizational structures. Write a Python function query_asymmetric_tiers(df: pd. DataFrame, target_tier: str) -> pd. DataFrame that extracts localized index cross-sections:Inner Tier Extraction (.xs()): Query the multi-indexed table to pull out all rows matching the exact index value supplied by target_tier.</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Explicit Level Target:</strong> Isolate the rows by targeting the row index level named VIP_Tier exactly.</li><li class="py-0.5"><strong>Hierarchy Retention:</strong> Configure the cross-section operation using drop_level=False. This ensures the filtered level (VIP_Tier) remains as part of the MultiIndex structure in the final output table, keeping the full row history visible.</li></ul>
@@ -12066,7 +12150,7 @@ def merge_transactions_with_customers(df_transactions, df_customers):
     pass','','store_dim_customers.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (246,'246. Pivot Complex Aggregations with Variable Margins and Totals','
+VALUES (247,'247. Pivot Complex Aggregations with Variable Margins and Totals','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Generating summary tables from raw transaction files like dirty_store_transactions.csv often breaks down if the reshape command cannot group multi-layer fields and calculate global column limits simultaneously. Write a Python function pivot_financial_summary(df: pd. DataFrame) -> pd. DataFrame that builds multi-factor pivot tables:Pivot Table Matrix Setup (.pivot_table()): Construct an aggregated pivot summary table.</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Dimensional Layout Rules:</strong> Configure the pivot options so that:The row index tracks the ProductCategory column. The column layout groups by the PaymentMethod column. The aggregated data values reflect the metrics inside the Profit column.</li><li class="py-0.5"><strong>Aggregation Protocol:</strong> Calculate the cumulative sum of profits across all intersecting categories.</li><li class="py-0.5"><strong>Totals Margins Integration:</strong> Include global row and column summary calculations within the pivot matrix by passing margins=True. Set the explicit string label for the summary rows and columns to "Grand Total".</li><li class="py-0.5"><strong>Null Cells Correction:</strong> Fill any resulting blank or missing cells (NaN) inside the pivot grid with a flat default value of 0.00.</li></ul>
@@ -12120,7 +12204,7 @@ def unmatched_customer_audits(df_transactions, df_customers):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (247,'247. Unstacking Selective Tiers of Multi-Dimensional Arrays','
+VALUES (248,'248. Unstacking Selective Tiers of Multi-Dimensional Arrays','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Data warehouses frequently store highly aggregated records in deep, row-hierarchical formats. To present these records to data consumption layers or downstream visualization widgets, you must dynamically swing selective layers of a row MultiIndex horizontally into column headers without disturbing unselected structural tiers. Write a Python function unstack_selective_tiers(df: pd. DataFrame) -> pd. DataFrame that manipulates multi-index layout depths:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>MultiIndex Initialization:</strong> The incoming DataFrame contains standard data columns Company, Year, Quarter, and Revenue. Convert Company, Year, and Quarter into the definitive row MultiIndex layout of the DataFrame in that exact top-to-bottom sequence. Selective Level Unstacking (.unstack()): Rotate the Quarter level out of the row MultiIndex structure, swinging it horizontally to become the primary column index layer. The levels Company and Year must remain fixed as the persistent row MultiIndex. Data Integrity &</li><li class="py-0.5"><strong>Spacing:</strong> Any missing cell blocks generated by asymmetrical reporting cycles across quarterly buckets must evaluate strictly to a standard float 0.00.</li><li class="py-0.5"><strong>Structure Formatting:</strong> Ensure the resulting column headers match the unstacked values natively (e.g., "Q1", "Q2").</li></ul>
@@ -12177,7 +12261,7 @@ def cross_join_campaigns(df_customers, df_campaigns):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (248,'248. Multi-Index Swapping and Reordering for Matrix Math','
+VALUES (249,'249. Multi-Index Swapping and Reordering for Matrix Math','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Before running matrix multiplication operations or structural window analytics on MultiIndexed frames, the data tiers must align precisely by priority. You must design a utility to reorder the internal levels of a hierarchical index without losing the underlying cell links. Write a Python function reorder_hierarchical_levels(df: pd. DataFrame) -> pd. DataFrame that swaps multi-index prioritization structures:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Index Verification:</strong> The incoming input DataFrame exhibits a three-level row MultiIndex defined exactly as [Region, Year, Segment] from top to bottom. Level Position Swapping (.swaplevel() / .reorder_levels()): Reorder the internal layers of this MultiIndex structure so that Year becomes the primary level (Level 0), Segment becomes the intermediate level (Level 1), and Region drops to the bottom level (Level 2).</li><li class="py-0.5"><strong>Index Sorting Protocol:</strong> Post-reordering, you must execute an explicit .sort_index(level=0) to reorganize the structural row layout chronologically by the new primary Year tier.</li><li class="py-0.5"><strong>Data Preservation:</strong> Do not drop, modify, or pivot any of the numeric metric data columns present inside the data space.</li></ul>
@@ -12230,7 +12314,7 @@ def merge_asof_sensor_tolerances(df_transactions, df_sensor):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (249,'249. Reshape Sparse Matrices into Dense DataFrames','
+VALUES (250,'250. Reshape Sparse Matrices into Dense DataFrames','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Analytical algorithms process tabular inputs inefficiently when matrices are stored in sparse, unpivoted transactional records. You must transform flat relational rows containing structural interaction coordinate keys into a dense, classical wide matrix. Write a Python function convert_sparse_to_dense(df: pd. DataFrame) -> pd. DataFrame that generates dense feature arrays:Dense Matrix Setup (.pivot()): Pivot the flat tracking table so that the unique values inside the UserID column become the explicit row index, and the unique tags within the FeatureID column become the horizontal column headers.</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Coordinate Values Mapping:</strong> Populate the cells at each intersection with the corresponding value from the InteractionScore column.</li><li class="py-0.5"><strong>Sparse Null Amelioration:</strong> Because coordinate points are inherently sparse, many intersections will lack a record. Fill these specific missing grid slots with a flat default value of 0.</li><li class="py-0.5"><strong>Type Harmonization:</strong> Ensure that all scores inside the final dense matrix are explicitly cast to the standard integer type (int64).</li><li class="py-0.5"><strong>Index Cleanliness:</strong> The index name (UserID) and column name (FeatureID) must remain cleanly preserved.</li></ul>
@@ -12286,7 +12370,7 @@ def reconcile_disjoint_ledgers(df_ledger_a, df_ledger_b):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (250,'250. Conditional Melting of Multi-Column Data Blocks','
+VALUES (251,'251. Conditional Melting of Multi-Column Data Blocks','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Database schemas that record multi-metric variables side-by-side across sequential timeline steps (e.g., storing 2025_Target, 2025_Actual, 2026_Target, 2026_Actual as horizontal columns) require complex, multi-conditional melting steps to reshape them into tidy data tables. Write a Python function melt_conditional_data_blocks(df: pd. DataFrame) -> pd. DataFrame that implements conditional wide-to-long melting:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Structural Meltdown Execution:</strong> Unpivot the wide multi-column DataFrame using pd.melt(). Preserve ProjectID and Department as fixed structural identifier variables.</li><li class="py-0.5"><strong>Header Attribute Splitting:</strong> The horizontal variable columns collapse into a new string column named VariableYear. Split this string field on the underscore character _ to break it apart (e.g., dividing "2026_Target" into "2026" and "Target").</li><li class="py-0.5"><strong>Feature Column Allocation:</strong> Reassign these separated components into two distinct new tracking columns named CalendarYear and PerformanceMetric. Drop the intermediate VariableYear column.</li><li class="py-0.5"><strong>Target Variable Pivoting:</strong> Pivot the intermediate table so that the values inside PerformanceMetric (Target and Actual) swing into separate, dedicated parallel columns named exactly TargetValue and ActualValue.</li><li class="py-0.5"><strong>Output Cleanliness:</strong> Rebuild the layout into a flat DataFrame, sorted by ProjectID in ascending order and CalendarYear chronologically.</li></ul>
@@ -12341,7 +12425,7 @@ def join_aggregate_customer_value(df_transactions, df_customers):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (251,'251. Asynchronous Time-Zone Alignment and Localization','
+VALUES (252,'252. Asynchronous Time-Zone Alignment and Localization','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Global log systems ingest sensor timestamps from variable regional networks displaying conflicting time-zone markers or floating offsets. When processing streams for sensor_readings_noisy.csv, direct timeline comparison crashes unless strings are forced into absolute time-zone awareness and standardized to a single corporate standard. Write a Python function standardize_timezones(df: pd. DataFrame) -> pd. DataFrame that builds a uniform datetime timeline:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Datetime Standardization:</strong> Parse the incoming Timestamp column into a true Pandas datetime format. Handle mixed layouts (slashes, ISO-T, and space notations) by forcing unaligned strings into a clean datetime representation.</li><li class="py-0.5"><strong>Time-Zone Localization:</strong> If the converted timestamps are completely naive (lacking time-zone tracking metadata), localize them to Coordinated Universal Time (UTC) using .dt.tz_localize(''UTC'', ambient=''NaT'').</li><li class="py-0.5"><strong>Time-Zone Conversion:</strong> Convert all localized timestamps explicitly into the Eastern Standard Time zone using .dt.tz_convert(''US/Eastern'').</li><li class="py-0.5"><strong>Clean Index Sorting:</strong> Establish this new Eastern Time column as the absolute index anchor of the DataFrame. Drop any rows where the timestamp evaluated to NaT (missing or unparseable dates). Sort the dataset in ascending chronological order.</li></ul>
@@ -12400,7 +12484,7 @@ def standardize_timezones(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (252,'252. Calculate Custom Business-Day Deltas Excluding Arbitrary Holidays','
+VALUES (253,'253. Calculate Custom Business-Day Deltas Excluding Arbitrary Holidays','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Supply chain settlement matrices tracking fulfillment latency inside dirty_store_transactions.csv cannot rely on standard day calculations. Standard day counts fail because they count weekends and holiday factory shutdowns, leading to inaccurate calculations of true operational processing speed. Write a Python function calculate_business_duration(df: pd. DataFrame, custom_holidays: list) -> pd. DataFrame that isolates custom operational windows:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Date Validation:</strong> Convert OrderDate and ShipDate columns into standard Pandas datetime formats. Drop rows where either date is missing.</li><li class="py-0.5"><strong>Business Day Formula:</strong> Create a new column named ProcessingBusinessDays that calculates the exact count of business days elapsed between OrderDate (start date) and ShipDate (end date). Weekend and</li><li class="py-0.5"><strong>Holiday Constraints:</strong> The calculation must explicitly exclude standard weekends (Saturdays and Sundays) AND exclude any custom calendar dates passed inside the custom_holidays list parameter.</li><li class="py-0.5"><strong>Boundary Counting:</strong> The calculation must be inclusive of both boundary dates (i.e., if a product orders and ships on the exact same valid business day, the duration metrics must return 1).</li></ul>
@@ -12455,7 +12539,7 @@ def fill_missing_performance_factors(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (253,'253. Forward-Fill Intermittent Time Series with Upper Bounds','
+VALUES (254,'254. Forward-Fill Intermittent Time Series with Upper Bounds','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">High-frequency financial tick streams inside high_frequency_stock_ticks.csv frequently register data drops due to network issues, resulting in empty rows (NaN). Standard forward-fills (ffill) solve this but present a major risk: they carry old data forward over long gaps, which pollutes volatility tracking models. Write a Python function bounded_volatility_fill(df: pd. DataFrame, max_fill_gap: int) -> pd. DataFrame that patches temporal streams within strict bounds:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Chronological Alignment:</strong> Sort the ticker records globally by Ticker alphabetically, and then by Timestamp in ascending chronological order. Set Timestamp as the explicit index anchor of the dataset.</li><li class="py-0.5"><strong>Partitioned Forward-Fill:</strong> Group the sorted data space by the Ticker column.</li><li class="py-0.5"><strong>Bounded Imputation:</strong> Execute a forward-fill configuration across the Price column to patch missing (NaN) cells with the closest preceding valid price metric.</li><li class="py-0.5"><strong>Upper Gap Limits:</strong> Enforce a strict upper bound limit specified by the max_fill_gap parameter. If a ticker exhibits a consecutive run of missing cells that strictly exceeds max_fill_gap, stop filling (leave the excess subsequent missing slots as NaN).</li><li class="py-0.5"><strong>Output Frame:</strong> Return the complete DataFrame with the filled price data. Restore Timestamp as a standard data column.</li></ul>
@@ -12516,7 +12600,7 @@ def resample_uneven_stock_ticks(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (254,'254. Detect Consecutive Day Streaks (The Gaps-and-Islands Problem)','
+VALUES (255,'255. Detect Consecutive Day Streaks (The Gaps-and-Islands Problem)','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">To identify loyal user cohorts, marketing analytics engines parse transaction logs to find customers who make purchases over multiple consecutive calendar days. This requires grouping scattered dates into continuous time islands while filtering out non-consecutive activity gaps. Write a Python function detect_consecutive_purchases(df: pd. DataFrame, min_streak: int) -> pd. DataFrame that solves the Gaps-and-Islands time sequence challenge:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Date Normalization:</strong> Convert the Date column to a true date-only standard format (removing any hours/minutes/seconds tokens). Remove exact duplicate purchase dates for the same customer so each calendar day is counted only once.</li><li class="py-0.5"><strong>Chronological Sorting:</strong> Sort the entire dataset by CustomerID alphabetically, and then by Date in ascending chronological order.</li><li class="py-0.5"><strong>Island Island Sequence Partitioning:</strong> Identify continuous clusters of consecutive days for each customer.(Operational</li><li class="py-0.5"><strong>Hint:</strong> Subtracting an escalating row counter sequence from each date creates a uniform structural baseline date. Rows sharing an identical baseline date belong to the same consecutive calendar island).</li><li class="py-0.5"><strong>Streak Tally Formulation:</strong> Calculate the total length (duration in days) of each continuous island sequence. Filter and retain only those islands where the streak duration length is strictly greater than or equal to the min_streak parameter.</li><li class="py-0.5"><strong>Output Schema:</strong> Return a flat summary DataFrame containing the columns CustomerID, StreakStartDate, StreakEndDate, and StreakLength, sorted by StreakLength in descending order.</li></ul>
@@ -12573,7 +12657,7 @@ def detect_consecutive_outliers(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (255,'255. Resample Irregular High-Frequency Ticks to Open-High-Low-Close (OHLC)','
+VALUES (256,'256. Resample Irregular High-Frequency Ticks to Open-High-Low-Close (OHLC)','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Trading visualization engines cannot process raw, microsecond financial ticks directly. Financial charting tools require high-frequency feeds (such as the raw inputs in high_frequency_stock_ticks.csv) to be consolidated into standard Open-High-Low-Close (OHLC) bar structures over fixed time intervals. Write a Python function resample_to_ohlc(df: pd. DataFrame, time_frame: str) -> pd. DataFrame that converts high-frequency price fields:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Timeline Initialization:</strong> Convert the Timestamp column into a true Pandas datetime standard format and establish it as the definitive row index anchor. Remove rows where the Price column is missing (NaN).</li><li class="py-0.5"><strong>Chronological Sorting:</strong> Sort the DataFrame explicitly by the datetime index in ascending order. OHLC Resample (.resample().ohlc()): Group the dataset by the Ticker column, and resample the chronological price stream into uniform time blocks defined by the time_frame parameters (e.g., ''5Min'', ''1H''). Index Flattening &</li><li class="py-0.5"><strong>Cleaning:</strong> Flatten the resulting hierarchical MultiIndex column headers (open, high, low, close) so they act as standard columns. Convert the index markers back into two flat data columns named Ticker and BarTimestamp.</li><li class="py-0.5"><strong>Output Sorting:</strong> Sort the output matrix alphabetically by Ticker first, and chronologically by BarTimestamp second. Drop any bar intervals where no ticks occurred (removing completely empty intervals).</li></ul>
@@ -12632,7 +12716,7 @@ def plot_student_score_distributions(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (256,'256. Calculate Rolling Window Metrics with Variable Time-Offsets','
+VALUES (257,'257. Calculate Rolling Window Metrics with Variable Time-Offsets','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Standard row-based rolling calculations (window=7) distort statistical standard deviations if time intervals are highly irregular. For example, 7 rows of data could represent 7 seconds during peak market activity, or 7 hours during low-volume periods. To accurately track metrics like rolling temperature averages in sensor_readings_noisy.csv, the window calculation must be constrained by an absolute time duration offset (e.g., 2D or 1H) rather than a fixed row count. Write a Python function calculate_time_rolling_mean(df: pd. DataFrame, time_window: str) -> pd. DataFrame that builds time-offset windows:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Datetime Index Verification:</strong> Convert the Timestamp column into a standard datetime format and set it as the explicit index of the table. Sort the index in ascending chronological order.</li><li class="py-0.5"><strong>Time-Based Windowing:</strong> Group the data space by the SensorID column, and execute a moving rolling window calculation across the Temperature column.</li><li class="py-0.5"><strong>Offset Configuration:</strong> Set the rolling window parameters to use the variable string offset supplied by the time_window argument (e.g., ''2h'', ''1D'').</li><li class="py-0.5"><strong>Minimum Window Span:</strong> Configure the rolling calculation using min_periods=1 so it yields valid running calculations from the very first row rather than generating leading null entries.</li><li class="py-0.5"><strong>Structural Return:</strong> Append the rolling statistics back onto the source dataset as a new column named RollingTimeMeanTemp. Return the complete DataFrame with Timestamp fully restored as a standard column.</li></ul>
@@ -12690,7 +12774,7 @@ def plot_sensor_timeline(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (257,'257. Align Asynchronous Events Using Forward-Looking merge_asof','
+VALUES (258,'258. Align Asynchronous Events Using Forward-Looking merge_asof','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Financial validation pipelines tracking market execution map incoming customer transactions back to the closest available baseline market price. Because trade executions and market price changes happen asynchronously, you must pair each transaction with the nearest future market tick occurring within a strict time limit. Write a Python function merge_future_market_ticks(df_orders: pd. DataFrame, df_ticks: pd. DataFrame) -> pd. DataFrame that implements asynchronous future matching:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Chronological Alignment:</strong> Ensure the Timestamp column in both DataFrames is cast to a true Pandas datetime format and sorted in ascending order.</li><li class="py-0.5"><strong>Forward Asynchronous Join:</strong> Use pd.merge_asof() to link df_orders to df_ticks based on their timestamps.</li><li class="py-0.5"><strong>Directional Matching Configuration:</strong> Configure the matching direction to look strictly forward (matching each order timestamp to the closest subsequent market tick timestamp that is greater than or equal to it).</li><li class="py-0.5"><strong>Tolerance Boundaries:</strong> Set a strict maximum time window tolerance limit of 500 milliseconds (pd. Timedelta(milliseconds=500)). If no market tick occurs within 500 milliseconds after the order timestamp, do not perform the join (leave the inherited tick columns as NaN).</li></ul>
@@ -12751,7 +12835,7 @@ def plot_sales_by_category(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (258,'258. Compute Expanding Metric Maximums and Exponentially Weighted Decays','
+VALUES (259,'259. Compute Expanding Metric Maximums and Exponentially Weighted Decays','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Quantitative momentum models evaluate asset price histories by measuring both absolute lifetime price ceilings and exponentially decaying moving baselines. This requires running expanding windows and exponentially weighted functions side-by-side to track trend acceleration shifts. Write a Python function compute_momentum_indicators(df: pd. DataFrame, alpha_factor: float) -> pd. DataFrame that constructs advanced analytical tracking models:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Chronological Alignment:</strong> Sort the incoming transaction log globally by Ticker alphabetically, and then by Timestamp in ascending chronological order.</li><li class="py-0.5"><strong>Expanding Historical Ceilings:</strong> Group the sorted records by Ticker. For each group, calculate the expanding cumulative maximum of the Price column up to the current row index point. Name this new column LifetimePeakPrice. Exponential Decay Calculations (.ewm()): Within each ticker group, compute the exponentially weighted moving average of the Price column.</li><li class="py-0.5"><strong>Smoothing Parameters:</strong> Configure the decay function using the alpha smoothing parameter specified by the alpha_factor argument. Set adjust=False to force recursive calculation rules. Name this tracking column Price_EWMA.</li><li class="py-0.5"><strong>Output Cleanliness:</strong> Round all calculated float values to exactly 4 decimal places. Return the complete DataFrame.</li></ul>
@@ -12809,7 +12893,7 @@ def plot_score_vs_hours_scatter(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (259,'259. Downcast Massive Dataframes via Numeric and Categorical Type Traversal','
+VALUES (260,'260. Downcast Massive Dataframes via Numeric and Categorical Type Traversal','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">When huge multi-gigabyte files are loaded into Pandas, the engine defaults to high-bit representations (like int64 and float64) for all numerical fields, and object (string) pointers for categorical columns. This consumes excessive amounts of RAM. To optimize production memory footprints, you must programmatically downcast data types to their smallest possible bit depths without losing structural numerical precision or truncating cell values. Write a Python function optimize_dataframe_memory(df: pd. DataFrame) -> pd. DataFrame that implements memory downcasting:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Integer Downcasting:</strong> For every column containing integer types, downcast the field to the lowest possible signed integer bit depth (int8, int16, int32, int64) that can safely hold the column''s absolute maximum and minimum values using pd.to_numeric(..., downcast=''integer'').</li><li class="py-0.5"><strong>Float Downcasting:</strong> For every column containing floating-point numbers, downcast the field to the smallest available float bit depth (float32 or float64) using pd.to_numeric(..., downcast=''float'').</li><li class="py-0.5"><strong>Categorical Compression:</strong> Scan all remaining object (string) columns. If a string column''s unique value cardinality is low—specifically, if its unique value count is strictly less than 5% of the total row dimension of the DataFrame—convert that column explicitly into a memory-efficient category data type.</li><li class="py-0.5"><strong>Data Integrity:</strong> The final cell values and row shapes must remain identical to the source table.</li></ul>
@@ -12869,7 +12953,7 @@ def plot_monthly_profit_trend(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (260,'260. Vectorized Numeric Evaluation Using pd.eval() for Compound Logic','
+VALUES (261,'261. Vectorized Numeric Evaluation Using pd.eval() for Compound Logic','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Evaluating compound mathematical queries on massive dataframes using standard Python syntax notation (e.g., df[(df[''A''] > 0) & (df[''B''] < 5)]) forces Pandas to instantiate large intermediate allocation arrays in RAM. This causes out-of-memory errors on large datasets. To optimize performance, you must execute compound evaluation logic through the vectorized optimization engine via pd.eval(). Write a Python function evaluate_compound_logic(df: pd. DataFrame) -> pd. DataFrame that builds optimized numerical masks:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Vectorized Logic Execution:</strong> Use the high-performance pd.eval() engine string interpreter to evaluate a compound condition across the dataset.</li><li class="py-0.5"><strong>Compound Filter Rule:</strong> The filter expression must evaluate the following strict condition string:$$\text{Mask} = (\text{Quantity} > 5) \land (\text{UnitPrice} < 50.0) \land (\text{Discount} > 0.05)$$Imputation</li><li class="py-0.5"><strong>Safe Handling:</strong> Before evaluating the expression, replace any missing cells (NaN) in the Quantity, UnitPrice, and Discount columns with a flat value of 0.</li><li class="py-0.5"><strong>Data Isolation:</strong> Filter the incoming table to return only the rows where the compound logical statement evaluates to True. Keep all original columns intact.</li></ul>
@@ -12925,7 +13009,7 @@ def plot_sensor_distributions_box(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (261,'261. High-Speed Conditional String Filtering via Vectorized .query()','
+VALUES (262,'262. High-Speed Conditional String Filtering via Vectorized .query()','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Standard row filtering using boolean syntax arrays becomes unreadable and performs poorly when dealing with complex, multi-variable categorical filtering logic. You must use the optimized .query() expression engine to run high-speed, conditional string filtration. Write a Python function query_high_speed_filters(df: pd. DataFrame, min_hours: float, target_support: str) -> pd. DataFrame that executes optimized runtime queries:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Dynamic Expression Injection:</strong> Use the .query() method to filter the incoming DataFrame.</li><li class="py-0.5"><strong>Multi-Variable String Rule:</strong> The expression string must evaluate rows based on the following multi-variable condition:$$\text{Condition} = (\text{StudyHours} \ge \text{@min\_hours}) \land (\text{SchoolSupport} == \text{@target\_support})$$Variable</li><li class="py-0.5"><strong>Referencing:</strong> Use the @ symbol within the query expression string to dynamically reference the local variables min_hours and target_support.</li><li class="py-0.5"><strong>Casing Normalization:</strong> Prior to executing the query, ensure the SchoolSupport text column is stripped of all surrounding whitespaces and converted to a standard string.</li></ul>
@@ -12981,7 +13065,7 @@ def plot_region_user_distribution(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (262,'262. Chunked Processing Architecture for Multi-Gigabyte Ingestion','
+VALUES (263,'263. Chunked Processing Architecture for Multi-Gigabyte Ingestion','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Challenge 98: Chunked Processing Architecture for Multi-Gigabyte IngestionProblem DescriptionWhen processing an enormous multi-gigabyte data repository that exceeds the available RAM capacity of a host machine, calling pd.read_csv("large_file.csv") will instantly trigger a system crash. To process large files safely, you must implement a chunked reading architecture that streams the file sequentially in manageable micro-batches. Write a Python function process_stream_chunks(file_path: str, batch_chunk_size: int) -> pd. DataFrame that simulates chunked micro-batch processing:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Chunked Ingestion Engine:</strong> Open the target file using pd.read_csv() combined with the chunksize=batch_chunk_size parameter configuration. This will return a iterable text file parsing stream reader object.</li><li class="py-0.5"><strong>Iterative Batch Aggregation:</strong> Loop through each chunk batch sequentially. Within each chunk batch, perform an immediate data filtering step: retain only those rows where the Status column matches "Error" or "Err".</li><li class="py-0.5"><strong>Relational In-Line Truncation:</strong> For the filtered rows in each chunk, discard all columns except Timestamp, SensorID, and Status to minimize the data''s memory footprint before aggregation.</li><li class="py-0.5"><strong>Consolidated Reconstruction:</strong> Vertically stack (pd.concat) the filtered data slices from each chunk into a single, consolidated output DataFrame. Reset the positional index smoothly from 0 to $N-1$. Input Functional Parametersfile_path: A string path pointing toward the location of a mock big data file structured identically to sensor_readings_noisy.csv.batch_chunk_size: An integer defining the maximum row limit processed inside a single micro-batch iteration loop (e.g., 100). ConstraintsThe function must avoid loading the entire file into memory at once; data must be filtered chunk-by-chunk. Example 1Input File Execution Parameters (batch_chunk_size = 2 over a 4-row file):Chunk 1</li><li class="py-0.5"><strong>Log Block:</strong>
@@ -13018,7 +13102,7 @@ def plot_stock_price_candlesticks(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (263,'263. Eliminate SettingWithCopyWarning in Deeply Nested Views','
+VALUES (264,'264. Eliminate SettingWithCopyWarning in Deeply Nested Views','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">When modifying values in a subset of a DataFrame, developers frequently trigger the notorious SettingWithCopyWarning. This occurs when an operation is performed on a "view" of the data rather than an explicit "copy", leaving it ambiguous whether the original DataFrame was successfully updated. To build safe production data pipelines, you must eliminate chained indexing loops and enforce explicit allocation. Write a Python function safe_salary_adjustment(df: pd. DataFrame, target_dept: str, bonus_multiplier: float) -> pd. DataFrame that performs safe data mutations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Subset Isolation:</strong> Isolate a subset of the incoming DataFrame containing only employees belonging to the specified target_dept.</li><li class="py-0.5"><strong>Explicit Copy Enforcement:</strong> Enforce an explicit memory allocation on this slice using the .copy() method to completely sever its reference view link to the source table.</li><li class="py-0.5"><strong>In-Place Mutation:</strong> Within this new, isolated DataFrame, multiply the CurrentSalary column by the bonus_multiplier value to compute an updated compensation matrix.</li><li class="py-0.5"><strong>Warning Mitigation:</strong> The execution of this function must run completely clean, without triggering a SettingWithCopyWarning or altering the rows of the original input DataFrame. Return only the modified subset DataFrame.</li></ul>
@@ -13076,7 +13160,7 @@ def plot_departmental_profit_heatmap(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (264,'264. Optimize Row-Wise Traversal (Replacing iterrows with itertuples)','
+VALUES (265,'265. Optimize Row-Wise Traversal (Replacing iterrows with itertuples)','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Using .iterrows() to loop through rows in a large dataset is a major anti-pattern in Pandas. It runs slowly because it has to pack each row''s data into a new Pandas Series object at every step. When vectorization isn''t an option and you must loop through rows, you should use the much faster .itertuples() method, which streams rows as lightweight, optimized Python named tuples. Write a Python function compute_custom_performance_index(df: pd. DataFrame) -> list that optimizes row loops:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Lightweight Row Streaming:</strong> Loop through the rows of the incoming academic DataFrame using the optimized .itertuples() traversal architecture. Disable index tracking inside the tuple generation loop by setting index=False to speed up performance.</li><li class="py-0.5"><strong>Row-Wise Algorithmic Logic:</strong> For each row tuple, compute a custom index score called PerformanceIndex based on these conditional rules:If AttendanceRate is strictly less than 80.0, the score is defined as: StudyHours * 0.5 + SleepHoursIf AttendanceRate is greater than or equal to 80.0, the score is defined as: StudyHours * 1.2 + SleepHours * 1.5 -</li><li class="py-0.5"><strong>ScreenTimeOutput Structure:</strong> Store the calculated numerical scores in a standard Python list, preserving the exact order of rows from the original dataset. Return this list.</li></ul>
@@ -13129,7 +13213,7 @@ def plot_correlation_matrix(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (265,'265. Fast Element-Wise Matrix Mutations Using NumPy Vectorization Backends','
+VALUES (266,'266. Fast Element-Wise Matrix Mutations Using NumPy Vectorization Backends','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">While the .apply() method is flexible, applying a custom Python function to rows or columns operates as an implicit for loop under the hood. For large datasets, this approach is highly inefficient. To achieve maximum execution speed, you should pass data directly to underlying NumPy arrays (.values or .to_numpy()) to harness true low-level C-vectorized parallel processing. Write a Python function fast_vectorized_profit_scaler(df: pd. DataFrame) -> np.ndarray that utilizes NumPy vectorization backends:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>NumPy Array Extraction:</strong> Extract the raw numeric data from the Quantity, UnitPrice, and Profit columns as a combined multi-dimensional NumPy ndarray block using the .values property.</li><li class="py-0.5"><strong>Low-Level Array Math:</strong> Perform low-level C-vectorized mathematical mutations directly on the extracted NumPy array coordinates. Compute a new array named ScaledYield using the following logic:For rows where the Profit coordinate is strictly negative (representing a loss), scale the absolute value of that loss by multiplying it by the corresponding Quantity. For rows where the Profit coordinate is zero or positive, multiply the Profit value by the corresponding UnitPrice.</li><li class="py-0.5"><strong>Output Format:</strong> Return the calculated ScaledYield values as a standalone one-dimensional NumPy ndarray, preserving the data''s initial row order.</li></ul>
@@ -13182,7 +13266,7 @@ def detect_fraudulent_transactions(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (266,'266. Parallelizing Custom User-Defined Functions Across Groups','
+VALUES (267,'267. Parallelizing Custom User-Defined Functions Across Groups','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">When executing highly complex user-defined functions (UDFs) across a dataset using .groupby().apply(), Pandas processes each group partition sequentially on a single CPU core. On large multi-core production systems, this leaves the remaining CPU cores completely idle. To optimize resource utilization, you must structure your grouping code into discrete, independent tasks that can be executed in parallel across multiple processing threads. Write a Python function parallel_group_processing(df: pd. DataFrame) -> pd. DataFrame that designs parallel-ready group operations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Subgroup Structural Partitioning:</strong> Group the educational tracking grid by the ParentEducation column.</li><li class="py-0.5"><strong>Isolated Task Design:</strong> Design a clean user-defined function (UDF) that can run independently on any individual group chunk. The UDF must sort the chunk''s internal rows by ExamScore in descending order, drop the lowest 10% of records from that specific group, and calculate the mathematical variance of the remaining scores.</li><li class="py-0.5"><strong>Consolidated Assembly:</strong> Return a flat summary DataFrame containing the columns ParentEducation and FilteredVariance, sorted alphabetically by ParentEducation.</li><li class="py-0.5"><strong>Architecture Readiness:</strong> Ensure the processing logic uses standard, non-interdependent functions, making it fully compatible with parallel mapping frameworks (like joblib or multiprocessing).</li></ul>
@@ -13239,7 +13323,7 @@ def score_relative_percentiles(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (267,'267. Compute Rolling Correlation Matrices Across Sliding Timelines','
+VALUES (268,'268. Compute Rolling Correlation Matrices Across Sliding Timelines','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Quantitative analysts evaluating asset pairs inside high_frequency_stock_ticks.csv monitor shifting market microstructures by tracking the rolling correlation between asset price movements over time. Static global correlation calculations are insufficient because they hide brief periods of decoupling caused by localized price shocks. Write a Python function compute_rolling_pair_correlation(df: pd. DataFrame, window_size: int) -> pd. DataFrame that calculates sliding time-series correlations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Ticker Alignment Imputation:</strong> The input DataFrame contains irregular tick logs for multiple tickers. Pivot the data so that Timestamp becomes the explicit row index, Ticker labels become columns, and Price values fill the intersections. Chronologically sort this pivoted index.</li><li class="py-0.5"><strong>Missing Tick Forward-Protection:</strong> High-frequency streams often contain mismatched timestamps between assets. Forward-fill (ffill) missing values across the ticker columns so that the last known price persists until a new tick arrives. If leading values remain null, drop those rows.</li><li class="py-0.5"><strong>Rolling Correlation Processing:</strong> Execute a moving window correlation matrix calculation using .rolling(window=window_size).corr().</li><li class="py-0.5"><strong>Target Level Extraction:</strong> The resulting rolling correlation output returns a hierarchical MultiIndex column-and-row matrix at each timestamp step. Extract the rolling correlation values strictly between the ticker pairs "AAPL" and "TSLA".</li><li class="py-0.5"><strong>Output Structure:</strong> Return a flat DataFrame with columns Timestamp and RollingCorrelation. Remove any leading rows where the rolling window lacked sufficient data points to compute a valid correlation matrix.</li></ul>
@@ -13298,7 +13382,7 @@ def detect_stale_hardware_nodes(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (268,'268. Multi-Condition Deduplication Keeping Custom Dynamic Extremes','
+VALUES (269,'269. Multi-Condition Deduplication Keeping Custom Dynamic Extremes','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Cleaning transaction records from the dirty_store_transactions.csv ledger requires removing redundant customer logs. However, flat deduplication commands (like .drop_duplicates(keep=''first'')) fail when business logic requires evaluating multiple conditions simultaneously to determine which unique row to preserve. Write a Python function deduplicate_dynamic_extremes(df: pd. DataFrame) -> pd. DataFrame that runs complex deduplication filters:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Duplicate Domain Identification:</strong> A group of rows are considered duplicates if they share identical values for both CustomerID and ProductCategory.</li><li class="py-0.5"><strong>Dynamic Priority Rules:</strong> Within each duplicate group, analyze the rows and retain exactly one record based on the following selection priority:Preserve the row that logged the absolute maximum Profit metric. If multiple rows in a duplicate group tie for the exact same maximum profit, break the tie by preserving the row that logs the absolute minimum Discount value. If a tie still persists across both profit and discount, retain the row with the lower numerical TransactionID.</li><li class="py-0.5"><strong>Index Restoration:</strong> Return the final deduplicated DataFrame sorted by TransactionID in ascending order, with its row indices reset continuously from 0.</li></ul>
@@ -13354,7 +13438,7 @@ def segment_customer_lifetimes(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (269,'269. Dynamic Quantile-Based Binning Across Variable Group Sizes','
+VALUES (270,'270. Dynamic Quantile-Based Binning Across Variable Group Sizes','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Standard quantile binning (pd.qcut()) calculates uniform thresholds across an entire dataset. However, this distorts performance classifications if baseline behaviors vary heavily between distinct categories. For example, a student exam score of 75 might be in the top 10% at a school with strict grading, but in the bottom 20% at another. To normalize scores accurately, you must compute quantile boundaries dynamically within each group separate from the rest of the dataset. Write a Python function compute_grouped_quantiles(df: pd. DataFrame) -> pd. DataFrame that builds custom localized ranking bins:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Subgroup Quantile Allocation:</strong> Group the academic tracking grid by the ParentEducation column.</li><li class="py-0.5"><strong>Localized Variable Binning:</strong> Within each separate education group, bucket the individual ExamScore values into exactly three distinct quantile ranks (Terciles).</li><li class="py-0.5"><strong>Ordinal Label Formatting:</strong> Name the three quantile bins precisely "Low", "Medium", and "High" from lowest to highest score.</li><li class="py-0.5"><strong>Column Injection Assignment:</strong> Append these dynamic group-level assignments to a new column named CohortPerformanceTier.</li><li class="py-0.5"><strong>Data Integrity Preservation:</strong> Return the complete original DataFrame holding all its initial features with the new CohortPerformanceTier column attached. Do not drop rows or shuffle the original data sequence.</li></ul>
@@ -13412,7 +13496,7 @@ def calculate_seasonal_financials(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (270,'270. Reconstruct Lineage Tables from Self-Referential Parent-Child Rows','
+VALUES (271,'271. Reconstruct Lineage Tables from Self-Referential Parent-Child Rows','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Corporate organizational maps or product manufacturing bills of materials are frequently stored in flat relational tables using self-referential rows (where a row contains a key pointing back to another row''s identifier in the same table, representing a parent-child relationship). To run hierarchical network models, you must recursively traverse these self-referential rows to trace corporate lineages. Write a Python function reconstruct_management_lineage(df: pd. DataFrame) -> pd. DataFrame that builds an algorithmic tree lineage tracker:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Self-Referential Traversal:</strong> The input table contains employee records with two key columns: EmployeeID (individual system key) and ManagerID (refers to the EmployeeID of their immediate superior).</li><li class="py-0.5"><strong>Lineage Path Tracking:</strong> Tracing up this hierarchy, recursively follow the chain of command for each employee until you reach the absolute top-tier executive (the root node, indicated by a ManagerID that is null, empty, or equal to their own EmployeeID).</li><li class="py-0.5"><strong>Lineage Feature Generation:</strong> For each employee, generate a new column named LineageDepth that stores the integer count of management tiers above them (e.g., top-tier executive = 0, direct report = 1, second-tier report = 2).</li><li class="py-0.5"><strong>Root Node Execution:</strong> Create an additional tracking column named UltimateSuperiorID containing the EmployeeID of the absolute top executive at the root of their management chain.</li><li class="py-0.5"><strong>Output Structure:</strong> Return a flat DataFrame containing the columns EmployeeID, ManagerID, LineageDepth, and UltimateSuperiorID, sorted by LineageDepth in ascending order.</li></ul>
@@ -13470,7 +13554,7 @@ def detect_high_volatility_symbols(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (271,'271. Identify Complex Cycle Patterns in Graph Metadata','
+VALUES (272,'272. Identify Complex Cycle Patterns in Graph Metadata','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Network infrastructure matrices parsing time-stamped system feeds from sensor_readings_noisy.csv monitor data routing paths between physical devices. If a network configuration error occurs, data packets can get trapped in a circular loop, passing endlessly between nodes and consuming bandwidth. You must build an engine to trace these routing paths and flag cyclic dependencies. Write a Python function detect_network_cycles(df: pd. DataFrame) -> pd. DataFrame that runs topological cycle evaluations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Graph Setup:</strong> The incoming DataFrame contains two relational columns: SourceNode and DestinationNode, representing directed edges in a network graph.</li><li class="py-0.5"><strong>Cycle Traversal Logic:</strong> Build an algorithm to traverse the directed edges for each source node. Track the path of connected nodes until you either hit a dead end (a node with no outgoing edges) or encounter a node that has already been visited within the current traversal path, confirming a circular loop.</li><li class="py-0.5"><strong>Anomaly Flagging:</strong> Add a boolean tracking column named IsCyclic that evaluates to True if the node belongs to a circular path, and False otherwise.</li><li class="py-0.5"><strong>Output Architecture:</strong> Return a flat summary DataFrame containing only two columns: SourceNode and IsCyclic. Remove duplicates so each unique SourceNode appears exactly once, sorted alphabetically.</li></ul>
@@ -13531,7 +13615,7 @@ def score_predictive_metrics(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (272,'272. Vectorized Matrix Multiplications for Multi-Dimensional Coordinate Tiers','
+VALUES (273,'273. Vectorized Matrix Multiplications for Multi-Dimensional Coordinate Tiers','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Advanced spatial classification models process large datasets inefficiently if coordinate transformations are run inside row-wise loops. To maximize performance, you must bypass standard Pandas methods and pass data columns directly into custom matrix dot-products using underlying linear algebra backends. Write a Python function execute_matrix_transformation(df: pd. DataFrame, transform_matrix: np.ndarray) -> pd. DataFrame that implements linear algebra transformations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Feature Vector Extraction:</strong> Extract the data from three numeric columns—StudyHours, SleepHours, and ScreenTime—as a dense 2D NumPy array of shape $(N, 3)$ using the .values property.</li><li class="py-0.5"><strong>Matrix Dot-Product Transformation:</strong> Perform a vectorized matrix multiplication (np.dot or the @ operator) between the extracted $(N, 3)$ feature array and the provided $(3, 3)$ transformation matrix, yielding a new transformed matrix of shape $(N, 3)$.</li><li class="py-0.5"><strong>Calculated Column Appending:</strong> Map these newly calculated vectors back onto the source DataFrame as three distinct columns named Vector_X, Vector_Y, and Vector_Z respectively.</li><li class="py-0.5"><strong>Preservation Layout:</strong> Round all three newly generated float columns to exactly 4 decimal places. Return the complete modified DataFrame containing all original columns along with the transformation vectors.</li></ul>
@@ -13578,7 +13662,7 @@ def normalize_sensor_features(df, transform_matrix):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (273,'273. Track Dynamic Multi-Layer State Machine Transitions','
+VALUES (274,'274. Track Dynamic Multi-Layer State Machine Transitions','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Security monitoring tools processing high-precision streams like sensor_readings_noisy.csv detect complex system vulnerabilities by tracking sequential changes in operational status over time. A simple count of errors is insufficient; you must track exactly how a system transitions between different states over sequential steps. Write a Python function track_state_transitions(df: pd. DataFrame) -> pd. DataFrame that models state machine progressions:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Chronological Sorting:</strong> Sort the incoming dataset globally by SensorID alphabetically, and then by Timestamp in ascending chronological order.</li><li class="py-0.5"><strong>State Window Shifting:</strong> Within each SensorID group, create a new column named PriorStatus that uses the .shift(1) method to capture the immediate preceding row''s status value.</li><li class="py-0.5"><strong>Transition Mapping:</strong> Combine the current row''s Status and the PriorStatus value to create a transition string column named StateTransition formatted precisely as "PRIOR_TO_CURRENT" (e.g., "Normal_to_Error").</li><li class="py-0.5"><strong>Boundary Management:</strong> For the very first row of each sensor group, PriorStatus will evaluate to NaN. Replace this initial transition string with the default label "START_STATE".</li><li class="py-0.5"><strong>Output Structure:</strong> Return the complete DataFrame holding all initial attributes with the PriorStatus and StateTransition columns attached.</li></ul>
@@ -13636,7 +13720,7 @@ def track_state_transitions(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (274,'274. End-to-End Multiprocess Pipeline Orchestration','
+VALUES (275,'275. End-to-End Multiprocess Pipeline Orchestration','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">This final challenge brings together all the key areas of the curriculum—data cleaning, joining, aggregation, and structural reshaping—into a single, unified production pipeline. You must design an end-to-end data transformation engine that ingests raw, messy transaction files and processes them into clean analytical features. Write a Python function orchestrate_data_pipeline(df_transactions: pd. DataFrame, df_customers: pd. DataFrame) -> pd. DataFrame that coordinates a complete multi-step transformation pipeline:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Data Sanitization Step:</strong> Clean the df_transactions table by stripping all leading/trailing whitespaces from the ProductCategory column and forcing all characters to lowercase. Remove any rows where Profit or CustomerID is missing (NaN).</li><li class="py-0.5"><strong>Relational Ingestion Step:</strong> Merge the cleaned transactions DataFrame with the df_customers master dimension table using an Inner Join on the shared CustomerID column.</li><li class="py-0.5"><strong>Advanced Group Aggregation Step:</strong> Group the combined dataset by Region and the cleaned ProductCategory columns simultaneously. For each group, calculate two statistics:The total cumulative sum of the Quantity column (name this output column TotalQuantity). The volume-weighted average profit using the formula:$$\text{WeightedProfit} = \frac{\sum (\text{Quantity} \times \text{Profit})}{\sum \text{Quantity}}$$Structural</li><li class="py-0.5"><strong>Pivot Reshaping Step:</strong> Pivot the aggregated results so that Region becomes the explicit row index, and unique values within the ProductCategory column swing horizontally into the primary column layout. The cells at each intersection must display the calculated WeightedProfit metric.</li><li class="py-0.5"><strong>Final Output Formatting:</strong> Fill any missing or empty grid cells (NaN) inside the final pivot grid with a flat default value of 0.00. Round all float metrics to exactly 2 decimal places. Return the finalized pivoted DataFrame.</li></ul>
