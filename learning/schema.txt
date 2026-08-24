@@ -1,0 +1,680 @@
+## Table `profiles`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `username` | `text` |  Unique |
+| `bio` | `text` |  Nullable |
+| `avatar_url` | `text` |  Nullable |
+| `university_name` | `text` |  Nullable |
+| `course` | `text` |  Nullable |
+| `dob` | `date` |  Nullable |
+| `city` | `text` |  Nullable |
+| `is_banned` | `bool` |  Nullable |
+| `sethji` | `bool` |  Nullable |
+| `is_onboarded` | `bool` |  Nullable |
+| `created_at` | `timestamptz` |  Nullable |
+| `updated_at` | `timestamptz` |  Nullable |
+| `last_seen` | `timestamptz` |  Nullable |
+| `full_name` | `text` |  Nullable |
+| `year_of_study` | `text` |  Nullable |
+| `is_email_verified` | `bool` |  Nullable |
+| `university_id` | `uuid` |  Nullable |
+| `is_testing_user` | `bool` |  Nullable |
+| `session_token` | `text` |  Nullable |
+| `allow_calls` | `text` |  |
+| `is_muted_ringtone` | `bool` |  |
+| `active_chat_id` | `text` |  Nullable |
+| `default_wallpaper` | `text` |  Nullable |
+| `is_teacher` | `bool` |  Nullable |
+| `teacher_id_card_url` | `text` |  Nullable |
+| `linkedin_url` | `text` |  Nullable |
+
+## Table `groups`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `name` | `text` |  |
+| `bio` | `text` |  Nullable |
+| `description` | `text` |  Nullable |
+| `creator_id` | `uuid` |  Nullable |
+| `privacy_type` | `text` |  |
+| `password_hash` | `text` |  Nullable |
+| `is_system_group` | `bool` |  Nullable |
+| `avatar_url` | `text` |  Nullable |
+| `created_at` | `timestamptz` |  Nullable |
+| `updated_at` | `timestamptz` |  Nullable |
+| `university_id` | `uuid` |  Nullable |
+| `theme` | `text` |  Nullable |
+| `wallpaper_url` | `text` |  Nullable |
+| `rules` | `text` |  Nullable |
+| `font_theme` | `varchar` |  Nullable |
+
+## Table `group_members`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `group_id` | `uuid` |  |
+| `user_id` | `uuid` |  |
+| `role` | `text` |  |
+| `is_group_banned` | `bool` |  Nullable |
+| `joined_at` | `timestamptz` |  Nullable |
+
+## Table `messages`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `sender_id` | `uuid` |  |
+| `recipient_id` | `uuid` |  Nullable |
+| `group_id` | `uuid` |  Nullable |
+| `message_text` | `text` |  |
+| `is_anonymous` | `bool` |  Nullable |
+| `created_at` | `timestamptz` |  Nullable |
+| `media_url` | `text` |  Nullable |
+| `read_at` | `timestamptz` |  Nullable |
+
+## Table `friends`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `user_id_1` | `uuid` |  |
+| `user_id_2` | `uuid` |  |
+| `status` | `text` |  |
+| `created_at` | `timestamptz` |  Nullable |
+| `theme` | `text` |  Nullable |
+
+## Table `blocks`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `blocker_id` | `uuid` |  |
+| `blocked_id` | `uuid` |  |
+| `created_at` | `timestamptz` |  Nullable |
+
+## Table `reports`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `reporter_id` | `uuid` |  |
+| `reported_user_id` | `uuid` |  |
+| `reason` | `text` |  |
+| `status` | `text` |  |
+| `created_at` | `timestamptz` |  Nullable |
+
+## Table `notifications`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `recipient_id` | `uuid` |  Nullable |
+| `title` | `text` |  |
+| `content` | `text` |  |
+| `is_broadcast` | `bool` |  Nullable |
+| `is_read` | `bool` |  Nullable |
+| `created_at` | `timestamptz` |  Nullable |
+
+## Table `chat_clears`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `user_id` | `uuid` |  |
+| `friend_id` | `uuid` |  Nullable |
+| `group_id` | `uuid` |  Nullable |
+| `cleared_at` | `timestamptz` |  |
+
+## Table `deleted_messages`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `user_id` | `uuid` |  |
+| `message_id` | `uuid` |  |
+| `created_at` | `timestamptz` |  |
+
+## Table `feedbacks`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `user_id` | `uuid` |  |
+| `content` | `text` |  |
+| `created_at` | `timestamptz` |  Nullable |
+
+## Table `message_reactions`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `message_id` | `uuid` |  |
+| `user_id` | `uuid` |  |
+| `emoji` | `text` |  |
+| `created_at` | `timestamptz` |  Nullable |
+
+## Table `universities`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `name` | `text` |  Unique |
+| `domain` | `text` |  Unique |
+| `logo_url` | `text` |  Nullable |
+| `created_at` | `timestamptz` |  Nullable |
+
+## Table `university_applications`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `name` | `text` |  |
+| `domain` | `text` |  |
+| `contact_email` | `text` |  |
+| `status` | `text` |  |
+| `created_at` | `timestamptz` |  Nullable |
+
+## Table `push_subscriptions`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `user_id` | `uuid` |  |
+| `subscription` | `jsonb` |  |
+| `created_at` | `timestamptz` |  |
+
+## Table `notification_preferences`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `user_id` | `uuid` |  |
+| `context_type` | `text` |  |
+| `context_id` | `text` |  |
+| `mute_website` | `bool` |  |
+| `mute_device` | `bool` |  |
+| `updated_at` | `timestamptz` |  |
+| `notify_all_messages` | `bool` |  |
+| `notify_all_messages_website` | `bool` |  |
+
+## Table `active_calls`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `room_name` | `text` |  Unique |
+| `group_id` | `uuid` |  Nullable |
+| `creator_id` | `uuid` |  |
+| `call_type` | `text` |  |
+| `created_at` | `timestamptz` |  |
+| `ended_at` | `timestamptz` |  Nullable |
+
+## Table `user_chat_settings`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `user_id` | `uuid` |  |
+| `chat_type` | `text` |  |
+| `chat_id` | `uuid` |  |
+| `theme` | `text` |  Nullable |
+| `wallpaper_url` | `text` |  Nullable |
+| `created_at` | `timestamptz` |  Nullable |
+
+## Table `teacher_applications`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `user_id` | `uuid` |  |
+| `id_card_url` | `text` |  |
+| `status` | `text` |  |
+| `created_at` | `timestamptz` |  Nullable |
+| `updated_at` | `timestamptz` |  Nullable |
+
+## Table `quizzes`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `title` | `text` |  |
+| `description` | `text` |  Nullable |
+| `creator_id` | `uuid` |  Nullable |
+| `is_teacher_quiz` | `bool` |  Nullable |
+| `scope` | `text` |  |
+| `university_id` | `uuid` |  Nullable |
+| `difficulty` | `text` |  Nullable |
+| `required_inputs` | `jsonb` |  Nullable |
+| `password_hash` | `text` |  Nullable |
+| `questions` | `jsonb` |  |
+| `start_time` | `timestamptz` |  |
+| `end_time` | `timestamptz` |  |
+| `created_at` | `timestamptz` |  Nullable |
+| `per_question_time_limit` | `int4` |  Nullable |
+| `time_limit` | `int4` |  Nullable |
+
+## Table `quiz_attempts`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `quiz_id` | `uuid` |  |
+| `user_id` | `uuid` |  |
+| `answers` | `jsonb` |  |
+| `student_details` | `jsonb` |  Nullable |
+| `score` | `int4` |  |
+| `warnings_count` | `int4` |  Nullable |
+| `is_disqualified` | `bool` |  Nullable |
+| `started_at` | `timestamptz` |  Nullable |
+| `completed_at` | `timestamptz` |  Nullable |
+
+## Table `group_bans`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `group_id` | `uuid` |  |
+| `user_id` | `uuid` |  |
+| `banned_by` | `uuid` |  Nullable |
+| `created_at` | `timestamptz` |  Nullable |
+
+## Table `pinned_messages`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `message_id` | `uuid` |  Unique |
+| `group_id` | `uuid` |  Nullable |
+| `pinned_by` | `uuid` |  |
+| `created_at` | `timestamptz` |  |
+
+## Table `group_logs`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `group_id` | `uuid` |  Nullable |
+| `action_performer_id` | `uuid` |  Nullable |
+| `target_user_id` | `uuid` |  Nullable |
+| `action_type` | `varchar` |  |
+| `deleted_message_text` | `text` |  Nullable |
+| `created_at` | `timestamptz` |  |
+
+## Table `tea_posts`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `author_id` | `uuid` |  Nullable |
+| `content` | `text` |  |
+| `media_url` | `text` |  Nullable |
+| `is_anonymous` | `bool` |  |
+| `created_at` | `timestamptz` |  |
+| `updated_at` | `timestamptz` |  |
+
+## Table `tea_aura_votes`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `post_id` | `uuid` |  |
+| `user_id` | `uuid` |  |
+| `vote_type` | `int4` |  |
+| `created_at` | `timestamptz` |  |
+
+## Table `tea_poll_votes`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `post_id` | `uuid` |  |
+| `user_id` | `uuid` |  |
+| `reaction_type` | `text` |  |
+| `created_at` | `timestamptz` |  |
+
+## Table `tea_comments`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `post_id` | `uuid` |  |
+| `user_id` | `uuid` |  |
+| `comment_text` | `text` |  |
+| `created_at` | `timestamptz` |  |
+| `is_pinned` | `bool` |  |
+| `parent_id` | `uuid` |  Nullable |
+
+## Table `follows`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `follower_id` | `uuid` |  |
+| `following_id` | `uuid` |  |
+| `created_at` | `timestamptz` |  |
+
+## Table `tea_saved_posts`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `user_id` | `uuid` |  |
+| `post_id` | `uuid` |  |
+| `created_at` | `timestamptz` |  |
+
+## Table `tea_seen_posts`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `user_id` | `uuid` |  |
+| `post_id` | `uuid` |  |
+| `created_at` | `timestamptz` |  |
+
+## RLS Policies
+
+### `messages`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Allow message deletion` | DELETE | authenticated | PERMISSIVE | `((sender_id = ( SELECT auth.uid() AS uid)) OR ((group_id IS NOT NULL) AND (EXISTS ( SELECT 1    FROM group_members gm   WHERE ((gm.group_id = messages.group_id) AND (gm.user_id = ( SELECT auth.uid() AS uid)) AND (gm.role = ANY (ARRAY['admin'::text, 'coadmin'::text, 'mod'::text])))))) OR ((group_id IS NOT NULL) AND (EXISTS ( SELECT 1    FROM groups g   WHERE ((g.id = messages.group_id) AND (g.is_system_group = true)))) AND (EXISTS ( SELECT 1    FROM profiles p   WHERE ((p.id = ( SELECT auth.uid() AS uid)) AND (p.sethji = true))))))` | — |
+| `Members can insert messages in active groups/DMs` | INSERT | authenticated | PERMISSIVE | — | `((sender_id = auth.uid()) AND (((group_id IS NOT NULL) AND (EXISTS ( SELECT 1    FROM group_members   WHERE ((group_members.group_id = messages.group_id) AND (group_members.user_id = auth.uid()) AND (group_members.is_group_banned = false))))) OR (recipient_id IS NOT NULL)))` |
+| `Members can send group messages` | INSERT | authenticated | PERMISSIVE | — | `((sender_id = ( SELECT auth.uid() AS uid)) AND (((group_id IS NOT NULL) AND (EXISTS ( SELECT 1    FROM group_members   WHERE ((group_members.group_id = messages.group_id) AND (group_members.user_id = ( SELECT auth.uid() AS uid)) AND (group_members.is_group_banned = false))))) OR ((recipient_id IS NOT NULL) AND (sender_id = ( SELECT auth.uid() AS uid)))))` |
+| `Members can view messages in their groups/DMs` | SELECT | authenticated | PERMISSIVE | `(((group_id IS NOT NULL) AND (EXISTS ( SELECT 1    FROM group_members   WHERE ((group_members.group_id = messages.group_id) AND (group_members.user_id = auth.uid()) AND (group_members.is_group_banned = false))))) OR ((recipient_id = auth.uid()) OR (sender_id = auth.uid())))` | — |
+| `Recipient can mark messages as read` | UPDATE | authenticated | PERMISSIVE | `(recipient_id = auth.uid())` | `(recipient_id = auth.uid())` |
+| `Users can update messages they receive` | UPDATE | authenticated | PERMISSIVE | `(recipient_id = ( SELECT auth.uid() AS uid))` | `(recipient_id = ( SELECT auth.uid() AS uid))` |
+| `Users can view group messages they belong to` | SELECT | authenticated | PERMISSIVE | `(((group_id IS NOT NULL) AND (EXISTS ( SELECT 1    FROM group_members   WHERE ((group_members.group_id = messages.group_id) AND (group_members.user_id = ( SELECT auth.uid() AS uid)) AND (group_members.is_group_banned = false))))) OR ((recipient_id IS NOT NULL) AND ((sender_id = ( SELECT auth.uid() AS uid)) OR (recipient_id = ( SELECT auth.uid() AS uid)))))` | — |
+
+### `profiles`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Anyone can view non-banned profiles` | SELECT | public | PERMISSIVE | `((is_banned = false) OR (id = ( SELECT auth.uid() AS uid)))` | — |
+| `Public profiles are viewable by everyone` | SELECT | authenticated | PERMISSIVE | `true` | — |
+| `Users can insert own profile` | INSERT | public | PERMISSIVE | — | `(id = ( SELECT auth.uid() AS uid))` |
+| `Users can update own profile` | UPDATE | authenticated | PERMISSIVE | `(auth.uid() = id)` | — |
+
+### `groups`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Anyone can view public groups` | SELECT | public | PERMISSIVE | `((auth.role() = 'authenticated'::text) OR (privacy_type = ANY (ARRAY['public'::text, 'password_protected'::text])))` | — |
+| `Authenticated users can create groups` | INSERT | authenticated | PERMISSIVE | — | `(creator_id = ( SELECT auth.uid() AS uid))` |
+| `Group admins can update groups` | UPDATE | authenticated | PERMISSIVE | `((creator_id = ( SELECT auth.uid() AS uid)) OR (EXISTS ( SELECT 1    FROM group_members   WHERE ((group_members.group_id = groups.id) AND (group_members.user_id = ( SELECT auth.uid() AS uid)) AND (group_members.role = ANY (ARRAY['admin'::text, 'coadmin'::text, 'mod'::text]))))))` | — |
+
+### `group_members`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Admins can remove members` | DELETE | authenticated | PERMISSIVE | `((user_id = ( SELECT auth.uid() AS uid)) OR (EXISTS ( SELECT 1    FROM group_members gm   WHERE ((gm.group_id = group_members.group_id) AND (gm.user_id = ( SELECT auth.uid() AS uid)) AND (gm.role = ANY (ARRAY['admin'::text, 'coadmin'::text]))))))` | — |
+| `Authenticated can join groups` | INSERT | authenticated | PERMISSIVE | — | `((user_id = auth.uid()) AND (EXISTS ( SELECT 1    FROM groups g   WHERE ((g.id = group_members.group_id) AND ((g.privacy_type = 'public'::text) OR ((g.privacy_type = 'university_only'::text) AND (g.university_id = ( SELECT profiles.university_id            FROM profiles           WHERE (profiles.id = auth.uid())))))))))` |
+| `Members can view group memberships` | SELECT | authenticated | PERMISSIVE | `true` | — |
+| `Staff can update memberships` | UPDATE | authenticated | PERMISSIVE | `(EXISTS ( SELECT 1    FROM group_members gm   WHERE ((gm.group_id = group_members.group_id) AND (gm.user_id = ( SELECT auth.uid() AS uid)) AND (gm.role = ANY (ARRAY['admin'::text, 'coadmin'::text, 'mod'::text])))))` | — |
+
+### `blocks`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Users can block others` | INSERT | authenticated | PERMISSIVE | — | `(blocker_id = ( SELECT auth.uid() AS uid))` |
+| `Users can unblock` | DELETE | authenticated | PERMISSIVE | `(blocker_id = ( SELECT auth.uid() AS uid))` | — |
+| `Users can view and manage their own blocks` | ALL | authenticated | PERMISSIVE | `(blocker_id = auth.uid())` | `(blocker_id = auth.uid())` |
+| `Users can view their blocks` | SELECT | authenticated | PERMISSIVE | `((blocker_id = ( SELECT auth.uid() AS uid)) OR (blocked_id = ( SELECT auth.uid() AS uid)))` | — |
+
+### `friends`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Only recipients can accept friend requests` | UPDATE | authenticated | PERMISSIVE | `(user_id_2 = auth.uid())` | `(status = 'accepted'::text)` |
+| `Users can remove friendships` | DELETE | authenticated | PERMISSIVE | `((user_id_1 = ( SELECT auth.uid() AS uid)) OR (user_id_2 = ( SELECT auth.uid() AS uid)))` | — |
+| `Users can send friend requests` | INSERT | authenticated | PERMISSIVE | — | `(user_id_1 = ( SELECT auth.uid() AS uid))` |
+| `Users can update their friendships` | UPDATE | authenticated | PERMISSIVE | `((user_id_1 = auth.uid()) OR (user_id_2 = auth.uid()))` | `((user_id_1 = auth.uid()) OR (user_id_2 = auth.uid()))` |
+| `Users can view own friendships` | SELECT | authenticated | PERMISSIVE | `((user_id_1 = auth.uid()) OR (user_id_2 = auth.uid()))` | — |
+| `Users can view their friendships` | SELECT | authenticated | PERMISSIVE | `((status = 'accepted'::text) OR (user_id_1 = ( SELECT auth.uid() AS uid)) OR (user_id_2 = ( SELECT auth.uid() AS uid)))` | — |
+
+### `reports`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Admins can update reports` | UPDATE | authenticated | PERMISSIVE | `(EXISTS ( SELECT 1    FROM profiles   WHERE ((profiles.id = ( SELECT auth.uid() AS uid)) AND (profiles.sethji = true))))` | — |
+| `Users can submit reports` | INSERT | authenticated | PERMISSIVE | — | `(reporter_id = ( SELECT auth.uid() AS uid))` |
+| `Users can view own reports` | SELECT | authenticated | PERMISSIVE | `((reporter_id = ( SELECT auth.uid() AS uid)) OR (EXISTS ( SELECT 1    FROM profiles   WHERE ((profiles.id = ( SELECT auth.uid() AS uid)) AND (profiles.sethji = true)))))` | — |
+
+### `notifications`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Users can insert notifications securely` | INSERT | authenticated | PERMISSIVE | — | `(auth.uid() IS NOT NULL)` |
+| `Users can update own notification read status` | UPDATE | authenticated | PERMISSIVE | `(recipient_id = ( SELECT auth.uid() AS uid))` | — |
+| `Users can view own notifications` | SELECT | authenticated | PERMISSIVE | `((recipient_id = ( SELECT auth.uid() AS uid)) OR (is_broadcast = true))` | — |
+
+### `message_reactions`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Anyone can view message reactions` | SELECT | authenticated | PERMISSIVE | `true` | — |
+| `Users can delete own reaction` | DELETE | authenticated | PERMISSIVE | `(user_id = ( SELECT auth.uid() AS uid))` | — |
+| `Users can insert own reaction` | INSERT | authenticated | PERMISSIVE | — | `(user_id = ( SELECT auth.uid() AS uid))` |
+| `Users can update own reaction` | UPDATE | authenticated | PERMISSIVE | `(user_id = ( SELECT auth.uid() AS uid))` | `(user_id = ( SELECT auth.uid() AS uid))` |
+
+### `chat_clears`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Users can manage their own chat clears` | ALL | authenticated | PERMISSIVE | `(user_id = ( SELECT auth.uid() AS uid))` | `(user_id = ( SELECT auth.uid() AS uid))` |
+
+### `feedbacks`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Admins can view all feedback` | SELECT | authenticated | PERMISSIVE | `(EXISTS ( SELECT 1    FROM profiles   WHERE ((profiles.id = ( SELECT auth.uid() AS uid)) AND (profiles.sethji = true))))` | — |
+| `Global admins can view all feedbacks` | SELECT | authenticated | PERMISSIVE | `(EXISTS ( SELECT 1    FROM profiles   WHERE ((profiles.id = auth.uid()) AND (profiles.sethji = true))))` | — |
+| `Users can insert own feedback` | INSERT | authenticated | PERMISSIVE | — | `(user_id = ( SELECT auth.uid() AS uid))` |
+| `Users can view own feedback` | SELECT | authenticated | PERMISSIVE | `(user_id = ( SELECT auth.uid() AS uid))` | — |
+
+### `push_subscriptions`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Users can manage own subscriptions` | ALL | authenticated | PERMISSIVE | `(user_id = auth.uid())` | `(user_id = auth.uid())` |
+| `Users can manage their own push subscriptions` | ALL | public | PERMISSIVE | `(auth.uid() = user_id)` | — |
+
+### `universities`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Allow public read access to universities` | SELECT | public | PERMISSIVE | `true` | — |
+
+### `deleted_messages`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Users can manage their own deleted messages` | ALL | authenticated | PERMISSIVE | `(user_id = ( SELECT auth.uid() AS uid))` | `(user_id = ( SELECT auth.uid() AS uid))` |
+
+### `university_applications`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Allow anyone to apply for university` | INSERT | public | PERMISSIVE | — | `true` |
+| `Allow public read access to applications` | SELECT | public | PERMISSIVE | `true` | — |
+
+### `pinned_messages`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Allow delete for authorized users` | DELETE | public | PERMISSIVE | `(((group_id IS NOT NULL) AND (EXISTS ( SELECT 1    FROM group_members   WHERE ((group_members.group_id = pinned_messages.group_id) AND (group_members.user_id = auth.uid()) AND (group_members.role = ANY (ARRAY['admin'::text, 'coadmin'::text, 'mod'::text])) AND (group_members.is_group_banned = false))))) OR ((group_id IS NULL) AND (pinned_by = auth.uid())))` | — |
+| `Allow insert for authorized users` | INSERT | public | PERMISSIVE | — | `(((group_id IS NOT NULL) AND (EXISTS ( SELECT 1    FROM (group_members      JOIN messages ON ((messages.id = pinned_messages.message_id)))   WHERE ((group_members.group_id = pinned_messages.group_id) AND (group_members.user_id = auth.uid()) AND (group_members.role = ANY (ARRAY['admin'::text, 'coadmin'::text, 'mod'::text])) AND (group_members.is_group_banned = false) AND (messages.group_id = pinned_messages.group_id))))) OR ((group_id IS NULL) AND (pinned_by = auth.uid()) AND (EXISTS ( SELECT 1    FROM messages   WHERE ((messages.id = pinned_messages.message_id) AND (messages.group_id IS NULL) AND ((messages.sender_id = auth.uid()) OR (messages.recipient_id = auth.uid())))))))` |
+| `Allow select for room/DM participants` | SELECT | public | PERMISSIVE | `(((group_id IS NOT NULL) AND (EXISTS ( SELECT 1    FROM (group_members      JOIN messages ON ((messages.id = pinned_messages.message_id)))   WHERE ((group_members.group_id = pinned_messages.group_id) AND (group_members.user_id = auth.uid()) AND (group_members.is_group_banned = false) AND (messages.group_id = pinned_messages.group_id))))) OR ((group_id IS NULL) AND (EXISTS ( SELECT 1    FROM messages   WHERE ((messages.id = pinned_messages.message_id) AND (messages.group_id IS NULL) AND ((messages.sender_id = auth.uid()) OR (messages.recipient_id = auth.uid())))))))` | — |
+
+### `tea_seen_posts`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Auth tea_seen_posts write` | ALL | public | PERMISSIVE | `(auth.uid() = user_id)` | `(auth.uid() = user_id)` |
+| `Public tea_seen_posts read` | SELECT | public | PERMISSIVE | `(auth.uid() = user_id)` | — |
+
+### `follows`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Auth follows delete` | DELETE | public | PERMISSIVE | `(auth.uid() = follower_id)` | — |
+| `Auth follows insert` | INSERT | public | PERMISSIVE | — | `(auth.uid() = follower_id)` |
+| `Public follows read` | SELECT | public | PERMISSIVE | `true` | — |
+
+### `tea_saved_posts`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Auth tea_saved_posts write` | ALL | public | PERMISSIVE | `(auth.uid() = user_id)` | `(auth.uid() = user_id)` |
+| `Public tea_saved_posts read` | SELECT | public | PERMISSIVE | `(auth.uid() = user_id)` | — |
+
+### `active_calls`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Allow delete/update for creator or group staff` | ALL | authenticated | PERMISSIVE | `((creator_id = auth.uid()) OR (EXISTS ( SELECT 1    FROM profiles   WHERE ((profiles.id = auth.uid()) AND (profiles.sethji = true)))) OR ((group_id IS NOT NULL) AND (EXISTS ( SELECT 1    FROM group_members   WHERE ((group_members.group_id = active_calls.group_id) AND (group_members.user_id = auth.uid()) AND (group_members.role = ANY (ARRAY['admin'::text, 'coadmin'::text, 'mod'::text])))))))` | `((creator_id = auth.uid()) OR (EXISTS ( SELECT 1    FROM profiles   WHERE ((profiles.id = auth.uid()) AND (profiles.sethji = true)))) OR ((group_id IS NOT NULL) AND (EXISTS ( SELECT 1    FROM group_members   WHERE ((group_members.group_id = active_calls.group_id) AND (group_members.user_id = auth.uid()) AND (group_members.role = ANY (ARRAY['admin'::text, 'coadmin'::text, 'mod'::text])))))))` |
+| `Anyone authenticated can insert active calls` | INSERT | authenticated | PERMISSIVE | — | `(creator_id = ( SELECT auth.uid() AS uid))` |
+| `Anyone authenticated can view active calls` | SELECT | authenticated | PERMISSIVE | `true` | — |
+| `Global admins can view all calls` | SELECT | authenticated | PERMISSIVE | `(EXISTS ( SELECT 1    FROM profiles   WHERE ((profiles.id = auth.uid()) AND (profiles.sethji = true))))` | — |
+| `Members can see calls in their groups` | SELECT | authenticated | PERMISSIVE | `((group_id IS NULL) OR (EXISTS ( SELECT 1    FROM group_members   WHERE ((group_members.group_id = active_calls.group_id) AND (group_members.user_id = auth.uid())))))` | — |
+
+### `notification_preferences`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Users manage own preferences` | ALL | public | PERMISSIVE | `(auth.uid() = user_id)` | `(auth.uid() = user_id)` |
+
+### `tea_comments`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Auth tea_comments delete` | DELETE | public | PERMISSIVE | `(auth.uid() = user_id)` | — |
+| `Auth tea_comments insert` | INSERT | public | PERMISSIVE | — | `(auth.uid() = user_id)` |
+| `Public tea_comments read` | SELECT | public | PERMISSIVE | `true` | — |
+
+### `user_chat_settings`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Users can manage own chat settings` | ALL | authenticated | PERMISSIVE | `(user_id = auth.uid())` | `(user_id = auth.uid())` |
+
+### `tea_posts`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Auth tea_posts delete` | DELETE | public | PERMISSIVE | `(auth.uid() = author_id)` | — |
+| `Auth tea_posts insert` | INSERT | public | PERMISSIVE | — | `((auth.role() = 'authenticated'::text) AND (author_id = auth.uid()))` |
+| `Public tea_posts read` | SELECT | public | PERMISSIVE | `true` | — |
+
+### `tea_aura_votes`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Auth tea_aura_votes write` | ALL | public | PERMISSIVE | `(auth.uid() = user_id)` | `(auth.uid() = user_id)` |
+| `Public tea_aura_votes read` | SELECT | public | PERMISSIVE | `true` | — |
+
+### `tea_poll_votes`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Auth tea_poll_votes write` | ALL | public | PERMISSIVE | `(auth.uid() = user_id)` | `(auth.uid() = user_id)` |
+| `Public tea_poll_votes read` | SELECT | public | PERMISSIVE | `true` | — |
+
+### `teacher_applications`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Admins can update teacher applications` | UPDATE | authenticated | PERMISSIVE | `(EXISTS ( SELECT 1    FROM profiles   WHERE ((profiles.id = auth.uid()) AND (profiles.sethji = true))))` | — |
+| `Users can submit own teacher applications` | INSERT | authenticated | PERMISSIVE | — | `(user_id = auth.uid())` |
+| `Users can view own teacher applications` | SELECT | authenticated | PERMISSIVE | `((user_id = auth.uid()) OR (EXISTS ( SELECT 1    FROM profiles   WHERE ((profiles.id = auth.uid()) AND (profiles.sethji = true)))))` | — |
+
+### `quiz_attempts`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Authenticated users can log attempts` | INSERT | authenticated | PERMISSIVE | — | `(user_id = auth.uid())` |
+| `Users can view own attempts or creators can view quiz attempts` | SELECT | authenticated | PERMISSIVE | `((user_id = auth.uid()) OR (EXISTS ( SELECT 1    FROM quizzes   WHERE ((quizzes.id = quiz_attempts.quiz_id) AND ((quizzes.creator_id = auth.uid()) OR (quizzes.end_time < now()))))))` | — |
+
+### `group_logs`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Allow staff to insert group logs` | INSERT | public | PERMISSIVE | — | `(EXISTS ( SELECT 1    FROM group_members   WHERE ((group_members.group_id = group_logs.group_id) AND (group_members.user_id = auth.uid()) AND (group_members.role = ANY (ARRAY['admin'::text, 'coadmin'::text, 'mod'::text])))))` |
+| `Allow staff to read group logs` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM group_members   WHERE ((group_members.group_id = group_logs.group_id) AND (group_members.user_id = auth.uid()) AND (group_members.role = ANY (ARRAY['admin'::text, 'coadmin'::text, 'mod'::text])))))` | — |
+| `Disallow deletes` | DELETE | public | PERMISSIVE | `false` | — |
+| `Disallow updates` | UPDATE | public | PERMISSIVE | `false` | — |
+
+### `quizzes`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Authenticated users can create quizzes` | INSERT | authenticated | PERMISSIVE | — | `((creator_id = auth.uid()) AND (COALESCE(((auth.jwt() ->> 'is_anonymous'::text))::boolean, false) = false))` |
+| `Creators can delete own quizzes` | DELETE | authenticated | PERMISSIVE | `((creator_id = auth.uid()) AND (COALESCE(((auth.jwt() ->> 'is_anonymous'::text))::boolean, false) = false))` | — |
+| `Creators can update own quizzes` | UPDATE | authenticated | PERMISSIVE | `((creator_id = auth.uid()) AND (COALESCE(((auth.jwt() ->> 'is_anonymous'::text))::boolean, false) = false))` | — |
+| `Discovery view for quizzes` | SELECT | authenticated | PERMISSIVE | `((creator_id = auth.uid()) OR (scope = 'all'::text) OR (scope = 'university'::text))` | — |
+

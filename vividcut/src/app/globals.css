@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+:root {
+  --background: #F4F4F5;
+  --foreground: #18181B;
+}
+
+:root.dark {
+  --background: #121214;
+  --foreground: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 200ms;
+}
+
+/* Custom Scrollbar Styles for premium glassmorphism scrollable areas */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #2E2E35;
+  border-radius: 9999px;
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background: #E4E4E7;
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #6D57EC;
+}
+
+.light ::-webkit-scrollbar-thumb:hover {
+  background: #6D57EC;
+}
