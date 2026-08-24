@@ -5,462 +5,7 @@ BEGIN;
 TRUNCATE public.coding_questions RESTART IDENTITY CASCADE;
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (1,'1. Positive, Negative or Zero','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>classify_number(n)</code> that takes a number and returns <code>"Positive"</code>, <code>"Negative"</code>, or <code>"Zero"</code>.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">This is the simplest if/elif/else chain — the foundation of all decision-making in Python.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Positive"</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">The number 5 is strictly greater than 0, so it is classified as positive.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 2</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = -3</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Negative"</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">The number -3 is strictly less than 0, so it is classified as negative.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 3</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 0</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Zero"</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">The number 0 is equal to 0, so it is classified as zero.</span></div>
-</div>','easy',100,'python-ifelse','def classify_number(n):
-    # Return "Positive", "Negative", or "Zero"
-    pass','def ref_impl(*args):
-    if args[0] > 0: return "Positive"
-    elif args[0] < 0: return "Negative"
-    return "Zero"
-
-assert "classify_number" in exec_globals, "Function classify_number not found"
-fn = exec_globals["classify_number"]
-test_cases = [5, -3, 0, -100, 0.0, 0.1]
-passed = 0
-for tc in test_cases:
-    if isinstance(tc, tuple):
-        res = fn(*tc)
-        expected = ref_impl(*tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    else:
-        res = fn(tc)
-        expected = ref_impl(tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    passed += 1
-exec_globals["passed_cases"] = passed
-exec_globals["total_cases"] = 6',NULL);
-
-INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (2,'2. Absolute Value Without abs()','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>my_abs(n)</code> that returns the absolute value of a number <em>without</em> using Python''s built-in <code>abs()</code> function.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Use an <code>if/else</code> statement: if the number is negative, negate it; otherwise return it as-is.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = -7</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>7</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Since -7 is negative, we multiply it by -1 to get its absolute positive value, which is 7.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 2</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>5</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Since 5 is positive, its absolute value remains 5.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 3</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 0</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>0</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Since 0 has no positive or negative sign, its absolute value remains 0.</span></div>
-</div>','easy',100,'python-ifelse','def my_abs(n):
-    # Return absolute value without abs()
-    pass','def ref_impl(*args):
-    return -args[0] if args[0] < 0 else args[0]
-
-assert "my_abs" in exec_globals, "Function my_abs not found"
-fn = exec_globals["my_abs"]
-test_cases = [-7, 5, 0, -100, 3.14, -2.5]
-passed = 0
-for tc in test_cases:
-    if isinstance(tc, tuple):
-        res = fn(*tc)
-        expected = ref_impl(*tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    else:
-        res = fn(tc)
-        expected = ref_impl(tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    passed += 1
-exec_globals["passed_cases"] = passed
-exec_globals["total_cases"] = 6',NULL);
-
-INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (3,'3. Find Maximum of Three','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>max_of_three(a, b, c)</code> that returns the largest of three numbers <em>without</em> using the built-in <code>max()</code> function.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Use nested <code>if/elif/else</code> to compare all three values.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>a=1, b=2, c=3</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>3</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Comparing 1, 2, and 3: 3 is greater than 1 and 3 is also greater than 2, so 3 is the largest number.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 2</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>a=10, b=10, c=5</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>10</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Comparing 10, 10, and 5: 10 is equal to 10 and both are greater than 5, so the maximum is 10.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 3</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>a=-1, b=-5, c=-2</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>-1</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Comparing -1, -5, and -2: -1 is greater than -2 and -1 is also greater than -5, so -1 is the largest number.</span></div>
-</div>','easy',100,'python-ifelse','def max_of_three(a, b, c):
-    # Return the largest without using max()
-    pass','def ref_impl(*args):
-    a,b,c=args[0],args[1],args[2]
-    if a>=b and a>=c: return a
-    elif b>=a and b>=c: return b
-    return c
-
-assert "max_of_three" in exec_globals, "Function max_of_three not found"
-fn = exec_globals["max_of_three"]
-test_cases = [(1,2,3), (5,3,4), (-1,-5,-2), (10,10,10), (0,0,1)]
-passed = 0
-for tc in test_cases:
-    if isinstance(tc, tuple):
-        res = fn(*tc)
-        expected = ref_impl(*tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    else:
-        res = fn(tc)
-        expected = ref_impl(tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    passed += 1
-exec_globals["passed_cases"] = passed
-exec_globals["total_cases"] = 5',NULL);
-
-INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (4,'4. FizzBuzz','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>fizzbuzz(n)</code> that takes an integer and returns:</p>
-<ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
-<li><code>"FizzBuzz"</code> if divisible by both 3 and 5</li>
-<li><code>"Fizz"</code> if divisible by 3 only</li>
-<li><code>"Buzz"</code> if divisible by 5 only</li>
-<li>The number itself as a string otherwise</li>
-</ul><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">This is the most famous coding interview warm-up question. Order matters — always check the combined divisibility first.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 15</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"FizzBuzz"</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">15 is divisible by both 3 (15/3 = 5) and 5 (15/5 = 3), so we return ''FizzBuzz''.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 2</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 9</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Fizz"</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">9 is divisible by 3 (9/3 = 3) but not by 5, so we return ''Fizz''.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 3</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 20</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Buzz"</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">20 is divisible by 5 (20/5 = 4) but not by 3, so we return ''Buzz''.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 4</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 7</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"7"</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">7 is not divisible by 3 or 5, so we return the number itself as a string ''7''.</span></div>
-</div>','easy',100,'python-ifelse','def fizzbuzz(n):
-    # Return FizzBuzz, Fizz, Buzz, or the number as string
-    pass','def ref_impl(*args):
-    n=args[0]
-    if n%15==0: return "FizzBuzz"
-    elif n%3==0: return "Fizz"
-    elif n%5==0: return "Buzz"
-    return str(n)
-
-assert "fizzbuzz" in exec_globals, "Function fizzbuzz not found"
-fn = exec_globals["fizzbuzz"]
-test_cases = [15, 9, 20, 7, 1, 30, 5, 3]
-passed = 0
-for tc in test_cases:
-    if isinstance(tc, tuple):
-        res = fn(*tc)
-        expected = ref_impl(*tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    else:
-        res = fn(tc)
-        expected = ref_impl(tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    passed += 1
-exec_globals["passed_cases"] = passed
-exec_globals["total_cases"] = 8',NULL);
-
-INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (5,'5. Vowel or Consonant','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>vowel_or_consonant(ch)</code> that takes a single character and returns <code>"Vowel"</code>, <code>"Consonant"</code>, or <code>"Neither"</code>.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Vowels are: a, e, i, o, u (both upper and lowercase). Any other letter is a consonant. Non-letter characters (digits, symbols, spaces) return <code>"Neither"</code>.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>ch = "a"</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Vowel"</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">The character ''a'' is in the vowels list (a, e, i, o, u), so it is a Vowel.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 2</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>ch = "B"</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Consonant"</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">The character ''B'' is a letter but not a vowel, so it is a Consonant.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 3</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>ch = "3"</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Neither"</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">The character ''3'' is a number and not a letter, so it is classified as Neither.</span></div>
-</div>','easy',100,'python-ifelse','def vowel_or_consonant(ch):
-    # Return "Vowel", "Consonant", or "Neither"
-    pass','def ref_impl(*args):
-    c=args[0].lower()
-    if not c.isalpha(): return "Neither"
-    return "Vowel" if c in "aeiou" else "Consonant"
-
-assert "vowel_or_consonant" in exec_globals, "Function vowel_or_consonant not found"
-fn = exec_globals["vowel_or_consonant"]
-test_cases = ["a", "B", "3", "U", "z", "!", " "]
-passed = 0
-for tc in test_cases:
-    if isinstance(tc, tuple):
-        res = fn(*tc)
-        expected = ref_impl(*tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    else:
-        res = fn(tc)
-        expected = ref_impl(tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    passed += 1
-exec_globals["passed_cases"] = passed
-exec_globals["total_cases"] = 7',NULL);
-
-INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (6,'6. Leap Year Check','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>is_leap_year(year)</code> that returns <code>True</code> if the given year is a leap year, <code>False</code> otherwise.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Leap year rules:</p>
-<ol class="list-decimal pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
-<li>Divisible by 4 → potentially a leap year</li>
-<li>But if also divisible by 100 → NOT a leap year</li>
-<li>Unless also divisible by 400 → IS a leap year</li>
-</ol><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">This requires nested conditions or a single compound boolean expression.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>year = 2024</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>True</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">2024 is divisible by 4, and it is not a century year (not divisible by 100), so it is a leap year.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 2</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>year = 1900</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>False</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">1900 is a century year divisible by 100 but not by 400, so it is not a leap year.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 3</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>year = 2000</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>True</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">2000 is a century year divisible by both 100 and 400, so it is a leap year.</span></div>
-</div>','easy',100,'python-ifelse','def is_leap_year(year):
-    # Return True if leap year, False otherwise
-    pass','def ref_impl(*args):
-    y=args[0]
-    return y%4==0 and (y%100!=0 or y%400==0)
-
-assert "is_leap_year" in exec_globals, "Function is_leap_year not found"
-fn = exec_globals["is_leap_year"]
-test_cases = [2024, 1900, 2000, 2023, 100, 400]
-passed = 0
-for tc in test_cases:
-    if isinstance(tc, tuple):
-        res = fn(*tc)
-        expected = ref_impl(*tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    else:
-        res = fn(tc)
-        expected = ref_impl(tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    passed += 1
-exec_globals["passed_cases"] = passed
-exec_globals["total_cases"] = 6',NULL);
-
-INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (7,'7. Grade Calculator','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>calculate_grade(score)</code> that takes a score (0-100) and returns a letter grade:</p>
-<ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
-<li>Score >= 90 → <code>"A"</code></li>
-<li>Score >= 80 → <code>"B"</code></li>
-<li>Score >= 70 → <code>"C"</code></li>
-<li>Score >= 60 → <code>"D"</code></li>
-<li>Score < 60 → <code>"F"</code></li>
-<li>Score < 0 or > 100 → <code>"Invalid"</code></li>
-</ul><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>score = 95</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"A"</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">The score 95 is 90 or above, which corresponds to grade ''A''.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 2</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>score = 72</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"C"</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">The score 72 is between 70 and 79, which corresponds to grade ''C''.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 3</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>score = 55</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"F"</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">The score 55 is below 60, which corresponds to grade ''F''.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 4</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>score = -5</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Invalid"</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">A negative score like -5 is outside the valid range of 0 to 100, so it is Invalid.</span></div>
-</div>','easy',100,'python-ifelse','def calculate_grade(score):
-    # Return letter grade A-F or Invalid
-    pass','def ref_impl(*args):
-    s=args[0]
-    if s<0 or s>100: return "Invalid"
-    elif s>=90: return "A"
-    elif s>=80: return "B"
-    elif s>=70: return "C"
-    elif s>=60: return "D"
-    return "F"
-
-assert "calculate_grade" in exec_globals, "Function calculate_grade not found"
-fn = exec_globals["calculate_grade"]
-test_cases = [95, 82, 70, 59, -5, 101, 60, 80, 90]
-passed = 0
-for tc in test_cases:
-    if isinstance(tc, tuple):
-        res = fn(*tc)
-        expected = ref_impl(*tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    else:
-        res = fn(tc)
-        expected = ref_impl(tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    passed += 1
-exec_globals["passed_cases"] = passed
-exec_globals["total_cases"] = 9',NULL);
-
-INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (8,'8. Season Detector','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>get_season(month)</code> that takes a month number (1-12) and returns the season:</p>
-<ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
-<li>Dec, Jan, Feb (12, 1, 2) → <code>"Winter"</code></li>
-<li>Mar, Apr, May (3, 4, 5) → <code>"Spring"</code></li>
-<li>Jun, Jul, Aug (6, 7, 8) → <code>"Summer"</code></li>
-<li>Sep, Oct, Nov (9, 10, 11) → <code>"Autumn"</code></li>
-<li>Any other number → <code>"Invalid"</code></li>
-</ul><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>month = 1</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Winter"</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Month 1 (January) belongs to the Winter months (December, January, and February).</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 2</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>month = 7</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Summer"</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Month 7 (July) belongs to the Summer months (June, July, and August).</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 3</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>month = 13</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Invalid"</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Month 13 is outside the valid range of 1 to 12, so it is Invalid.</span></div>
-</div>','easy',100,'python-ifelse','def get_season(month):
-    # Return the season name
-    pass','def ref_impl(*args):
-    m=args[0]
-    if m in [12,1,2]: return "Winter"
-    elif m in [3,4,5]: return "Spring"
-    elif m in [6,7,8]: return "Summer"
-    elif m in [9,10,11]: return "Autumn"
-    return "Invalid"
-
-assert "get_season" in exec_globals, "Function get_season not found"
-fn = exec_globals["get_season"]
-test_cases = [1, 2, 3, 6, 9, 12, 13, 0]
-passed = 0
-for tc in test_cases:
-    if isinstance(tc, tuple):
-        res = fn(*tc)
-        expected = ref_impl(*tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    else:
-        res = fn(tc)
-        expected = ref_impl(tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    passed += 1
-exec_globals["passed_cases"] = passed
-exec_globals["total_cases"] = 8',NULL);
-
-INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (9,'9. Valid Triangle Check','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>is_valid_triangle(a, b, c)</code> that returns <code>True</code> if the three sides form a valid triangle, <code>False</code> otherwise.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A triangle is valid if the sum of any two sides is strictly greater than the third side. This must hold for all three combinations.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>a=3, b=4, c=5</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>True</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">For sides 3, 4, and 5: 3+4>5, 3+5>4, and 4+5>3. Since the sum of any two sides is greater than the third, it is a valid triangle.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 2</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>a=1, b=2, c=3</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>False</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">For sides 1, 2, and 3: the sum of side 1 and 2 is 3, which is not strictly greater than side 3. Thus, it cannot form a triangle.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 3</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>a=0, b=2, c=3</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>False</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">A side length of 0 is impossible in geometry, so it cannot form a valid triangle.</span></div>
-</div>','easy',100,'python-ifelse','def is_valid_triangle(a, b, c):
-    # Return True if valid triangle
-    pass','def ref_impl(*args):
-    a,b,c=args[0],args[1],args[2]
-    return a+b>c and a+c>b and b+c>a
-
-assert "is_valid_triangle" in exec_globals, "Function is_valid_triangle not found"
-fn = exec_globals["is_valid_triangle"]
-test_cases = [(3,4,5), (1,2,3), (5,12,13), (0,2,3), (10,1,1)]
-passed = 0
-for tc in test_cases:
-    if isinstance(tc, tuple):
-        res = fn(*tc)
-        expected = ref_impl(*tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    else:
-        res = fn(tc)
-        expected = ref_impl(tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    passed += 1
-exec_globals["passed_cases"] = passed
-exec_globals["total_cases"] = 5',NULL);
-
-INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (10,'10. Ticket Price Calculator','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>ticket_price(age, is_student)</code> that returns ticket price based on rules:</p>
-<ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
-<li>Children under 5 → Free (<code>0</code>)</li>
-<li>Seniors 65+ → <code>5</code> (50% discount)</li>
-<li>Students → <code>8</code> (20% discount)</li>
-<li>Everyone else → <code>10</code> (full price)</li>
-</ul><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Note: the age rules take priority over the student discount.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>age=4, is_student=False</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>0</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Age 4 is under 5, which qualifies for free admission (price is 0).</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 2</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>age=70, is_student=False</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>5</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Age 70 is 65 or older, qualifying for the senior ticket price of 5.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 3</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>age=20, is_student=True</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>8</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Age 20 is not a child or senior, but has student status, getting the student price of 8.</span></div>
-</div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 4</h3>
-<div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>age=30, is_student=False</code></div>
-  <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>10</code></div>
-  <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Age 30 has no special discounts, paying the full standard price of 10.</span></div>
-</div>','easy',100,'python-ifelse','def ticket_price(age, is_student):
-    # Return ticket price as integer
-    pass','def ref_impl(*args):
-    age,stud=args[0],args[1]
-    if age<5: return 0
-    elif age>=65: return 5
-    elif stud: return 8
-    return 10
-
-assert "ticket_price" in exec_globals, "Function ticket_price not found"
-fn = exec_globals["ticket_price"]
-test_cases = [(4,False), (70,False), (20,True), (25,False), (5,True), (64,True)]
-passed = 0
-for tc in test_cases:
-    if isinstance(tc, tuple):
-        res = fn(*tc)
-        expected = ref_impl(*tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    else:
-        res = fn(tc)
-        expected = ref_impl(tc)
-        assert res == expected, f"Failed for {tc}:\n  got:      {res}\n  expected: {expected}"
-    passed += 1
-exec_globals["passed_cases"] = passed
-exec_globals["total_cases"] = 6',NULL);
-
-INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (11,'11. BMI Classifier','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>bmi_classify(weight, height)</code> that computes BMI = weight(kg) / height(m)² and returns:</p>
+VALUES (1,'1. BMI Classifier','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>bmi_classify(weight, height)</code> that computes BMI = weight(kg) / height(m)² and returns:</p>
 <ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li>BMI < 18.5 → <code>"Underweight"</code></li>
 <li>18.5 ≤ BMI < 25 → <code>"Normal"</code></li>
@@ -476,7 +21,7 @@ VALUES (11,'11. BMI Classifier','<p class="mb-4 leading-relaxed text-sm font-nor
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>weight=70, height=1.75</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Normal"</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">BMI = weight / height^2 = 70 / (1.75^2) = 22.9. Since 22.9 is between 18.5 and 24.9, the category is ''Normal''.</span></div>
-</div>','easy',100,'python-ifelse','def bmi_classify(weight, height):
+</div>','easy',100,'python-basics','def bmi_classify(weight, height):
     # Calculate BMI and return category
     pass','def ref_impl(*args):
     w,h=args[0],args[1]
@@ -504,7 +49,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (12,'12. Rock Paper Scissors','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>rps_winner(p1, p2)</code> that takes two choices (<code>"rock"</code>, <code>"paper"</code>, or <code>"scissors"</code>) and returns <code>"Player 1"</code>, <code>"Player 2"</code>, or <code>"Draw"</code>.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Rules: Rock beats Scissors, Scissors beats Paper, Paper beats Rock.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (2,'2. Rock Paper Scissors','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>rps_winner(p1, p2)</code> that takes two choices (<code>"rock"</code>, <code>"paper"</code>, or <code>"scissors"</code>) and returns <code>"Player 1"</code>, <code>"Player 2"</code>, or <code>"Draw"</code>.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Rules: Rock beats Scissors, Scissors beats Paper, Paper beats Rock.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>p1="rock", p2="scissors"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Player 1"</code></div>
@@ -519,7 +64,7 @@ VALUES (12,'12. Rock Paper Scissors','<p class="mb-4 leading-relaxed text-sm fon
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>p1="scissors", p2="rock"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Player 2"</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Player 1 chose scissors and Player 2 chose rock. Since rock beats scissors, Player 2 wins.</span></div>
-</div>','easy',100,'python-ifelse','def rps_winner(p1, p2):
+</div>','easy',100,'python-basics','def rps_winner(p1, p2):
     # Return who wins or "Draw"
     pass','def ref_impl(*args):
     p1,p2=args[0],args[1]
@@ -545,7 +90,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (13,'13. Simple Calculator','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>calculate(a, b, op)</code> that performs the operation specified by the string <code>op</code> on numbers <code>a</code> and <code>b</code>. Supported operators: <code>"+"</code>, <code>"-"</code>, <code>"*"</code>, <code>"/"</code>.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Return <code>"Error: Division by zero"</code> if op is <code>"/"</code> and b is 0. Return <code>"Error: Invalid operator"</code> for unknown operators.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (3,'3. Simple Calculator','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>calculate(a, b, op)</code> that performs the operation specified by the string <code>op</code> on numbers <code>a</code> and <code>b</code>. Supported operators: <code>"+"</code>, <code>"-"</code>, <code>"*"</code>, <code>"/"</code>.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Return <code>"Error: Division by zero"</code> if op is <code>"/"</code> and b is 0. Return <code>"Error: Invalid operator"</code> for unknown operators.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>a=10, b=5, op="+"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>15</code></div>
@@ -560,7 +105,7 @@ VALUES (13,'13. Simple Calculator','<p class="mb-4 leading-relaxed text-sm font-
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>a=5, b=2, op="%"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Error: Invalid operator"</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">The operator ''%'' is not one of the supported operators (+, -, *, /), so we return an invalid operator error.</span></div>
-</div>','easy',100,'python-ifelse','def calculate(a, b, op):
+</div>','easy',100,'python-basics','def calculate(a, b, op):
     # Return result or error string
     pass','def ref_impl(*args):
     a,b,op=args[0],args[1],args[2]
@@ -593,7 +138,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 6',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (14,'14. Character Classifier','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>classify_char(ch)</code> that takes a single character and returns its category:</p>
+VALUES (4,'4. Character Classifier','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>classify_char(ch)</code> that takes a single character and returns its category:</p>
 <ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li>Uppercase letter → <code>"Uppercase"</code></li>
 <li>Lowercase letter → <code>"Lowercase"</code></li>
@@ -619,7 +164,7 @@ VALUES (14,'14. Character Classifier','<p class="mb-4 leading-relaxed text-sm fo
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>ch = "#"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Special"</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">''#'' is a symbol, so it is classified as Special.</span></div>
-</div>','easy',100,'python-ifelse','def classify_char(ch):
+</div>','easy',100,'python-basics','def classify_char(ch):
     # Return the character category
     pass','def ref_impl(*args):
     c=args[0]
@@ -646,7 +191,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 8',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (15,'15. Quadratic Roots Counter','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>count_roots(a, b, c)</code> that determines how many real roots the quadratic equation <code>ax² + bx + c = 0</code> has.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Use the discriminant: <code>D = b² - 4ac</code></p>
+VALUES (5,'5. Quadratic Roots Counter','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>count_roots(a, b, c)</code> that determines how many real roots the quadratic equation <code>ax² + bx + c = 0</code> has.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Use the discriminant: <code>D = b² - 4ac</code></p>
 <ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li>D > 0 → 2 real roots</li>
 <li>D = 0 → 1 real root (repeated)</li>
@@ -669,7 +214,7 @@ VALUES (15,'15. Quadratic Roots Counter','<p class="mb-4 leading-relaxed text-sm
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>a is always non-zero</code></li>
-</ul>','medium',200,'python-ifelse','def count_roots(a, b, c):
+</ul>','medium',200,'python-basics','def count_roots(a, b, c):
     # Return number of real roots: 0, 1, or 2
     pass','def ref_impl(*args):
     a,b,c=args[0],args[1],args[2]
@@ -696,7 +241,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (16,'16. Number Reverse','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a signed integer n, reverse its digits mathematically. You must extract each digit from the back of the number using the modulo operator (% 10), add it to a running total scaled by 10, and then truncate the last digit of the original number using integer division (/ 10).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (6,'6. Number Reverse','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a signed integer n, reverse its digits mathematically. You must extract each digit from the back of the number using the modulo operator (% 10), add it to a running total scaled by 10, and then truncate the last digit of the original number using integer division (/ 10).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5792</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 2975</code></div>
@@ -706,7 +251,7 @@ VALUES (16,'16. Number Reverse','<p class="mb-4 leading-relaxed text-sm font-nor
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = -408</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> -804</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">For -408, we ignore the sign and reverse the digits of 408 to get 804, then re-apply the negative sign to get -804.</span></div>
-</div>','easy',100,'python-loops','def even_or_odd(n):
+</div>','easy',100,'python-basics','def even_or_odd(n):
     # Return "Even" or "Odd"
     pass','def ref_impl(*args):
     return "Even" if args[0] % 2 == 0 else "Odd"
@@ -729,7 +274,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (17,'17. String Reverse','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a string s, reverse the sequence of its characters. This is a foundational memory manipulation problem. The standard approach requires a two-pointer logic: one pointer at the start (0) and one at the end (s.length() - 1), swapping characters while moving toward the center.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (7,'7. String Reverse','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a string s, reverse the sequence of its characters. This is a foundational memory manipulation problem. The standard approach requires a two-pointer logic: one pointer at the start (0) and one at the end (s.length() - 1), swapping characters while moving toward the center.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "hello"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> "olleh"</code></div>
@@ -739,7 +284,7 @@ VALUES (17,'17. String Reverse','<p class="mb-4 leading-relaxed text-sm font-nor
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "Data Science"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> "ecneicS ataD"</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Reversing ''Data Science'' including spaces and capitals gives ''ecneicS ataD''.</span></div>
-</div>','easy',100,'python-loops','def reverse_integer(n):
+</div>','easy',100,'python-basics','def reverse_integer(n):
     # Reverse the digits of n
     pass','def ref_impl(*args):
     sign=-1 if args[0]<0 else 1
@@ -763,7 +308,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (18,'18. Count Digits in a Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, compute the total number of digits present in its base-10 representation. This can be solved iteratively by dividing the number by 10 until it reaches 0, or mathematically using the base-10 logarithm formula: $\lfloor \log_{10}(\vert{}n\vert{}) \rfloor + 1$.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (8,'8. Count Digits in a Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, compute the total number of digits present in its base-10 representation. This can be solved iteratively by dividing the number by 10 until it reaches 0, or mathematically using the base-10 logarithm formula: $\lfloor \log_{10}(\vert{}n\vert{}) \rfloor + 1$.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 34521</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 5</code></div>
@@ -773,7 +318,7 @@ VALUES (18,'18. Count Digits in a Number','<p class="mb-4 leading-relaxed text-s
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = -9</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 1</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">The number -9 contains only one digit: 9. The negative sign is not counted as a digit.</span></div>
-</div>','easy',100,'python-loops','def count_digits(n):
+</div>','easy',100,'python-basics','def count_digits(n):
     # Count digits in n
     pass','def ref_impl(*args):
     return len(str(abs(args[0])))
@@ -796,7 +341,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (19,'19. Sum of Digits of a Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, calculate the absolute sum of all its individual digits. You must iteratively isolate each digit from the units place upwards and accumulate the total value.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (9,'9. Sum of Digits of a Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, calculate the absolute sum of all its individual digits. You must iteratively isolate each digit from the units place upwards and accumulate the total value.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 1234</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 10 (Since $1 + 2 + 3 + 4 = 10$)</code></div>
@@ -806,7 +351,7 @@ VALUES (19,'19. Sum of Digits of a Number','<p class="mb-4 leading-relaxed text-
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = -506</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 11 (Since $\vert{}-5\vert{} + 0 + 6 = 11$)</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Summing the digits of -506 (ignoring the sign): 5 + 0 + 6 = 11.</span></div>
-</div>','easy',100,'python-loops','def sum_of_digits(n):
+</div>','easy',100,'python-basics','def sum_of_digits(n):
     # Sum all digits of n
     pass','def ref_impl(*args):
     return sum(int(d) for d in str(abs(args[0])))
@@ -829,7 +374,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (20,'20. Swap Two Numbers','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given two variables a and b, interchange their values. You must be prepared to demonstrate this using two distinct logical strategies:Using a temporary placeholder variable.Without any additional memory variables (using arithmetic addition/subtraction or bitwise XOR operations).</p>','easy',100,'python-loops','def swap_numbers(a, b):
+VALUES (10,'10. Swap Two Numbers','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given two variables a and b, interchange their values. You must be prepared to demonstrate this using two distinct logical strategies:Using a temporary placeholder variable.Without any additional memory variables (using arithmetic addition/subtraction or bitwise XOR operations).</p>','easy',100,'python-basics','def swap_numbers(a, b):
     # Return (b, a) swapped
     pass','def ref_impl(*args):
     return (args[1],args[0])
@@ -852,7 +397,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (21,'21. Check Even or Odd','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, determine whether it is completely divisible by 2 (Even) or leaves a remainder (Odd). This can be executed using the standard arithmetic modulo operator (n % 2 == 0) or optimized via bitwise logic checking the Least Significant Bit (LSB) ((n & 1) == 0).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (11,'11. Check Even or Odd','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, determine whether it is completely divisible by 2 (Even) or leaves a remainder (Odd). This can be executed using the standard arithmetic modulo operator (n % 2 == 0) or optimized via bitwise logic checking the Least Significant Bit (LSB) ((n & 1) == 0).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 42</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> "Even"</code></div>
@@ -862,7 +407,7 @@ VALUES (21,'21. Check Even or Odd','<p class="mb-4 leading-relaxed text-sm font-
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = -17</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> "Odd"</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">-17 divided by 2 leaves a remainder of 1 (or -1), which means it is an Odd number.</span></div>
-</div>','easy',100,'python-loops','def is_palindrome_number(n):
+</div>','easy',100,'python-basics','def is_palindrome_number(n):
     # Return True if palindrome number
     pass','def ref_impl(*args):
     n=args[0]
@@ -887,7 +432,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (22,'22. Fibonacci Series Generation','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, generate the first n terms of the Fibonacci sequence. The sequence begins with 0 and 1, and each subsequent number is the sum of the previous two numbers ($F_n = F_{n-1} + F_{n-2}$). The output should be a sequence or list containing exactly n elements.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (12,'12. Fibonacci Series Generation','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, generate the first n terms of the Fibonacci sequence. The sequence begins with 0 and 1, and each subsequent number is the sum of the previous two numbers ($F_n = F_{n-1} + F_{n-2}$). The output should be a sequence or list containing exactly n elements.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> [0, 1, 1, 2, 3]</code></div>
@@ -897,7 +442,7 @@ VALUES (22,'22. Fibonacci Series Generation','<p class="mb-4 leading-relaxed tex
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 1</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> [0]</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">With n=1, only the first Fibonacci term 0 is requested, returning [0].</span></div>
-</div>','easy',100,'python-loops','def is_armstrong(n):
+</div>','easy',100,'python-basics','def is_armstrong(n):
     # Return True if Armstrong number
     pass','def ref_impl(*args):
     n=args[0]
@@ -923,7 +468,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 6',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (23,'23. Nth Fibonacci Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, calculate the exact value of the $n$-th Fibonacci number. While the generation problem requires tracking the whole list, this problem requires optimizing space complexity down to $O(1)$ by only storing the last two terms during iteration instead of maintaining an entire history array.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (13,'13. Nth Fibonacci Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, calculate the exact value of the $n$-th Fibonacci number. While the generation problem requires tracking the whole list, this problem requires optimizing space complexity down to $O(1)$ by only storing the last two terms during iteration instead of maintaining an entire history array.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 0</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 0</code></div>
@@ -933,7 +478,7 @@ VALUES (23,'23. Nth Fibonacci Number','<p class="mb-4 leading-relaxed text-sm fo
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 9</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 34</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">F(9) is the 10th term in the sequence (0, 1, 1, 2, 3, 5, 8, 13, 21, 34), which is 34.</span></div>
-</div>','easy',100,'python-loops','def generate_fibonacci(n):
+</div>','easy',100,'python-basics','def generate_fibonacci(n):
     # Return list of first n Fibonacci numbers
     pass','def ref_impl(*args):
     n=args[0]
@@ -962,7 +507,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (24,'24. Factorial of a Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a non-negative integer n, compute the product of all positive integers less than or equal to n ($n! = n \times (n-1) \times \dots \times 1$).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (14,'14. Factorial of a Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a non-negative integer n, compute the product of all positive integers less than or equal to n ($n! = n \times (n-1) \times \dots \times 1$).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 120</code></div>
@@ -972,7 +517,7 @@ VALUES (24,'24. Factorial of a Number','<p class="mb-4 leading-relaxed text-sm f
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 0</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 1</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">By mathematical definition, the factorial of 0 (0!) is equal to 1.</span></div>
-</div>','easy',100,'python-loops','def nth_fibonacci(n):
+</div>','easy',100,'python-basics','def nth_fibonacci(n):
     # Return the nth Fibonacci number (0-indexed)
     pass','def ref_impl(*args):
     n=args[0]
@@ -1001,7 +546,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (25,'25. Check Prime Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, check whether it is a prime number (divisible only by 1 and itself). A naive loop checking up to $n$ yields an inefficient $O(n)$ footprint. The solution must use mathematical logic to optimize verification to $O(\sqrt{n})$ by checking factors up to the square root of n.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (15,'15. Check Prime Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, check whether it is a prime number (divisible only by 1 and itself). A naive loop checking up to $n$ yields an inefficient $O(n)$ footprint. The solution must use mathematical logic to optimize verification to $O(\sqrt{n})$ by checking factors up to the square root of n.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 11</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> true</code></div>
@@ -1011,7 +556,7 @@ VALUES (25,'25. Check Prime Number','<p class="mb-4 leading-relaxed text-sm font
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 4</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> false (Since $2 \times 2 = 4$)</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">4 can be divided evenly by 2 (2 * 2 = 4), which means it is not a prime number (returns False).</span></div>
-</div>','easy',100,'python-loops','def factorial(n):
+</div>','easy',100,'python-basics','def factorial(n):
     # Return n! (n factorial)
     pass','def ref_impl(*args):
     import math
@@ -1035,7 +580,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (26,'26. Armstrong Number Check','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, determine if it is an Armstrong number (also known as a Narcissistic number). An Armstrong number is equal to the sum of its own digits, each raised to the power of the total number of digits in that number.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (16,'16. Armstrong Number Check','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, determine if it is an Armstrong number (also known as a Narcissistic number). An Armstrong number is equal to the sum of its own digits, each raised to the power of the total number of digits in that number.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 153</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> true</code></div>
@@ -1045,7 +590,7 @@ VALUES (26,'26. Armstrong Number Check','<p class="mb-4 leading-relaxed text-sm 
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 123</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> false</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">123 has 3 digits. 1^3 + 2^3 + 3^3 = 1 + 8 + 27 = 36. Since 36 is not equal to 123, it is not an Armstrong number (returns False).</span></div>
-</div>','easy',100,'python-loops','def is_prime(n):
+</div>','easy',100,'python-basics','def is_prime(n):
     # Return True if n is prime
     pass','def ref_impl(*args):
     n=args[0]
@@ -1072,7 +617,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 7',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (27,'27. Palindrome Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, return true if n is a palindrome, and false otherwise. An integer is a palindrome when it reads the same backward as forward. To satisfy standard data-manipulation constraints, you must achieve this without converting the number into a string, forcing you to reverse the digits mathematically.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (17,'17. Palindrome Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, return true if n is a palindrome, and false otherwise. An integer is a palindrome when it reads the same backward as forward. To satisfy standard data-manipulation constraints, you must achieve this without converting the number into a string, forcing you to reverse the digits mathematically.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 1221</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> true</code></div>
@@ -1085,7 +630,7 @@ VALUES (27,'27. Palindrome Number','<p class="mb-4 leading-relaxed text-sm font-
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>Negative Sign Formats: All negative numbers must immediately fail and return false.</code></li><li><code>Trailing Zeros: Any positive number ending in 0 (like 10, 290, 1100) is fundamentally non-palindromic because no standard integer begins with 0. The exception is the number 0 itself, which must return true.</code></li><li><code>Preventing Partial Overflows: When reversing the entire number to check for equivalence, large numbers near the 32-bit ceiling might overflow. To prevent this, design the logic to stop reversing once it reaches the exact halfway point of the number (originalNumber <= reversedNumber).</code></li>
-</ul>','medium',200,'python-loops','def count_primes(n):
+</ul>','medium',200,'python-basics','def count_primes(n):
     # Count primes strictly less than n
     pass','def ref_impl(*args):
     n=args[0]
@@ -1116,7 +661,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (28,'28. Add Digits (Digital Root)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer num, repeatedly add all its individual digits until the calculated result contains only one single digit, then return it. While loops can solve this iteratively, the objective is to implement this using number theory (congruence formula) to achieve a constant execution footprint of $O(1)$ time and $O(1)$ space.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (18,'18. Add Digits (Digital Root)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer num, repeatedly add all its individual digits until the calculated result contains only one single digit, then return it. While loops can solve this iteratively, the objective is to implement this using number theory (congruence formula) to achieve a constant execution footprint of $O(1)$ time and $O(1)$ space.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>num = 38</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 2</code></div>
@@ -1126,7 +671,7 @@ VALUES (28,'28. Add Digits (Digital Root)','<p class="mb-4 leading-relaxed text-
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>num = 0</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 0</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">0 is already a single digit, so its digital root is 0.</span></div>
-</div>','easy',100,'python-loops','def gcd_lcm(a, b):
+</div>','easy',100,'python-basics','def gcd_lcm(a, b):
     # Return (gcd, lcm) as a tuple
     pass','def ref_impl(*args):
     import math
@@ -1155,7 +700,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (29,'29. Base 7 / Binary Conversion (Arbitrary Base Conversion)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a base-10 signed integer num, return its equivalent value represented in a target alternate radix system (such as Base 7 or Base 2/Binary) as a string. The logic requires continually capturing the remainder of the number divided by the target base, truncating the number, and building the result string from right to left.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (19,'19. Base 7 / Binary Conversion (Arbitrary Base Conversion)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a base-10 signed integer num, return its equivalent value represented in a target alternate radix system (such as Base 7 or Base 2/Binary) as a string. The logic requires continually capturing the remainder of the number divided by the target base, truncating the number, and building the result string from right to left.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>num = 100 (Converting to Base 7)</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> "202"</code></div>
@@ -1165,7 +710,7 @@ VALUES (29,'29. Base 7 / Binary Conversion (Arbitrary Base Conversion)','<p clas
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>num = -7 (Converting to Base 7)</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> "-10"</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Converting |-7| = 7 to base-7 gives ''10'', and re-applying the negative sign yields ''-10''.</span></div>
-</div>','easy',100,'python-loops','def trailing_zeroes(n):
+</div>','easy',100,'python-basics','def trailing_zeroes(n):
     # Count trailing zeros in n!
     pass','def ref_impl(*args):
     n=args[0]
@@ -1193,7 +738,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (30,'30. Integer to Roman','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a base-10 integer between 1 and 3999, convert it into its traditional Roman Numeral string representation. Roman numbers are written using seven distinct symbols (I=1, V=5, X=10, L=50, C=100, D=500, M=1000). The logic requires matching values against a descending dictionary lookup of symbols, handling subtractive prefix forms like 4 (IV), 9 (IX), 40 (XL), and 900 (CM) dynamically.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (20,'20. Integer to Roman','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a base-10 integer between 1 and 3999, convert it into its traditional Roman Numeral string representation. Roman numbers are written using seven distinct symbols (I=1, V=5, X=10, L=50, C=100, D=500, M=1000). The logic requires matching values against a descending dictionary lookup of symbols, handling subtractive prefix forms like 4 (IV), 9 (IX), 40 (XL), and 900 (CM) dynamically.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>num = 58</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> "LVIII"</code></div>
@@ -1206,7 +751,7 @@ VALUES (30,'30. Integer to Roman','<p class="mb-4 leading-relaxed text-sm font-n
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>Subtractive Transitions: Inputs hitting exact subtractive switchpoints (e.g., 400 returning "CD", or 90 returning "XC") must pass flawlessly without resolving to incorrect additive repetitions like "CCCC" or "LXXXX".</code></li><li><code>Maximum Scope Limits: Ensure inputs reaching the problem ceiling value (3999) safely accumulate out to "MMMCMXCIX".</code></li>
-</ul>','easy',100,'python-loops','def is_happy(n):
+</ul>','easy',100,'python-basics','def is_happy(n):
     # Return True if n is a happy number
     pass','def ref_impl(*args):
     n=args[0]
@@ -1234,7 +779,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (31,'31. Roman to Integer','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a valid Roman Numeral string s, convert it back into its equivalent base-10 integer form. The processing logic reads the string from left to right. If a smaller symbol value appears before a larger symbol value, it indicates that a subtractive configuration is active (e.g., IV), requiring you to subtract the smaller value from the running total instead of adding it.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (21,'21. Roman to Integer','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a valid Roman Numeral string s, convert it back into its equivalent base-10 integer form. The processing logic reads the string from left to right. If a smaller symbol value appears before a larger symbol value, it indicates that a subtractive configuration is active (e.g., IV), requiring you to subtract the smaller value from the running total instead of adding it.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "III"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 3</code></div>
@@ -1247,7 +792,7 @@ VALUES (31,'31. Roman to Integer','<p class="mb-4 leading-relaxed text-sm font-n
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>Single Character Conversions: Individual primitive tokens like "M" or "X" must successfully map directly to 1000 or 10.</code></li><li><code>Trailing Monotonic Steps: Complex mixed structures that terminate in minor tail values (e.g., "CDXLIV" for 444) must continuously track the character immediately to their right to accurately detect and execute look-ahead subtraction routines.</code></li>
-</ul>','easy',100,'python-loops','def is_ugly(n):
+</ul>','easy',100,'python-basics','def is_ugly(n):
     # Return True if n is an ugly number
     pass','def ref_impl(*args):
     n=args[0]
@@ -1275,7 +820,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 6',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (32,'32. Excel Sheet Column Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a string columnTitle that represents the column title as it appears in an Excel sheet, return its corresponding column number. This problem requires you to implement positional notation logic. The alphabet strings function like a base-26 numbering system where character tokens A through Z represent values 1 through 26.As you traverse the string from left to right, you shift the previously accumulated total by multiplying it by 26 before adding the value of the current character:$$\text{Total} = \text{Total} \times 26 + (\text{Current Character} - \text{''A''} + 1)$$</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (22,'22. Excel Sheet Column Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a string columnTitle that represents the column title as it appears in an Excel sheet, return its corresponding column number. This problem requires you to implement positional notation logic. The alphabet strings function like a base-26 numbering system where character tokens A through Z represent values 1 through 26.As you traverse the string from left to right, you shift the previously accumulated total by multiplying it by 26 before adding the value of the current character:$$\text{Total} = \text{Total} \times 26 + (\text{Current Character} - \text{''A''} + 1)$$</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>columnTitle = "AB"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 28</code></div>
@@ -1285,7 +830,7 @@ VALUES (32,'32. Excel Sheet Column Number','<p class="mb-4 leading-relaxed text-
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>columnTitle = "ZY"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 701</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">For column ''ZY'': Z is 26th (26 * 26 = 676) and Y is 25th (25). 676 + 25 = 701.</span></div>
-</div>','easy',100,'python-loops','def add_digits(num):
+</div>','easy',100,'python-basics','def add_digits(num):
     # Repeatedly sum digits until single digit (digital root)
     pass','def ref_impl(*args):
     num=args[0]
@@ -1310,7 +855,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (33,'33. Multiply Strings (BigInteger Simulation)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given two non-negative integers represented as strings num1 and num2, return the product of num1 and num2, also represented as a string. You cannot use built-in arbitrary-precision libraries (like BigInteger in Java) or convert the inputs directly to integers.This problem tests your ability to simulate long multiplication manually. You create an array of size num1.length() + num2.length() to store the intermediate products, multiply individual digits from right to left, accumulate the results at their correct positional indices, and handle the carry values systematically.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (23,'23. Multiply Strings (BigInteger Simulation)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given two non-negative integers represented as strings num1 and num2, return the product of num1 and num2, also represented as a string. You cannot use built-in arbitrary-precision libraries (like BigInteger in Java) or convert the inputs directly to integers.This problem tests your ability to simulate long multiplication manually. You create an array of size num1.length() + num2.length() to store the intermediate products, multiply individual digits from right to left, accumulate the results at their correct positional indices, and handle the carry values systematically.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>num1 = "2", num2 = "3"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> "6"</code></div>
@@ -1320,7 +865,7 @@ VALUES (33,'33. Multiply Strings (BigInteger Simulation)','<p class="mb-4 leadin
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>num1 = "123", num2 = "456"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> "56088"</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Multiplying 123 * 456 = 56088, returned as the string ''56088''.</span></div>
-</div>','medium',200,'python-loops','def my_pow(x, n):
+</div>','medium',200,'python-basics','def my_pow(x, n):
     # Implement x to the power n
     pass','def ref_impl(*args):
     x,n=args[0],args[1]
@@ -1344,7 +889,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 6',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (34,'34. String to Integer (atoi implementation)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Implement the myAtoi(string s) function, which converts a string into a signed 32-bit integer. The logic must simulate the robust parsing engine of standard low-level environments by following these precise sequential rules:Ignore any leading whitespace.Check if the next character is a sign symbol (''-'' or ''+'').Read in next characters until the next non-digit character or the end of the input is reached.Convert these digits into an integer.Clamp the final integer to stay within the signed 32-bit range: $[-2^{31}, 2^{31} - 1]$.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (24,'24. String to Integer (atoi implementation)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Implement the myAtoi(string s) function, which converts a string into a signed 32-bit integer. The logic must simulate the robust parsing engine of standard low-level environments by following these precise sequential rules:Ignore any leading whitespace.Check if the next character is a sign symbol (''-'' or ''+'').Read in next characters until the next non-digit character or the end of the input is reached.Convert these digits into an integer.Clamp the final integer to stay within the signed 32-bit range: $[-2^{31}, 2^{31} - 1]$.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "   -42"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> -42</code></div>
@@ -1354,7 +899,7 @@ VALUES (34,'34. String to Integer (atoi implementation)','<p class="mb-4 leading
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "4193 with words"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 4193</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">We parse digits up to the first non-digit space character in ''4193 with words'', yielding the integer 4193.</span></div>
-</div>','easy',100,'python-loops','def roman_to_int(s):
+</div>','easy',100,'python-basics','def roman_to_int(s):
     # Convert Roman numeral string to integer
     pass','def ref_impl(*args):
     s=args[0]
@@ -1385,7 +930,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (35,'35. Next Greater Element III (Digit Permutation)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a positive integer n, find the smallest positive integer that uses exactly the same digits present in n and is strictly greater than n. If no such integer exists, return -1.This requires identifying the next lexicographical permutation of the digit sequence:Traverse from right to left to find the first digit that is smaller than the digit to its immediate right (this is the swap pivot index i).If no such pivot exists, the digits are in descending order, meaning no greater permutation can be formed.Traverse from the right edge again to find the smallest digit that is greater than the digit at index i. Swap them.Reverse the entire sequence of digits to the right of index i to keep the resulting number as small as possible.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (25,'25. Next Greater Element III (Digit Permutation)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a positive integer n, find the smallest positive integer that uses exactly the same digits present in n and is strictly greater than n. If no such integer exists, return -1.This requires identifying the next lexicographical permutation of the digit sequence:Traverse from right to left to find the first digit that is smaller than the digit to its immediate right (this is the swap pivot index i).If no such pivot exists, the digits are in descending order, meaning no greater permutation can be formed.Traverse from the right edge again to find the smallest digit that is greater than the digit at index i. Swap them.Reverse the entire sequence of digits to the right of index i to keep the resulting number as small as possible.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 12</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 21</code></div>
@@ -1395,7 +940,7 @@ VALUES (35,'35. Next Greater Element III (Digit Permutation)','<p class="mb-4 le
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 21</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> -1</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">The digits of 21 are already sorted in descending order, meaning no larger permutation can be formed, so we return -1.</span></div>
-</div>','medium',200,'python-loops','def int_to_roman(num):
+</div>','medium',200,'python-basics','def int_to_roman(num):
     # Convert integer to Roman numeral string
     pass','def ref_impl(*args):
     num=args[0]
@@ -1428,7 +973,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (36,'36. Count Primes (Sieve of Eratosthenes)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, return the number of prime numbers that are strictly less than n. Checking every number from $2$ to $n$ individually results in a slow $O(n\sqrt{n})$ time complexity.Instead, use the Sieve of Eratosthenes. Create a boolean array of size n initialized to true. Starting from $2$, if a number is prime, mark all of its multiples as false (composite). To optimize this, start marking multiples from $i^2$ instead of $2 \times i$, and terminate the outer loop as soon as $i^2 \ge n$.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (26,'26. Count Primes (Sieve of Eratosthenes)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, return the number of prime numbers that are strictly less than n. Checking every number from $2$ to $n$ individually results in a slow $O(n\sqrt{n})$ time complexity.Instead, use the Sieve of Eratosthenes. Create a boolean array of size n initialized to true. Starting from $2$, if a number is prime, mark all of its multiples as false (composite). To optimize this, start marking multiples from $i^2$ instead of $2 \times i$, and terminate the outer loop as soon as $i^2 \ge n$.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 10</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 4</code></div>
@@ -1438,7 +983,7 @@ VALUES (36,'36. Count Primes (Sieve of Eratosthenes)','<p class="mb-4 leading-re
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 2</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 0</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">There are no prime numbers strictly less than 2, so the count is 0.</span></div>
-</div>','medium',200,'python-loops','def multiply_strings(num1, num2):
+</div>','medium',200,'python-basics','def multiply_strings(num1, num2):
     # Multiply two non-negative integers given as strings
     pass','def ref_impl(*args):
     return str(int(args[0])*int(args[1]))
@@ -1461,7 +1006,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (37,'37. Greatest Common Divisor (GCD) & LCM','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given two integers a and b, calculate their Greatest Common Divisor (GCD) and Least Common Multiple (LCM).To do this efficiently, use Euclid''s Algorithm, which states that $\text{GCD}(a, b) = \text{GCD}(b, a \pmod b)$ until $b$ becomes $0$. Once the GCD is found, compute the LCM using the mathematical property:$$\text{LCM}(a, b) = \frac{\vert{}a \times b\vert{}}{\text{GCD}(a, b)}$$</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (27,'27. Greatest Common Divisor (GCD) & LCM','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given two integers a and b, calculate their Greatest Common Divisor (GCD) and Least Common Multiple (LCM).To do this efficiently, use Euclid''s Algorithm, which states that $\text{GCD}(a, b) = \text{GCD}(b, a \pmod b)$ until $b$ becomes $0$. Once the GCD is found, compute the LCM using the mathematical property:$$\text{LCM}(a, b) = \frac{\vert{}a \times b\vert{}}{\text{GCD}(a, b)}$$</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>a = 24, b = 36</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> GCD = 12, LCM = 72</code></div>
@@ -1471,7 +1016,7 @@ VALUES (37,'37. Greatest Common Divisor (GCD) & LCM','<p class="mb-4 leading-rel
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>a = 7, b = 9</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> GCD = 1, LCM = 63</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">The Greatest Common Divisor of 7 and 9 is 1, and their Least Common Multiple is (7 * 9) / 1 = 63.</span></div>
-</div>','medium',200,'python-loops','def my_atoi(s):
+</div>','medium',200,'python-basics','def my_atoi(s):
     # Convert string to 32-bit signed integer (like C atoi)
     pass','def ref_impl(*args):
     s=args[0].lstrip()
@@ -1509,7 +1054,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 6',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (38,'38. Factorial Trailing Zeroes','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, return the number of trailing zeroes in n!. Your solution must run in $O(\log n)$ time complexity.Calculating the literal factorial value first is impossible because numbers like $100!$ quickly overflow even 64-bit long structures. Instead, use prime factorization logic: a trailing zero is created by multiplying $2 \times 5$. In any factorial sequence, the prime factor 2 is always more abundant than 5. Therefore, the problem simplifies to counting how many times the prime factor 5 appears in the numbers from $1$ to $n$:$$\text{Trailing Zeroes} = \lfloor \frac{n}{5} \rfloor + \lfloor \frac{n}{25} \rfloor + \lfloor \frac{n}{125} \rfloor + \dots$$</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (28,'28. Factorial Trailing Zeroes','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, return the number of trailing zeroes in n!. Your solution must run in $O(\log n)$ time complexity.Calculating the literal factorial value first is impossible because numbers like $100!$ quickly overflow even 64-bit long structures. Instead, use prime factorization logic: a trailing zero is created by multiplying $2 \times 5$. In any factorial sequence, the prime factor 2 is always more abundant than 5. Therefore, the problem simplifies to counting how many times the prime factor 5 appears in the numbers from $1$ to $n$:$$\text{Trailing Zeroes} = \lfloor \frac{n}{5} \rfloor + \lfloor \frac{n}{25} \rfloor + \lfloor \frac{n}{125} \rfloor + \dots$$</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 1</code></div>
@@ -1519,7 +1064,7 @@ VALUES (38,'38. Factorial Trailing Zeroes','<p class="mb-4 leading-relaxed text-
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 3</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 0</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">3! = 6, which contains no factor of 5, resulting in 0 trailing zeroes.</span></div>
-</div>','medium',200,'python-loops','def next_greater_digit_arrangement(n):
+</div>','medium',200,'python-basics','def next_greater_digit_arrangement(n):
     # Find smallest integer greater than n with same digits
     pass','def ref_impl(*args):
     n=args[0]
@@ -1554,7 +1099,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 6',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (39,'39. Super Pow (Modular Exponentiation)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Calculate $a^b \pmod{1337}$ where a is a positive integer and b is an extremely large positive integer given as an array of its individual digits.Because $b$ can contain thousands of digits, it cannot be converted into standard primitive datatypes. You must solve this by combining Modular Arithmetic with positional digit expansion:$$a^{[1, 2, 3, 4]} \pmod{m} = \left( (a^{[1, 2, 3]})^{10} \times a^4 \right) \pmod{m}$$This pattern allows you to process the array from left to right using a combination of a modular power helper function and recursive scaling.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (29,'29. Super Pow (Modular Exponentiation)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Calculate $a^b \pmod{1337}$ where a is a positive integer and b is an extremely large positive integer given as an array of its individual digits.Because $b$ can contain thousands of digits, it cannot be converted into standard primitive datatypes. You must solve this by combining Modular Arithmetic with positional digit expansion:$$a^{[1, 2, 3, 4]} \pmod{m} = \left( (a^{[1, 2, 3]})^{10} \times a^4 \right) \pmod{m}$$This pattern allows you to process the array from left to right using a combination of a modular power helper function and recursive scaling.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>a = 2, b = [3]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 8</code></div>
@@ -1564,7 +1109,7 @@ VALUES (39,'39. Super Pow (Modular Exponentiation)','<p class="mb-4 leading-rela
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>a = 2, b = [1, 0]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 1024 (Since $2^{10} = 1024$, and $1024 \pmod{1337} = 1024$).</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">We compute 2 raised to the power of 10 modulo 1337: 1024 modulo 1337 = 1024.</span></div>
-</div>','medium',200,'python-loops','def convert_to_base(num, base):
+</div>','medium',200,'python-basics','def convert_to_base(num, base):
     # Convert num to given base (2-9), return as string
     pass','def ref_impl(*args):
     num,base=args[0],args[1]
@@ -1595,7 +1140,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 6',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (40,'40. Ugly Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An ugly number is a positive integer whose prime factors are limited strictly to 2, 3, and 5. Given an integer n, return true if n is an ugly number, and false otherwise.The logic requires you to systematically strip away all factors of 2, 3, and 5 by dividing the number as long as it is evenly divisible. If the number reduces down to exactly 1 after this process, it is an ugly number.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (30,'30. Ugly Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An ugly number is a positive integer whose prime factors are limited strictly to 2, 3, and 5. Given an integer n, return true if n is an ugly number, and false otherwise.The logic requires you to systematically strip away all factors of 2, 3, and 5 by dividing the number as long as it is evenly divisible. If the number reduces down to exactly 1 after this process, it is an ugly number.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 6</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> true</code></div>
@@ -1605,7 +1150,7 @@ VALUES (40,'40. Ugly Number','<p class="mb-4 leading-relaxed text-sm font-normal
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 14</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> false</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">The prime factors of 14 are 2 and 7. Since 7 is not in the set {2, 3, 5}, the number is not ugly.</span></div>
-</div>','easy',100,'python-loops','def excel_column_number(columnTitle):
+</div>','easy',100,'python-basics','def excel_column_number(columnTitle):
     # Convert Excel column title (e.g. "AB") to number
     pass','def ref_impl(*args):
     t=args[0]
@@ -1632,7 +1177,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (41,'41. Happy Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write an algorithm to determine if a number n is "happy". A happy number is defined by a process where you replace the number by the sum of the squares of its digits, repeating the process until the number equals 1, or it loops endlessly in a cycle that does not include 1. Those numbers for which this process ends in 1 are happy. Return true if it is happy, and false if not.To solve this efficiently without using excessive memory, you can treat the sequence of numbers as a linked list problem and apply Floyd''s Tortoise and Hare cycle-detection algorithm. Alternatively, you can track previously visited numbers using a HashSet.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (31,'31. Happy Number','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write an algorithm to determine if a number n is "happy". A happy number is defined by a process where you replace the number by the sum of the squares of its digits, repeating the process until the number equals 1, or it loops endlessly in a cycle that does not include 1. Those numbers for which this process ends in 1 are happy. Return true if it is happy, and false if not.To solve this efficiently without using excessive memory, you can treat the sequence of numbers as a linked list problem and apply Floyd''s Tortoise and Hare cycle-detection algorithm. Alternatively, you can track previously visited numbers using a HashSet.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 19</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> true</code></div>
@@ -1642,7 +1187,7 @@ VALUES (41,'41. Happy Number','<p class="mb-4 leading-relaxed text-sm font-norma
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 2</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> false</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">2: the process enters an infinite loop (4 → 16 → 37...) and never reaches 1, so it is not a happy number.</span></div>
-</div>','hard',300,'python-loops','def super_pow(a, b):
+</div>','hard',300,'python-basics','def super_pow(a, b):
     # Compute a^b mod 1337 where b is given as list of digits
     pass','def ref_impl(*args):
     a,b=args[0],args[1]
@@ -1667,7 +1212,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (42,'42. Integer Break','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, break it into the sum of k positive integers, where $k \ge 2$, and maximize the product of those integers. Return the maximum product you can get.This problem utilizes number theory and logic to discover a specific mathematical pattern. Breaking the number into as many factors of 3 as possible yields the maximum product because the mathematical constant $e \approx 2.718$ is the optimal base for maximizing products, and 3 is the closest integer to $e$.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (32,'32. Integer Break','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, break it into the sum of k positive integers, where $k \ge 2$, and maximize the product of those integers. Return the maximum product you can get.This problem utilizes number theory and logic to discover a specific mathematical pattern. Breaking the number into as many factors of 3 as possible yields the maximum product because the mathematical constant $e \approx 2.718$ is the optimal base for maximizing products, and 3 is the closest integer to $e$.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 2</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 1</code></div>
@@ -1677,7 +1222,7 @@ VALUES (42,'42. Integer Break','<p class="mb-4 leading-relaxed text-sm font-norm
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 10</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 36</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">The number 10 is optimally split into 3 + 3 + 4, giving the maximum product of 3 * 3 * 4 = 36.</span></div>
-</div>','hard',300,'python-loops','def integer_break(n):
+</div>','hard',300,'python-basics','def integer_break(n):
     # Break n into positive integers summing to n, maximise product
     pass','def ref_impl(*args):
     n=args[0]
@@ -1709,7 +1254,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (43,'43. Perfect Squares (Lagrange''s Four-Square Properties)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, return the least number of perfect square numbers (e.g., $1, 4, 9, 16, \dots$) that sum to n.While this is widely known as a Dynamic Programming problem, it can be optimized to run in $O(\sqrt{n})$ time using Lagrange''s Four-Square Theorem. The theorem states that every natural number can be represented as the sum of four or fewer integer squares. By combining this with Legendre''s Three-Square Theorem, the answer can only ever be 1, 2, 3, or 4.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (33,'33. Perfect Squares (Lagrange''s Four-Square Properties)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, return the least number of perfect square numbers (e.g., $1, 4, 9, 16, \dots$) that sum to n.While this is widely known as a Dynamic Programming problem, it can be optimized to run in $O(\sqrt{n})$ time using Lagrange''s Four-Square Theorem. The theorem states that every natural number can be represented as the sum of four or fewer integer squares. By combining this with Legendre''s Three-Square Theorem, the answer can only ever be 1, 2, 3, or 4.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 12</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 3</code></div>
@@ -1719,7 +1264,7 @@ VALUES (43,'43. Perfect Squares (Lagrange''s Four-Square Properties)','<p class=
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 13</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 2</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">13 is optimally split into 9 + 4 (which are 3^2 + 2^2), needing 2 perfect squares.</span></div>
-</div>','medium',200,'python-loops','def num_squares(n):
+</div>','medium',200,'python-basics','def num_squares(n):
     # Least number of perfect square numbers that sum to n
     pass','def ref_impl(*args):
     n=args[0]
@@ -1751,7 +1296,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (44,'44. Nim Game (Game Theory Logic)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">You are playing the following Nim Game with your friend:There is a heap of stones on the table.You and your friend take turns making moves, and you go first.Each turn, the person whose turn it is will remove 1 to 3 stones from the heap.The one who removes the last stone is the winner.Given n, the number of stones in the heap, return true if you can win the game assuming both you and your friend play optimally, otherwise return false. This problem tests your ability to identify mathematical induction patterns and game state strategies to reduce a seemingly complex recursive game tree down to a single $O(1)$ logical condition.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (34,'34. Nim Game (Game Theory Logic)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">You are playing the following Nim Game with your friend:There is a heap of stones on the table.You and your friend take turns making moves, and you go first.Each turn, the person whose turn it is will remove 1 to 3 stones from the heap.The one who removes the last stone is the winner.Given n, the number of stones in the heap, return true if you can win the game assuming both you and your friend play optimally, otherwise return false. This problem tests your ability to identify mathematical induction patterns and game state strategies to reduce a seemingly complex recursive game tree down to a single $O(1)$ logical condition.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 4</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> false</code></div>
@@ -1761,7 +1306,7 @@ VALUES (44,'44. Nim Game (Game Theory Logic)','<p class="mb-4 leading-relaxed te
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 1</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> true</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">With 1 stone left, you take the last stone and win the game immediately.</span></div>
-</div>','easy',100,'python-loops','def can_win_nim(n):
+</div>','easy',100,'python-basics','def can_win_nim(n):
     # Return True if first player wins Nim game
     pass','def ref_impl(*args):
     return args[0]%4!=0
@@ -1784,7 +1329,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 6',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (45,'45. Pow(x, n) (Binary Exponentiation)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Implement pow(x, n), which calculates $x$ raised to the power $n$ (i.e., $x^n$). A naive approach multiplies $x$ exactly $n$ times, running in an inefficient $O(n)$ time loop.To pass technical interview performance bounds, you must use Binary Exponentiation (also known as exponentiation by squaring) to reduce the complexity to $O(\log n)$. The logic cuts the problem in half at each step:$$x^n = \begin{cases} (x^2)^{n/2} & \text{if } n \text{ is even} \\ x \times (x^2)^{(n-1)/2} & \text{if } n \text{ is odd} \end{cases}$$</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (35,'35. Pow(x, n) (Binary Exponentiation)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Implement pow(x, n), which calculates $x$ raised to the power $n$ (i.e., $x^n$). A naive approach multiplies $x$ exactly $n$ times, running in an inefficient $O(n)$ time loop.To pass technical interview performance bounds, you must use Binary Exponentiation (also known as exponentiation by squaring) to reduce the complexity to $O(\log n)$. The logic cuts the problem in half at each step:$$x^n = \begin{cases} (x^2)^{n/2} & \text{if } n \text{ is even} \\ x \times (x^2)^{(n-1)/2} & \text{if } n \text{ is odd} \end{cases}$$</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>x = 2.00000, n = 10</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 1024.00000</code></div>
@@ -1794,7 +1339,7 @@ VALUES (45,'45. Pow(x, n) (Binary Exponentiation)','<p class="mb-4 leading-relax
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>x = 2.10000, n = 3</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 9.26100</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">We compute 2.1 raised to the power of 3, which yields 9.261.</span></div>
-</div>','easy',100,'python-loops','def is_perfect_number(n):
+</div>','easy',100,'python-basics','def is_perfect_number(n):
     # Return True if n equals sum of its proper divisors
     pass','def ref_impl(*args):
     n=args[0]
@@ -1819,7 +1364,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 6',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (46,'46. Solid Star Square Pattern','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a solid square pattern composed of asterisks (*). The grid must contain exactly n rows, and each row must contain exactly n asterisks. Each asterisk in a row should be separated by a single space character.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0, the pattern cannot be formed; in this scenario, print nothing (an empty output).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (36,'36. Solid Star Square Pattern','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a solid square pattern composed of asterisks (*). The grid must contain exactly n rows, and each row must contain exactly n asterisks. Each asterisk in a row should be separated by a single space character.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0, the pattern cannot be formed; in this scenario, print nothing (an empty output).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all"> 
@@ -1839,7 +1384,7 @@ VALUES (46,'46. Solid Star Square Pattern','<p class="mb-4 leading-relaxed text-
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (The absolute minimal single-cell grid boundary condition)</code></li><li><code>n = -3 (Negative constraint handling resulting in zero operations)</code></li><li><code>n = 10 (Large uniform grid tracking row/column loop termination)</code></li>
-</ul>','easy',100,'python-patterns','def solid_square(n):
+</ul>','easy',100,'python-basics','def solid_square(n):
     # Write your code here
     pass','def ref_impl(*args):
     if args[0] <= 0: return ""
@@ -1890,7 +1435,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (47,'47. Right-Angled Star Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a right-angled triangle pattern of asterisks (*). The triangle must have exactly n rows. The first row must contain exactly 1 asterisk, the second row must contain 2 asterisks, and each subsequent row must increase the count by 1 until the n-th row, which contains exactly n asterisks. Each asterisk within a row should be separated by a single space character.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (37,'37. Right-Angled Star Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a right-angled triangle pattern of asterisks (*). The triangle must have exactly n rows. The first row must contain exactly 1 asterisk, the second row must contain 2 asterisks, and each subsequent row must increase the count by 1 until the n-th row, which contains exactly n asterisks. Each asterisk within a row should be separated by a single space character.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">*
@@ -1914,7 +1459,7 @@ VALUES (47,'47. Right-Angled Star Triangle','<p class="mb-4 leading-relaxed text
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (Single row boundary case printing a solitary asterisk)</code></li><li><code>n = 0 (Zero constraint exit validation)</code></li><li><code>n = 6 (Verifying that the sequence scales linearly row-by-row)</code></li>
-</ul>','easy',100,'python-patterns','def right_triangle(n):
+</ul>','easy',100,'python-basics','def right_triangle(n):
     # Write your code here
     pass','def ref_impl(*args):
     if args[0] <= 0: return ""
@@ -1965,7 +1510,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (48,'48. Right-Angled Number Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a right-angled triangle pattern using sequential integers. The pattern must contain exactly n rows.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (38,'38. Right-Angled Number Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a right-angled triangle pattern using sequential integers. The pattern must contain exactly n rows.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">1
@@ -1988,7 +1533,7 @@ VALUES (48,'48. Right-Angled Number Triangle','<p class="mb-4 leading-relaxed te
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (Displays only the starting number 1)</code></li><li><code>n = 4 (Verifying that the loop resets the numerical sequence back to 1 at the start of every new row)</code></li><li><code>n = -5 (Negative boundary verification check)</code></li>
-</ul>','easy',100,'python-patterns','def number_triangle(n):
+</ul>','easy',100,'python-basics','def number_triangle(n):
     # Write your code here
     pass','def ref_impl(*args):
     if args[0] <= 0: return ""
@@ -2039,7 +1584,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (49,'49. Repeating Number Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a right-angled triangle pattern of repeating numbers. The pattern must contain exactly n rows.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (39,'39. Repeating Number Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a right-angled triangle pattern of repeating numbers. The pattern must contain exactly n rows.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">1
@@ -2063,7 +1608,7 @@ VALUES (49,'49. Repeating Number Triangle','<p class="mb-4 leading-relaxed text-
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (Minimal grid displaying only 1)</code></li><li><code>n = 6 (Ensuring the digit character updates across higher loop indices while matching the column length)</code></li><li><code>n = -2 (Graceful termination on negative boundaries)</code></li>
-</ul>','easy',100,'python-patterns','def repeating_number_triangle(n):
+</ul>','easy',100,'python-basics','def repeating_number_triangle(n):
     # Write your code here
     pass','def ref_impl(*args):
     if args[0] <= 0: return ""
@@ -2114,7 +1659,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (50,'50. Inverted Right-Angled Star Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print an inverted right-angled triangle pattern of asterisks (*). The pattern must contain exactly n rows. The characters in each row should be separated by a single space.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (40,'40. Inverted Right-Angled Star Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print an inverted right-angled triangle pattern of asterisks (*). The pattern must contain exactly n rows. The characters in each row should be separated by a single space.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">* * * * *
@@ -2138,7 +1683,7 @@ VALUES (50,'50. Inverted Right-Angled Star Triangle','<p class="mb-4 leading-rel
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (Solitary cell structural match)</code></li><li><code>n = 4 (Verifying that loop decrements systematically trim the trailing star positions)</code></li><li><code>n = -10 (Handling out-of-bounds lower limits safely)</code></li>
-</ul>','easy',100,'python-patterns','def inverted_right_triangle(n):
+</ul>','easy',100,'python-basics','def inverted_right_triangle(n):
     # Write your code here
     pass','def ref_impl(*args):
     if args[0] <= 0: return ""
@@ -2189,7 +1734,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (51,'51. Inverted Right-Angled Number Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print an inverted right-angled triangle pattern of numbers. The grid must contain exactly n rows. Numbers within each row must be separated by a single space.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (41,'41. Inverted Right-Angled Number Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print an inverted right-angled triangle pattern of numbers. The grid must contain exactly n rows. Numbers within each row must be separated by a single space.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">1 2 3 4 5
@@ -2212,7 +1757,7 @@ VALUES (51,'51. Inverted Right-Angled Number Triangle','<p class="mb-4 leading-r
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (Outputs only the baseline scalar character 1)</code></li><li><code>n = 4 (Ensuring inner loop counts decrease its terminal boundaries while keeping the start value anchored to 1)</code></li><li><code>n = -4 (Invalid range configuration safety check)</code></li>
-</ul>','easy',100,'python-patterns','def inverted_number_triangle(n):
+</ul>','easy',100,'python-basics','def inverted_number_triangle(n):
     # Write your code here
     pass','def ref_impl(*args):
     if args[0] <= 0: return ""
@@ -2263,7 +1808,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (52,'52. Star Pyramid Pattern','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a centered pyramid pattern composed of asterisks (*). The pyramid must contain exactly n rows. The first row contains exactly 1 asterisk centered relative to the bottom row, and each subsequent row increases the asterisk count by exactly 2 (forming an odd sequence: 1, 3, 5, 7, ...).</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The output must be formatted with leading spaces to maintain a perfectly symmetrical, centered alignment. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (42,'42. Star Pyramid Pattern','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a centered pyramid pattern composed of asterisks (*). The pyramid must contain exactly n rows. The first row contains exactly 1 asterisk centered relative to the bottom row, and each subsequent row increases the asterisk count by exactly 2 (forming an odd sequence: 1, 3, 5, 7, ...).</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The output must be formatted with leading spaces to maintain a perfectly symmetrical, centered alignment. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 4</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">   *
@@ -2285,7 +1830,7 @@ VALUES (52,'52. Star Pyramid Pattern','<p class="mb-4 leading-relaxed text-sm fo
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (The minimal single-row pyramid showing one asterisk)</code></li><li><code>n = 5 (Verifying perfect centered spacing across higher horizontal layers)</code></li><li><code>n = -2 (Zero operations for invalid input boundaries)</code></li>
-</ul>','easy',100,'python-patterns','def star_pyramid(n):
+</ul>','easy',100,'python-basics','def star_pyramid(n):
     # Write your code here
     pass','def ref_impl(*args):
     n = args[0]
@@ -2342,7 +1887,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (53,'53. Inverted Star Pyramid Pattern','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print an inverted centered pyramid pattern composed of asterisks (*). The pattern must contain exactly n rows. The first row must display the maximum width sequence of asterisks, and each subsequent row must decrease the asterisk count by exactly 2.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The rows must include leading spaces to keep the entire shape centered and inverted symmetrically. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (43,'43. Inverted Star Pyramid Pattern','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print an inverted centered pyramid pattern composed of asterisks (*). The pattern must contain exactly n rows. The first row must display the maximum width sequence of asterisks, and each subsequent row must decrease the asterisk count by exactly 2.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The rows must include leading spaces to keep the entire shape centered and inverted symmetrically. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">*********
@@ -2365,7 +1910,7 @@ VALUES (53,'53. Inverted Star Pyramid Pattern','<p class="mb-4 leading-relaxed t
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (Prints just a single asterisk)</code></li><li><code>n = 4 (Ensures the top row correctly outputs exactly 7 asterisks and tapers down cleanly)</code></li><li><code>n = 0 (Graceful termination check)</code></li>
-</ul>','easy',100,'python-patterns','def inverted_star_pyramid(n):
+</ul>','easy',100,'python-basics','def inverted_star_pyramid(n):
     # Write your code here
     pass','def ref_impl(*args):
     n = args[0]
@@ -2422,7 +1967,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (54,'54. Star Diamond Pattern','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a symmetrical diamond pattern composed of asterisks (*). The diamond consists of a top upright pyramid followed by an inverted pyramid, creating a shape with a maximum thickness row in the center. The total height of the shape scales relative to the input parameter n.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Leading spaces must be managed perfectly across all rows to center the entire diamond. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (44,'44. Star Diamond Pattern','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a symmetrical diamond pattern composed of asterisks (*). The diamond consists of a top upright pyramid followed by an inverted pyramid, creating a shape with a maximum thickness row in the center. The total height of the shape scales relative to the input parameter n.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Leading spaces must be managed perfectly across all rows to center the entire diamond. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">    *
@@ -2450,7 +1995,7 @@ VALUES (54,'54. Star Diamond Pattern','<p class="mb-4 leading-relaxed text-sm fo
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 2 (Smallest complex multi-layer diamond layout)</code></li><li><code>n = 6 (Testing structural stability when splitting the growing and shrinking segments)</code></li><li><code>n = -5 (Negative boundary verification check)</code></li>
-</ul>','medium',200,'python-patterns','def star_diamond(n):
+</ul>','medium',200,'python-basics','def star_diamond(n):
     # Write your code here
     pass','def ref_impl(*args):
     n = args[0]
@@ -2511,7 +2056,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (55,'55. Half Star Diamond Pattern','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a sideways, right-pointing arrow pattern of asterisks (*). The pattern grows wider row-by-row until it reaches a maximum row width of n asterisks, after which it immediately begins narrowing down row-by-row until it terminates at 1 asterisk.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">No leading spaces are required for alignment; every row starts immediately at the left margin. Each asterisk within a row should be separated by a single space character. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (45,'45. Half Star Diamond Pattern','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a sideways, right-pointing arrow pattern of asterisks (*). The pattern grows wider row-by-row until it reaches a maximum row width of n asterisks, after which it immediately begins narrowing down row-by-row until it terminates at 1 asterisk.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">No leading spaces are required for alignment; every row starts immediately at the left margin. Each asterisk within a row should be separated by a single space character. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">*
@@ -2539,7 +2084,7 @@ VALUES (55,'55. Half Star Diamond Pattern','<p class="mb-4 leading-relaxed text-
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (A single row with a single asterisk)</code></li><li><code>n = 4 (Ensures that the peak width reaches exactly 4 stars and matches the image layout)</code></li><li><code>n = -1 (Negative parameter safety check)</code></li>
-</ul>','medium',200,'python-patterns','def half_star_diamond(n):
+</ul>','medium',200,'python-basics','def half_star_diamond(n):
     # Write your code here
     pass','def ref_impl(*args):
     n = args[0]
@@ -2596,7 +2141,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (56,'56. Alternating Binary Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a right-angled triangle pattern of alternating binary digits (1 and 0). The triangle must contain exactly n rows. The characters within each row must alternate between 1 and 0 with a single space separating them.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The first element of any row must match the value required by the alternating grid layout shown in the image (rows alternate their starting characters). If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (46,'46. Alternating Binary Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a right-angled triangle pattern of alternating binary digits (1 and 0). The triangle must contain exactly n rows. The characters within each row must alternate between 1 and 0 with a single space separating them.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The first element of any row must match the value required by the alternating grid layout shown in the image (rows alternate their starting characters). If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">1
@@ -2620,7 +2165,7 @@ VALUES (56,'56. Alternating Binary Triangle','<p class="mb-4 leading-relaxed tex
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (Outputs only a single 1)</code></li><li><code>n = 4 (Ensures that row 4 starts with 0 and alternates properly)</code></li><li><code>n = -3 (Out-of-bounds input boundary check)</code></li>
-</ul>','medium',200,'python-patterns','def binary_triangle(n):
+</ul>','medium',200,'python-basics','def binary_triangle(n):
     # Write your code here
     pass','def ref_impl(*args):
     n = args[0]
@@ -2680,7 +2225,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (57,'57. Mirror Number Canopy Pattern','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a symmetric numerical canopy pattern. The output must have exactly n rows. Each row consists of an increasing sequence of numbers on the left, an empty space gap in the middle, and a matching reversed sequence of numbers on the right.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The total horizontal character span remains constant, meaning the middle gap shrinks as the numerical sequences expand row-by-row. In the final n-th row, the left and right sequences meet in the center with no empty spaces between them. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (47,'47. Mirror Number Canopy Pattern','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a symmetric numerical canopy pattern. The output must have exactly n rows. Each row consists of an increasing sequence of numbers on the left, an empty space gap in the middle, and a matching reversed sequence of numbers on the right.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The total horizontal character span remains constant, meaning the middle gap shrinks as the numerical sequences expand row-by-row. In the final n-th row, the left and right sequences meet in the center with no empty spaces between them. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 4</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">1      1
@@ -2702,7 +2247,7 @@ VALUES (57,'57. Mirror Number Canopy Pattern','<p class="mb-4 leading-relaxed te
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (Displays the meeting point row 11 instantly)</code></li><li><code>n = 5 (Verifying precise width tracking of the empty internal spaces)</code></li><li><code>n = -6 (Handling negative grid heights cleanly)</code></li>
-</ul>','medium',200,'python-patterns','def mirror_canopy(n):
+</ul>','medium',200,'python-basics','def mirror_canopy(n):
     # Write your code here
     pass','def ref_impl(*args):
     n = args[0]
@@ -2760,7 +2305,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (58,'58. Floyd''s Number Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a right-angled triangle pattern of continuously increasing positive integers. The triangle must contain exactly n rows. Unlike other number triangles that reset on each row, the numbers in this pattern continue to increment sequentially from 1 upward throughout the entire grid. Each number within a row must be separated by a single space character.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (48,'48. Floyd''s Number Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a right-angled triangle pattern of continuously increasing positive integers. The triangle must contain exactly n rows. Unlike other number triangles that reset on each row, the numbers in this pattern continue to increment sequentially from 1 upward throughout the entire grid. Each number within a row must be separated by a single space character.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">1
@@ -2783,7 +2328,7 @@ VALUES (58,'58. Floyd''s Number Triangle','<p class="mb-4 leading-relaxed text-s
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (Prints only the starting value 1)</code></li><li><code>n = 4 (Ensures the final row accurately outputs the sequence ending at 10)</code></li><li><code>n = -4 (Graceful exit for invalid dimensions)</code></li>
-</ul>','medium',200,'python-patterns','def floyds_triangle(n):
+</ul>','medium',200,'python-basics','def floyds_triangle(n):
     # Write your code here
     pass','def ref_impl(*args):
     n = args[0]
@@ -2843,7 +2388,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (59,'59. Incrementing Alphabet Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a right-angled triangle pattern of uppercase English alphabets. The triangle must contain exactly n rows. The i-th row (where i corresponds to the row index starting from 1) must display an alphabetical sequence beginning with ''A'' and progressing up to the i-th character of the alphabet. No spaces are present between the characters.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0 or greater than 26, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (49,'49. Incrementing Alphabet Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a right-angled triangle pattern of uppercase English alphabets. The triangle must contain exactly n rows. The i-th row (where i corresponds to the row index starting from 1) must display an alphabetical sequence beginning with ''A'' and progressing up to the i-th character of the alphabet. No spaces are present between the characters.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0 or greater than 26, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">A
@@ -2866,7 +2411,7 @@ AB</pre></div></div>
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (Outputs only the single character ''A'')</code></li><li><code>n = 26 (Maximum upper limit boundary covering all characters up to ''Z'')</code></li><li><code>n = 27 (Out-of-bounds safety check resulting in an empty output)</code></li>
-</ul>','medium',200,'python-patterns','def alphabet_triangle(n):
+</ul>','medium',200,'python-basics','def alphabet_triangle(n):
     # Write your code here
     pass','def ref_impl(*args):
     n = args[0]
@@ -2918,7 +2463,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (60,'60. Inverted Alphabet Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print an inverted right-angled triangle pattern of uppercase English alphabets. The pattern must contain exactly n rows. The first row must display a sequence of uppercase characters starting from ''A'' up to the n-th letter of the alphabet. Each subsequent row must shorten its alphabetical sequence limit by exactly one trailing character until the final row, which outputs only the letter ''A''.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0 or greater than 26, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (50,'50. Inverted Alphabet Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print an inverted right-angled triangle pattern of uppercase English alphabets. The pattern must contain exactly n rows. The first row must display a sequence of uppercase characters starting from ''A'' up to the n-th letter of the alphabet. Each subsequent row must shorten its alphabetical sequence limit by exactly one trailing character until the final row, which outputs only the letter ''A''.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0 or greater than 26, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">ABCDE
@@ -2942,7 +2487,7 @@ A</pre></div></div>
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (Displays only the baseline letter ''A'')</code></li><li><code>n = 4 (Ensures the initial row correctly spans from ''A'' to ''D'')</code></li><li><code>n = -5 (Negative boundary verification check)</code></li>
-</ul>','medium',200,'python-patterns','def inverted_alphabet_triangle(n):
+</ul>','medium',200,'python-basics','def inverted_alphabet_triangle(n):
     # Write your code here
     pass','def ref_impl(*args):
     n = args[0]
@@ -2994,7 +2539,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (61,'61. Repeating Alphabet Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a right-angled triangle pattern of repeating uppercase alphabets. The pattern must contain exactly n rows. The i-th row must consist entirely of the i-th letter of the English alphabet, repeated exactly i times. No spaces separate the characters within a row.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0 or greater than 26, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (51,'51. Repeating Alphabet Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a right-angled triangle pattern of repeating uppercase alphabets. The pattern must contain exactly n rows. The i-th row must consist entirely of the i-th letter of the English alphabet, repeated exactly i times. No spaces separate the characters within a row.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If n is less than or equal to 0 or greater than 26, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">A
@@ -3018,7 +2563,7 @@ CCC</pre></div></div>
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (Displays a solitary ''A'')</code></li><li><code>n = 6 (Verifying character progression shifts accurately to ''F'' on the sixth row)</code></li><li><code>n = -1 (Negative constraint exit validation)</code></li>
-</ul>','medium',200,'python-patterns','def repeating_alphabet_triangle(n):
+</ul>','medium',200,'python-basics','def repeating_alphabet_triangle(n):
     # Write your code here
     pass','def ref_impl(*args):
     n = args[0]
@@ -3070,7 +2615,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (62,'62. Alphabet Palindrome Pyramid','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a centered pyramid pattern using alphabetical palindromes. The pyramid must contain exactly n rows. Each row consists of a sequence of letters that grows alphabetically starting from ''A'' up to a maximum character defined by that row, and then reverses back down to ''A''.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Leading spaces must be applied to ensure the entire pyramid is centered symmetrically. If n is less than or equal to 0 or greater than 26, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (52,'52. Alphabet Palindrome Pyramid','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a centered pyramid pattern using alphabetical palindromes. The pyramid must contain exactly n rows. Each row consists of a sequence of letters that grows alphabetically starting from ''A'' up to a maximum character defined by that row, and then reverses back down to ''A''.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Leading spaces must be applied to ensure the entire pyramid is centered symmetrically. If n is less than or equal to 0 or greater than 26, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 4</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">   A
@@ -3092,7 +2637,7 @@ ABA</pre></div></div>
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (Minimal layer showing only ''A'')</code></li><li><code>n = 5 (Verifying width alignment and centering up to character ''E'')</code></li><li><code>n = 28 (Exceeds uppercase alphabet limits, returns empty)</code></li>
-</ul>','medium',200,'python-patterns','def alphabet_palindrome_pyramid(n):
+</ul>','medium',200,'python-basics','def alphabet_palindrome_pyramid(n):
     # Write your code here
     pass','def ref_impl(*args):
     n = args[0]
@@ -3150,7 +2695,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (63,'63. Shifting Alphabet Window','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a right-angled triangle pattern of letters where each row starts with a progressively earlier letter of the alphabet. The grid must contain exactly n rows.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The first row begins with the n-th letter of the alphabet. Each subsequent row begins with the letter immediately preceding the previous row''s starting letter, and prints a sequence that runs forward up to the n-th letter of the alphabet. Characters within each row are separated by a single space. If n is less than or equal to 0 or greater than 26, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (53,'53. Shifting Alphabet Window','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a right-angled triangle pattern of letters where each row starts with a progressively earlier letter of the alphabet. The grid must contain exactly n rows.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The first row begins with the n-th letter of the alphabet. Each subsequent row begins with the letter immediately preceding the previous row''s starting letter, and prints a sequence that runs forward up to the n-th letter of the alphabet. Characters within each row are separated by a single space. If n is less than or equal to 0 or greater than 26, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">E
@@ -3174,7 +2719,7 @@ A B C</pre></div></div>
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (Outputs only the baseline character ''A'')</code></li><li><code>n = 4 (Ensures row 1 starts with ''D'' and the final row spans from ''A'' to ''D'')</code></li><li><code>n = -2 (Invalid bounds safety check)</code></li>
-</ul>','medium',200,'python-patterns','def alphabet_window(n):
+</ul>','medium',200,'python-basics','def alphabet_window(n):
     # Write your code here
     pass','def ref_impl(*args):
     n = args[0]
@@ -3230,7 +2775,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (64,'64. Symmetrical Star Canopy (The Inverted Butterfly)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a symmetrical star canopy pattern that consists of two mirror-image halves meeting at a central horizontal axis.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The top half begins with a solid row of asterisks (*) and, row by row, splits open from the center to create a widening empty rectangular space flanked by shrinking outer wings of stars. The bottom half reverses this layout: it begins with a wide empty center gap flanked by thin outer star wings, which then narrow row by row until they close completely at a final solid baseline row of asterisks.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Every asterisk within the rows must be printed immediately adjacent to the next without spaces. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (54,'54. Symmetrical Star Canopy (The Inverted Butterfly)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a symmetrical star canopy pattern that consists of two mirror-image halves meeting at a central horizontal axis.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The top half begins with a solid row of asterisks (*) and, row by row, splits open from the center to create a widening empty rectangular space flanked by shrinking outer wings of stars. The bottom half reverses this layout: it begins with a wide empty center gap flanked by thin outer star wings, which then narrow row by row until they close completely at a final solid baseline row of asterisks.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Every asterisk within the rows must be printed immediately adjacent to the next without spaces. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">**********
@@ -3260,7 +2805,7 @@ VALUES (64,'64. Symmetrical Star Canopy (The Inverted Butterfly)','<p class="mb-
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (The minimal 2x2 boundary layout printing a solid 2-star line on top and bottom)</code></li><li><code>n = 4 (Ensures that the thickest row contains exactly 8 asterisks with no interior gaps)</code></li><li><code>n = -3 (Graceful handling of negative constraints resulting in zero output)</code></li>
-</ul>','hard',300,'python-patterns','def inverted_butterfly(n):
+</ul>','hard',300,'python-basics','def inverted_butterfly(n):
     # Write your code here
     pass','def ref_impl(*args):
     n = args[0]
@@ -3321,7 +2866,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (65,'65. Symmetrical Star Bow (The Standard Butterfly)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a symmetrical star bow pattern. This pattern is the visual inverse of the canopy structure: the top half starts narrow at the outer margins with a wide empty center gap, and grows inward row by row until the stars meet in the middle to form a completely solid row of asterisks. The bottom half then mirrors this shape, splitting outward row by row from the center to finish with narrow star clusters on the outer edges.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">No spaces exist between adjacent asterisks. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (55,'55. Symmetrical Star Bow (The Standard Butterfly)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a symmetrical star bow pattern. This pattern is the visual inverse of the canopy structure: the top half starts narrow at the outer margins with a wide empty center gap, and grows inward row by row until the stars meet in the middle to form a completely solid row of asterisks. The bottom half then mirrors this shape, splitting outward row by row from the center to finish with narrow star clusters on the outer edges.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">No spaces exist between adjacent asterisks. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">*        *
@@ -3349,7 +2894,7 @@ VALUES (65,'65. Symmetrical Star Bow (The Standard Butterfly)','<p class="mb-4 l
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (Displays a single solid line ** instantly)</code></li><li><code>n = 4 (Verifying that the absolute middle row scales out to a maximum length of 8 solid stars)</code></li><li><code>n = -5 (Negative boundary dimension safety check)</code></li>
-</ul>','hard',300,'python-patterns','def butterfly(n):
+</ul>','hard',300,'python-basics','def butterfly(n):
     # Write your code here
     pass','def ref_impl(*args):
     n = args[0]
@@ -3410,7 +2955,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (66,'66. Hollow Star Box Frame','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a hollow box frame structure using asterisks (*). The frame consists of exactly n vertical layers. The first layer and the final layer form solid horizontal borders of asterisks. All middle structural layers contain exactly two asterisks positioned on the absolute left and right boundaries, separated by an empty internal space.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Each character within a row must be separated by a single space character to maintain a square proportions matrix. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (56,'56. Hollow Star Box Frame','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a hollow box frame structure using asterisks (*). The frame consists of exactly n vertical layers. The first layer and the final layer form solid horizontal borders of asterisks. All middle structural layers contain exactly two asterisks positioned on the absolute left and right boundaries, separated by an empty internal space.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Each character within a row must be separated by a single space character to maintain a square proportions matrix. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 4</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">* * * *
@@ -3432,7 +2977,7 @@ VALUES (66,'66. Hollow Star Box Frame','<p class="mb-4 leading-relaxed text-sm f
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (Prints only a single asterisk *)</code></li><li><code>n = 5 (Ensures the internal empty space rows scale perfectly across 3 interior layers)</code></li><li><code>n = -2 (Out-of-bounds input boundary check)</code></li>
-</ul>','hard',300,'python-patterns','def hollow_square(n):
+</ul>','hard',300,'python-basics','def hollow_square(n):
     # Write your code here
     pass','def ref_impl(*args):
     n = args[0]
@@ -3490,7 +3035,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (67,'67. Concentric Number Grid','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a concentric numerical square grid layout. The pattern is built out of nested square borders, where the absolute outermost border is composed entirely of the number n, the next inner border is composed of n - 1, and this pattern decrements inward layer by layer until it reaches the central cell, which contains the number 1.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The total dimensions of the grid will have an odd height and width equal to (2 * n) - 1 columns and rows. Every single number within a row must be separated by a single space character. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (57,'57. Concentric Number Grid','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print a concentric numerical square grid layout. The pattern is built out of nested square borders, where the absolute outermost border is composed entirely of the number n, the next inner border is composed of n - 1, and this pattern decrements inward layer by layer until it reaches the central cell, which contains the number 1.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The total dimensions of the grid will have an odd height and width equal to (2 * n) - 1 columns and rows. Every single number within a row must be separated by a single space character. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 4</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">4 4 4 4 4 4 4
@@ -3516,7 +3061,7 @@ VALUES (67,'67. Concentric Number Grid','<p class="mb-4 leading-relaxed text-sm 
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (The absolute baseline matrix displaying only the single core integer 1)</code></li><li><code>n = 3 (Ensures the grid spans exactly 5x5 dimensions and scales numbers downward towards the center)</code></li><li><code>n = -1 (Negative parameter check resulting in safe exit execution)</code></li>
-</ul>','hard',300,'python-patterns','def concentric_grid(n):
+</ul>','hard',300,'python-basics','def concentric_grid(n):
     # Write your code here
     pass','def ref_impl(*args):
     n = args[0]
@@ -3576,7 +3121,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (68,'68. String Upper, Lower, Strip','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>clean_string(s)</code> that takes a string with possible leading/trailing whitespace and mixed case, and returns a tuple:
+VALUES (58,'58. String Upper, Lower, Strip','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>clean_string(s)</code> that takes a string with possible leading/trailing whitespace and mixed case, and returns a tuple:
 <code>(stripped, upper, lower, title_case)</code></p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Use Python''s built-in string methods: <code>.strip()</code>, <code>.upper()</code>, <code>.lower()</code>, <code>.title()</code></p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "  hello world  "</code></div>
@@ -3587,7 +3132,7 @@ VALUES (68,'68. String Upper, Lower, Strip','<p class="mb-4 leading-relaxed text
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "  PyTHON  "</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>("PyTHON", "PYTHON", "python", "Python")</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Same operations on ''  PyTHON  ''</span></div>
-</div>','easy',100,'python-strings','def clean_string(s):
+</div>','easy',100,'python-basics','def clean_string(s):
     # Return (stripped, upper, lower, title_case)
     pass','def ref_impl(*args):
     r=args[0].strip()
@@ -3611,7 +3156,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (69,'69. Split and Join','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>split_and_join(sentence)</code> that takes a sentence string, splits it into words, and then returns a tuple:
+VALUES (59,'59. Split and Join','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>split_and_join(sentence)</code> that takes a sentence string, splits it into words, and then returns a tuple:
 <code>(words_list, word_count, joined_with_dash)</code></p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Use <code>.split()</code> which splits on whitespace by default, and <code>"-".join(lst)</code> to join with a dash separator.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "the quick brown fox"</code></div>
@@ -3622,7 +3167,7 @@ VALUES (69,'69. Split and Join','<p class="mb-4 leading-relaxed text-sm font-nor
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "hello world"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>(["hello","world"], 2, "hello-world")</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">split() gives [''hello'', ''world''], len=2, joined with hyphen → ''hello-world''</span></div>
-</div>','easy',100,'python-strings','def split_and_join(sentence):
+</div>','easy',100,'python-basics','def split_and_join(sentence):
     # Return (words_list, word_count, joined_with_dash)
     pass','def ref_impl(*args):
     words=args[0].split()
@@ -3646,7 +3191,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (70,'70. Replace and Find','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>modify_string(s, old, new_val)</code> that returns a tuple:
+VALUES (60,'60. Replace and Find','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>modify_string(s, old, new_val)</code> that returns a tuple:
 <code>(replaced, first_index, count)</code></p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Where:</p>
 <ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li><code>replaced</code> = the string with all occurrences of <code>old</code> replaced by <code>new_val</code></li>
@@ -3662,7 +3207,7 @@ VALUES (70,'70. Replace and Find','<p class="mb-4 leading-relaxed text-sm font-n
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s="python", old="z", new_val="Z"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>("python", -1, 0)</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">No match for ''z'' → returns original string, find=-1, count=0</span></div>
-</div>','easy',100,'python-strings','def modify_string(s, old, new_val):
+</div>','easy',100,'python-basics','def modify_string(s, old, new_val):
     # Return (replaced, first_index, count)
     pass','def ref_impl(*args):
     s,old,new=args[0],args[1],args[2]
@@ -3686,7 +3231,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (71,'71. Starts With & Ends With','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>check_affixes(s, prefix, suffix)</code> that returns a tuple:
+VALUES (61,'61. Starts With & Ends With','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>check_affixes(s, prefix, suffix)</code> that returns a tuple:
 <code>(starts_with_prefix, ends_with_suffix, both)</code> — all boolean values.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Use Python''s <code>.startswith()</code> and <code>.endswith()</code> string methods.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s="Python Programming", prefix="Py", suffix="ing"</code></div>
@@ -3697,7 +3242,7 @@ VALUES (71,'71. Starts With & Ends With','<p class="mb-4 leading-relaxed text-sm
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s="Hello World", prefix="Hi", suffix="World"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>(False, True, False)</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">''hello'' starts with ''he'' and ends with ''lo'' → (True, True)</span></div>
-</div>','easy',100,'python-strings','def check_affixes(s, prefix, suffix):
+</div>','easy',100,'python-basics','def check_affixes(s, prefix, suffix):
     # Return (starts, ends, both) as booleans
     pass','def ref_impl(*args):
     s,p,su=args[0],args[1],args[2]
@@ -3723,7 +3268,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (72,'72. isalpha, isdigit, isalnum','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>check_string_type(s)</code> that returns a tuple:
+VALUES (62,'62. isalpha, isdigit, isalnum','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>check_string_type(s)</code> that returns a tuple:
 <code>(is_alpha, is_digit, is_alnum, is_space)</code></p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Use the built-in string methods <code>.isalpha()</code>, <code>.isdigit()</code>, <code>.isalnum()</code>, <code>.isspace()</code>. Each returns True only if ALL characters in the string satisfy the condition.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "Hello"</code></div>
@@ -3742,7 +3287,7 @@ VALUES (72,'72. isalpha, isdigit, isalnum','<p class="mb-4 leading-relaxed text-
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>s is a non-empty string</code></li>
-</ul>','easy',100,'python-strings','def check_string_type(s):
+</ul>','easy',100,'python-basics','def check_string_type(s):
     # Return (is_alpha, is_digit, is_alnum, is_space)
     pass','def ref_impl(*args):
     s=args[0]
@@ -3766,7 +3311,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (73,'73. Count Specific Characters','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>char_counts(s)</code> that takes a string and returns a tuple:
+VALUES (63,'63. Count Specific Characters','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>char_counts(s)</code> that takes a string and returns a tuple:
 <code>(vowels, consonants, digits, spaces, specials)</code></p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Count each type of character in the string. Vowels are a,e,i,o,u (case-insensitive). Consonants are other letters. Specials are anything else that''s not a digit or space.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "Hello World 2024!"</code></div>
@@ -3777,7 +3322,7 @@ VALUES (73,'73. Count Specific Characters','<p class="mb-4 leading-relaxed text-
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "abc"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>(1, 2, 0, 0, 0)</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Empty string has 0 words, longest is '''' (0 chars)</span></div>
-</div>','easy',100,'python-strings','def char_counts(s):
+</div>','easy',100,'python-basics','def char_counts(s):
     # Return (vowels, consonants, digits, spaces, specials)
     pass','def ref_impl(*args):
     s=args[0]
@@ -3806,7 +3351,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (74,'74. String Padding & Alignment','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>align_string(s, width)</code> that returns a tuple of the string aligned three ways within a field of the given <code>width</code>:
+VALUES (64,'64. String Padding & Alignment','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>align_string(s, width)</code> that returns a tuple of the string aligned three ways within a field of the given <code>width</code>:
 <code>(left_aligned, right_aligned, center_aligned)</code></p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Use Python''s string methods <code>.ljust(width)</code>, <code>.rjust(width)</code>, <code>.center(width)</code>.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s="hi", width=6</code></div>
@@ -3820,7 +3365,7 @@ VALUES (74,'74. String Padding & Alignment','<p class="mb-4 leading-relaxed text
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>width is always >= len(s)</code></li>
-</ul>','easy',100,'python-strings','def align_string(s, width):
+</ul>','easy',100,'python-basics','def align_string(s, width):
     # Return (left, right, center) aligned strings
     pass','def ref_impl(*args):
     s,w=args[0],args[1]
@@ -3844,7 +3389,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (75,'75. Palindrome Using String Methods','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>is_palindrome_clean(s)</code> that checks if a string is a palindrome after cleaning it.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Cleaning steps (using string methods):</p>
+VALUES (65,'65. Palindrome Using String Methods','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>is_palindrome_clean(s)</code> that checks if a string is a palindrome after cleaning it.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Cleaning steps (using string methods):</p>
 <ol class="list-decimal pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li>Convert to lowercase with <code>.lower()</code></li>
 <li>Keep only alphanumeric characters — iterate and use <code>.isalnum()</code></li>
@@ -3864,7 +3409,7 @@ VALUES (75,'75. Palindrome Using String Methods','<p class="mb-4 leading-relaxed
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "Was it a car or a cat I saw?"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>True</code></div>
   
-</div>','easy',100,'python-strings','def is_palindrome_clean(s):
+</div>','easy',100,'python-basics','def is_palindrome_clean(s):
     # Clean s and check if palindrome
     pass','def ref_impl(*args):
     s=args[0]
@@ -3889,7 +3434,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (76,'76. Word Frequency','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>word_frequency(sentence)</code> that takes a sentence string, splits it into words (lowercased), and returns a dictionary mapping each unique word to its count.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">This combines <code>.lower()</code>, <code>.split()</code>, and dictionary operations.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (66,'66. Word Frequency','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>word_frequency(sentence)</code> that takes a sentence string, splits it into words (lowercased), and returns a dictionary mapping each unique word to its count.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">This combines <code>.lower()</code>, <code>.split()</code>, and dictionary operations.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "the cat sat on the mat"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>{"the": 2, "cat": 1, "sat": 1, "on": 1, "mat": 1}</code></div>
@@ -3899,7 +3444,7 @@ VALUES (76,'76. Word Frequency','<p class="mb-4 leading-relaxed text-sm font-nor
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "hello hello world"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>{"hello": 2, "world": 1}</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Rotate ''abcde'' by 1: move last 1 char ''e'' to front → ''eabcd''</span></div>
-</div>','easy',100,'python-strings','def word_frequency(sentence):
+</div>','easy',100,'python-basics','def word_frequency(sentence):
     # Return dict of word: count
     pass','def ref_impl(*args):
     words=args[0].lower().split()
@@ -3926,7 +3471,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (77,'77. Format a Report Line','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>format_report(name, score, rank)</code> that returns a neatly formatted report line using an f-string:</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans"><code>f"Rank {rank:02d} | {name:<15} | Score: {score:06.2f}"</code></p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Format specifiers:</p>
+VALUES (67,'67. Format a Report Line','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>format_report(name, score, rank)</code> that returns a neatly formatted report line using an f-string:</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans"><code>f"Rank {rank:02d} | {name:<15} | Score: {score:06.2f}"</code></p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Format specifiers:</p>
 <ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li><code>:02d</code> → integer with leading zeros (min width 2)</li>
 <li><code>:<15</code> → left-align with width 15</li>
@@ -3941,7 +3486,7 @@ VALUES (77,'77. Format a Report Line','<p class="mb-4 leading-relaxed text-sm fo
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>name="Bob", score=7.3, rank=10</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Rank 10 | Bob             | Score: 007.30"</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">''aabbc'': unique characters sorted → ''abc''</span></div>
-</div>','easy',100,'python-strings','def format_report(name, score, rank):
+</div>','easy',100,'python-basics','def format_report(name, score, rank):
     # Return the formatted report line
     pass','def ref_impl(*args):
     n,sc,rk=args[0],args[1],args[2]
@@ -3965,7 +3510,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (78,'78. Check if a String is a Palindrome','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a string s, determine whether it reads the exact same forward as it does backward. The verification must be completely case-insensitive.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Only alphanumeric characters (letters and numbers) should be evaluated. All whitespace characters, punctuation marks, and special structural symbols must be completely ignored. An empty string or a string consisting entirely of skipped characters satisfies this condition by default.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (68,'68. Check if a String is a Palindrome','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a string s, determine whether it reads the exact same forward as it does backward. The verification must be completely case-insensitive.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Only alphanumeric characters (letters and numbers) should be evaluated. All whitespace characters, punctuation marks, and special structural symbols must be completely ignored. An empty string or a string consisting entirely of skipped characters satisfies this condition by default.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "A man, a plan, a canal: Panama"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> True</code></div>
@@ -3983,7 +3528,7 @@ VALUES (78,'78. Check if a String is a Palindrome','<p class="mb-4 leading-relax
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>Input: s = "ab_a"</code></li><li><code>Expected Output: True</code></li><li><code>Input: s = "0P"</code></li><li><code>Expected Output: False</code></li><li><code>Input: s = "a"</code></li><li><code>Expected Output: True</code></li><li><code>Input: s = ".,."</code></li><li><code>Expected Output: True</code></li><li><code>Input: s = ""</code></li><li><code>Expected Output: True</code></li>
-</ul>','easy',100,'python-strings','def is_palindrome(s):
+</ul>','easy',100,'python-basics','def is_palindrome(s):
     pass','def ref_impl(*args):
     import re
     clean=re.sub(r"[^a-zA-Z0-9]","",args[0]).lower()
@@ -4007,7 +3552,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (79,'79. Count Vowels, Consonants, and Digits','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a string s, analyze its content and find the total count of vowels, consonants, and numeric digits present. Return the calculated values as a tuple format: (vowel_count, consonant_count, digit_count).</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Vowels: The English letters ''a'', ''e'', ''i'', ''o'', ''u'' (in both uppercase and lowercase forms).</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Consonants: Any other English alphabet letter that is not a vowel.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Digits: Any numerical character ranging from ''0'' to ''9''.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Any white spaces, punctuation marks, or special characters present in the string must be completely ignored and excluded from all three counts.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (69,'69. Count Vowels, Consonants, and Digits','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a string s, analyze its content and find the total count of vowels, consonants, and numeric digits present. Return the calculated values as a tuple format: (vowel_count, consonant_count, digit_count).</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Vowels: The English letters ''a'', ''e'', ''i'', ''o'', ''u'' (in both uppercase and lowercase forms).</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Consonants: Any other English alphabet letter that is not a vowel.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Digits: Any numerical character ranging from ''0'' to ''9''.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Any white spaces, punctuation marks, or special characters present in the string must be completely ignored and excluded from all three counts.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "Hello World 2026!"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> (3, 7, 4)</code></div>
@@ -4025,7 +3570,7 @@ VALUES (79,'79. Count Vowels, Consonants, and Digits','<p class="mb-4 leading-re
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>Input: s = "AEIOUaeiou"</code></li><li><code>Expected Output: (10, 0, 0)</code></li><li><code>Input: s = "1234567890"</code></li><li><code>Expected Output: (0, 0, 10)</code></li><li><code>Input: s = "!!!   !!!"</code></li><li><code>Expected Output: (0, 0, 0)</code></li><li><code>Input: s = "bcdfghjklmnpqrstvwxyz"</code></li><li><code>Expected Output: (0, 21, 0)</code></li><li><code>Input: s = ""</code></li><li><code>Expected Output: (0, 0, 0)</code></li>
-</ul>','easy',100,'python-strings','def count_vowels_consonants_digits(s):
+</ul>','easy',100,'python-basics','def count_vowels_consonants_digits(s):
     pass','def ref_impl(*args):
     v=sum(1 for c in args[0] if c.lower() in "aeiou")
     c=sum(1 for c in args[0] if c.isalpha() and c.lower() not in "aeiou")
@@ -4050,7 +3595,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (80,'80. Find the First Non-Repeating Character','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a string s, scan through the text and identify the very first character that appears exactly once throughout the entire string.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Return the 0-based index position of this unique character. If every single character in the string repeats at least once elsewhere, or if the string is completely empty, return -1.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (70,'70. Find the First Non-Repeating Character','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a string s, scan through the text and identify the very first character that appears exactly once throughout the entire string.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Return the 0-based index position of this unique character. If every single character in the string repeats at least once elsewhere, or if the string is completely empty, return -1.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "leetcode"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 0</code></div>
@@ -4068,7 +3613,7 @@ VALUES (80,'80. Find the First Non-Repeating Character','<p class="mb-4 leading-
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>Input: s = "a"</code></li><li><code>Expected Output: 0</code></li><li><code>Input: s = "abcdeabcde"</code></li><li><code>Expected Output: -1</code></li><li><code>Input: s = "abcdefg"</code></li><li><code>Expected Output: 0</code></li><li><code>Input: s = "ccca"</code></li><li><code>Expected Output: 3</code></li><li><code>Input: s = ""</code></li><li><code>Expected Output: -1</code></li>
-</ul>','easy',100,'python-strings','def first_uniq_char(s):
+</ul>','easy',100,'python-basics','def first_uniq_char(s):
     pass','def ref_impl(*args):
     s=args[0]
     for idx,char in enumerate(s):
@@ -4094,7 +3639,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (81,'81. Check if Two Strings are Anagrams','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given two strings, s and t, determine whether t is an anagram of s.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An anagram is defined as a word or phrase formed by rearranging the exact letters of a different word or phrase, using all the original letters exactly once. The evaluation must check for an absolute matching frequency of every single character character-for-character. If the strings have different lengths, they cannot be anagrams.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (71,'71. Check if Two Strings are Anagrams','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given two strings, s and t, determine whether t is an anagram of s.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An anagram is defined as a word or phrase formed by rearranging the exact letters of a different word or phrase, using all the original letters exactly once. The evaluation must check for an absolute matching frequency of every single character character-for-character. If the strings have different lengths, they cannot be anagrams.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "anagram", t = "nagaram"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> True</code></div>
@@ -4112,7 +3657,7 @@ VALUES (81,'81. Check if Two Strings are Anagrams','<p class="mb-4 leading-relax
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>Input: s = "a", t = "ab"</code></li><li><code>Expected Output: False</code></li><li><code>Input: s = "aa", t = "a"</code></li><li><code>Expected Output: False</code></li><li><code>Input: s = "ab", t = "ba"</code></li><li><code>Expected Output: True</code></li><li><code>Input: s = "aabc", t = "abca"</code></li><li><code>Expected Output: True</code></li><li><code>Input: s = "", t = ""</code></li><li><code>Expected Output: True</code></li>
-</ul>','easy',100,'python-strings','def is_anagram(s, t):
+</ul>','easy',100,'python-basics','def is_anagram(s, t):
     pass','def ref_impl(*args):
     return sorted(args[0])==sorted(args[1])
 
@@ -4134,7 +3679,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 2',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (82,'82. Valid Palindrome II','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a string s, return True if the string can be a palindrome after deleting at most one character from it.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A palindrome is a string that reads the same forward and backward. You can choose to delete zero characters or exactly one character from any position in the string to satisfy the condition.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (72,'72. Valid Palindrome II','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a string s, return True if the string can be a palindrome after deleting at most one character from it.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A palindrome is a string that reads the same forward and backward. You can choose to delete zero characters or exactly one character from any position in the string to satisfy the condition.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "aba"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> True</code></div>
@@ -4152,7 +3697,7 @@ VALUES (82,'82. Valid Palindrome II','<p class="mb-4 leading-relaxed text-sm fon
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>Input: s = "deeee"</code></li><li><code>Expected Output: True (Deleting the first character ''d'' yields "eeee")</code></li><li><code>Input: s = "abcdefba"</code></li><li><code>Expected Output: False (Requires deleting more than one character to form a palindrome)</code></li><li><code>Input: s = "aguokkgauktcjmdwwdonecahexwjjotfsocipyzhwqvhuabcitjbmuzhrrznaswwmjjumszumbjticaubhqvwhzyipcosftojjwxehacenodwwdmjctkuagukkouga"</code></li><li><code>Expected Output: True (Testing a long string with a single mismatch deep inside the structure)</code></li><li><code>Input: s = "a"</code></li><li><code>Expected Output: True</code></li>
-</ul>','easy',100,'python-strings','def valid_palindrome_ii(s):
+</ul>','easy',100,'python-basics','def valid_palindrome_ii(s):
     pass','def ref_impl(*args):
     s=args[0]
     left,right=0,len(s)-1
@@ -4181,7 +3726,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (83,'83. String Compression (Run-Length Encoding)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an array of characters chars, compress it using a run-length encoding algorithm.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">For each group of consecutive repeating characters:</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If the group length is 1, append the character to the result.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Otherwise, append the character followed by the group''s length.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The compression must be done in-place, modifying the input array directly. The new length of the compressed array must be returned. The structural digits of any count greater than or equal to 10 must be split into single individual string characters (e.g., a count of 12 becomes "1", then "2").</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (73,'73. String Compression (Run-Length Encoding)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an array of characters chars, compress it using a run-length encoding algorithm.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">For each group of consecutive repeating characters:</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If the group length is 1, append the character to the result.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Otherwise, append the character followed by the group''s length.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The compression must be done in-place, modifying the input array directly. The new length of the compressed array must be returned. The structural digits of any count greater than or equal to 10 must be split into single individual string characters (e.g., a count of 12 becomes "1", then "2").</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>chars = ["a","a","b","b","c","c","c"]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 6 (The input array becomes ["a","2","b","2","c","3"])</code></div>
@@ -4199,7 +3744,7 @@ VALUES (83,'83. String Compression (Run-Length Encoding)','<p class="mb-4 leadin
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>Input: chars = ["a","a","a","a","a","a","a","a","a","a"]</code></li><li><code>Expected Output: 3 (Modifies to ["a","1","0"])</code></li><li><code>Input: chars = ["a","b","c"]</code></li><li><code>Expected Output: 3 (Modifies to ["a","b","c"] since no repetitions occur)</code></li><li><code>Input: chars = []</code></li><li><code>Expected Output: 0</code></li>
-</ul>','medium',200,'python-strings','def compress(chars):
+</ul>','medium',200,'python-basics','def compress(chars):
     pass','assert "compress" in exec_globals, "Function compress not found"
 fn = exec_globals["compress"]
 tc1 = ["a","a","b","b","c","c","c"]
@@ -4215,7 +3760,7 @@ exec_globals["passed_cases"] = 3
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (84,'84. Reverse Words in a String','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an input string s, reverse the order of the words.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A word is defined as a sequence of non-space characters. The words in s will be separated by at least one space. Return a string of the words in reverse order concatenated by a single space.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Constraint Requirements: The input string s may contain leading spaces, trailing spaces, or multiple spaces between two words. The returned string must not contain leading or trailing spaces, and words must be separated by exactly one single space.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (74,'74. Reverse Words in a String','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an input string s, reverse the order of the words.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A word is defined as a sequence of non-space characters. The words in s will be separated by at least one space. Return a string of the words in reverse order concatenated by a single space.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Constraint Requirements: The input string s may contain leading spaces, trailing spaces, or multiple spaces between two words. The returned string must not contain leading or trailing spaces, and words must be separated by exactly one single space.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "the sky is blue"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> "blue is sky the"</code></div>
@@ -4233,7 +3778,7 @@ VALUES (84,'84. Reverse Words in a String','<p class="mb-4 leading-relaxed text-
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>Input: s = "  Bob    Loves  Alice  "</code></li><li><code>Expected Output: "Alice Loves Bob"</code></li><li><code>Input: s = "Alice"</code></li><li><code>Expected Output: "Alice"</code></li><li><code>Input: s = "   "</code></li><li><code>Expected Output: ""</code></li>
-</ul>','easy',100,'python-strings','def reverse_words(s):
+</ul>','easy',100,'python-basics','def reverse_words(s):
     pass','def ref_impl(*args):
     return " ".join(args[0].split()[::-1])
 
@@ -4255,7 +3800,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (85,'85. Longest Palindromic Substring','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a string s, find and return the longest contiguous substring within s that forms a valid palindrome.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A substring is a contiguous sequence of characters within a string. If multiple palindromic substrings share the maximum length, returning any one of them is acceptable.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (75,'75. Longest Palindromic Substring','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a string s, find and return the longest contiguous substring within s that forms a valid palindrome.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A substring is a contiguous sequence of characters within a string. If multiple palindromic substrings share the maximum length, returning any one of them is acceptable.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "babad"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> "bab" (Note: "aba" is also a completely valid answer)</code></div>
@@ -4273,7 +3818,7 @@ VALUES (85,'85. Longest Palindromic Substring','<p class="mb-4 leading-relaxed t
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>Input: s = "aacabdkacaa"</code></li><li><code>Expected Output: "aca"</code></li><li><code>Input: s = "bb"</code></li><li><code>Expected Output: "bb"</code></li><li><code>Input: s = "abcdefg"</code></li><li><code>Expected Output: "a" (When no larger matches exist, any single character satisfies the base length 1)</code></li><li><code>Input: s = ""</code></li><li><code>Expected Output: ""</code></li>
-</ul>','medium',200,'python-strings','def longest_palindrome(s):
+</ul>','medium',200,'python-basics','def longest_palindrome(s):
     pass','def ref_impl(*args):
     s=args[0]
     if not s: return ""
@@ -4307,7 +3852,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (86,'86. Is Subsequence','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given two strings s and t, determine if s is a subsequence of t.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A subsequence of a string is a new string that is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (e.g., "ace" is a subsequence of "abcde" while "aec" is not). Return True if conditions match, otherwise False.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (76,'76. Is Subsequence','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given two strings s and t, determine if s is a subsequence of t.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A subsequence of a string is a new string that is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (e.g., "ace" is a subsequence of "abcde" while "aec" is not). Return True if conditions match, otherwise False.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "abc", t = "ahbgdc"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> True</code></div>
@@ -4325,7 +3870,7 @@ VALUES (86,'86. Is Subsequence','<p class="mb-4 leading-relaxed text-sm font-nor
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>Input: s = "abc", t = "abc"</code></li><li><code>Expected Output: True</code></li><li><code>Input: s = "b", t = "c"</code></li><li><code>Expected Output: False</code></li><li><code>Input: s = "aaaaaa", t = "bbaaaa"</code></li><li><code>Expected Output: False (Mismatched absolute letter counts)</code></li><li><code>Input: s = "", t = ""</code></li><li><code>Expected Output: True</code></li>
-</ul>','easy',100,'python-strings','def is_subsequence(s, t):
+</ul>','easy',100,'python-basics','def is_subsequence(s, t):
     pass','def ref_impl(*args):
     s,t=args[0],args[1]
     i,j=0,0
@@ -4352,7 +3897,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 2',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (87,'87. Longest Substring Without Repeating Characters','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a string s, find the length of the longest contiguous substring that contains entirely unique characters (no character appears more than once within that substring span).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (77,'77. Longest Substring Without Repeating Characters','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a string s, find the length of the longest contiguous substring that contains entirely unique characters (no character appears more than once within that substring span).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "abcabcbb"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 3 (The longest unique substring is "abc")</code></div>
@@ -4370,7 +3915,7 @@ VALUES (87,'87. Longest Substring Without Repeating Characters','<p class="mb-4 
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>Input: s = " "</code></li><li><code>Expected Output: 1 (A single space character is a valid unique character)</code></li><li><code>Input: s = "dvdf"</code></li><li><code>Expected Output: 3 (The substring "vdf" is the longest unique segment)</code></li><li><code>Input: s = ""</code></li><li><code>Expected Output: 0</code></li>
-</ul>','medium',200,'python-strings','def length_of_longest_substring(s):
+</ul>','medium',200,'python-basics','def length_of_longest_substring(s):
     pass','def ref_impl(*args):
     s=args[0]
     used={}
@@ -4402,7 +3947,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (88,'88. Find All Anagrams in a String','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given two strings s and p, return an array of all the start indices of p''s anagrams inside s. You may return the answer list in any sorting order.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, using all the original letters exactly once. This means you are looking for substrings in s that match the length and exact character frequencies of p.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (78,'78. Find All Anagrams in a String','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given two strings s and p, return an array of all the start indices of p''s anagrams inside s. You may return the answer list in any sorting order.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, using all the original letters exactly once. This means you are looking for substrings in s that match the length and exact character frequencies of p.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>s = "cbaebabacd", p = "abc"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> [0, 6] (The anagram matches start at index 0 ["cba"] and index 6 ["bac"])</code></div>
@@ -4415,7 +3960,7 @@ VALUES (88,'88. Find All Anagrams in a String','<p class="mb-4 leading-relaxed t
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>Input: s = "aaaaaaaaaa", p = "aaaaaaaa"</code></li><li><code>Expected Output: [0, 1, 2]</code></li><li><code>Input: s = "af", p = "be"</code></li><li><code>Expected Output: []</code></li><li><code>Input: s = "", p = "a"</code></li><li><code>Expected Output: []</code></li>
-</ul>','medium',200,'python-strings','def find_anagrams(s, p):
+</ul>','medium',200,'python-basics','def find_anagrams(s, p):
     pass','def ref_impl(*args):
     s,p=args[0],args[1]
     from collections import Counter
@@ -4453,7 +3998,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 2',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (89,'89. Longest Common Prefix','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function to find the longest common prefix string amongst an array of strings strs.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A prefix is a collection of characters at the absolute beginning of a string. If no common prefix exists across all strings in the array, return an empty string "".</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (79,'79. Longest Common Prefix','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function to find the longest common prefix string amongst an array of strings strs.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A prefix is a collection of characters at the absolute beginning of a string. If no common prefix exists across all strings in the array, return an empty string "".</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>strs = ["flower","flow","flight"]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> "fl"</code></div>
@@ -4471,7 +4016,7 @@ VALUES (89,'89. Longest Common Prefix','<p class="mb-4 leading-relaxed text-sm f
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>Input: strs = ["","b"]</code></li><li><code>Expected Output: "" (An empty string in the input array immediately nullifies any prefix)</code></li><li><code>Input: strs = ["ab", "a"]</code></li><li><code>Expected Output: "a"</code></li><li><code>Input: strs = ["cir", "car"]</code></li><li><code>Expected Output: "c"</code></li><li><code>Input: strs = []</code></li><li><code>Expected Output: ""</code></li>
-</ul>','easy',100,'python-strings','def longest_common_prefix(strs):
+</ul>','easy',100,'python-basics','def longest_common_prefix(strs):
     pass','def ref_impl(*args):
     strs=args[0]
     if not strs: return ""
@@ -4500,7 +4045,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (90,'90. List Methods — Append, Pop, Insert','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>list_operations(nums)</code> that takes a list and performs these operations in sequence, returning the final list:</p>
+VALUES (80,'80. List Methods — Append, Pop, Insert','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>list_operations(nums)</code> that takes a list and performs these operations in sequence, returning the final list:</p>
 <ol class="list-decimal pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li>Append 100 to the end</li>
 <li>Insert 0 at position 0 (front)</li>
@@ -4516,7 +4061,7 @@ VALUES (90,'90. List Methods — Append, Pop, Insert','<p class="mb-4 leading-re
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [5]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>[0, 5]</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Pair elements (stops at shortest list): (1,''a''), (2,''b'')</span></div>
-</div>','easy',100,'python-lists-arrays','def list_operations(nums):
+</div>','easy',100,'python-basics','def list_operations(nums):
     # Modify the list in-place, return it
     pass','def ref_impl(*args):
     lst=list(args[0])
@@ -4543,7 +4088,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (91,'91. List Slicing','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>slice_list(lst)</code> that returns a tuple of 5 different slices:
+VALUES (81,'81. List Slicing','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>slice_list(lst)</code> that returns a tuple of 5 different slices:
 <code>(first_three, last_three, every_second, reversed_list, middle)</code></p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Where middle = everything except the first and last element. If the list has fewer than 3 elements, return empty list for those slices.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>lst = [0,1,2,3,4,5,6,7,8,9]</code></div>
@@ -4554,7 +4099,7 @@ VALUES (91,'91. List Slicing','<p class="mb-4 leading-relaxed text-sm font-norma
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>lst = [1,2,3]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>([1,2,3], [1,2,3], [1,3], [3,2,1], [2])</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Odd indices (1, 3): 2, 4 → [2, 4]</span></div>
-</div>','easy',100,'python-lists-arrays','def slice_list(lst):
+</div>','easy',100,'python-basics','def slice_list(lst):
     # Return tuple of 5 slices
     pass','def ref_impl(*args):
     l=args[0]
@@ -4578,7 +4123,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (92,'92. Sorting Lists','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>sort_info(lst)</code> that returns a tuple:
+VALUES (82,'82. Sorting Lists','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>sort_info(lst)</code> that returns a tuple:
 <code>(sorted_asc, sorted_desc, min_val, max_val, sum_val)</code></p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Use <code>sorted()</code> (which returns a new list), not <code>.sort()</code> (which modifies in-place). Use built-in <code>min()</code>, <code>max()</code>, <code>sum()</code>.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>lst = [3,1,4,1,5,9,2,6]</code></div>
@@ -4589,7 +4134,7 @@ VALUES (92,'92. Sorting Lists','<p class="mb-4 leading-relaxed text-sm font-norm
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>lst = [5]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>([5], [5], 5, 5, 5)</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">max=5, min=5, range = 5-5 = 0, sorted = [5]</span></div>
-</div>','easy',100,'python-lists-arrays','def sort_info(lst):
+</div>','easy',100,'python-basics','def sort_info(lst):
     # Return (sorted_asc, sorted_desc, min, max, sum)
     pass','def ref_impl(*args):
     l=args[0]
@@ -4613,7 +4158,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (93,'93. List Comprehension Basics','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>comprehension_ops(nums)</code> that returns a tuple of four new lists created using list comprehensions:</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">1. Squares of all numbers: <code>[x**2 for x in nums]</code>
+VALUES (83,'83. List Comprehension Basics','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>comprehension_ops(nums)</code> that returns a tuple of four new lists created using list comprehensions:</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">1. Squares of all numbers: <code>[x**2 for x in nums]</code>
 2. Only even numbers: <code>[x for x in nums if x%2==0]</code>
 3. Absolute values: <code>[abs(x) for x in nums]</code>
 4. Strings of numbers: <code>[str(x) for x in nums]</code></p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
@@ -4621,7 +4166,7 @@ VALUES (93,'93. List Comprehension Basics','<p class="mb-4 leading-relaxed text-
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [1,-2,3,-4,5]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>([1,4,9,16,25], [-2,-4], [1,2,3,4,5], ["1","-2","3","-4","5"])</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Split into chunks of size 2: [1, 2], [3, 4], [5]</span></div>
-</div>','easy',100,'python-lists-arrays','def comprehension_ops(nums):
+</div>','easy',100,'python-basics','def comprehension_ops(nums):
     # Return tuple of 4 lists using comprehensions
     pass','def ref_impl(*args):
     n=args[0]
@@ -4645,7 +4190,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (94,'94. 2D Lists (Matrix Basics)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>matrix_info(matrix)</code> that takes a 2D list (list of lists) and returns a tuple:
+VALUES (84,'84. 2D Lists (Matrix Basics)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>matrix_info(matrix)</code> that takes a 2D list (list of lists) and returns a tuple:
 <code>(rows, cols, flat, transposed)</code></p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Where:</p>
 <ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li><code>rows</code> = number of rows</li>
@@ -4657,7 +4202,7 @@ VALUES (94,'94. 2D Lists (Matrix Basics)','<p class="mb-4 leading-relaxed text-s
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>matrix = [[1,2,3],[4,5,6]]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>(2, 3, [1,2,3,4,5,6], [[1,4],[2,5],[3,6]])</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Numbers 1 to 5 missing from [1, 2, 4, 5] is {3} → [3]</span></div>
-</div>','easy',100,'python-lists-arrays','def matrix_info(matrix):
+</div>','easy',100,'python-basics','def matrix_info(matrix):
     # Return (rows, cols, flat, transposed)
     pass','def ref_impl(*args):
     m=args[0]
@@ -4685,7 +4230,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (95,'95. zip and enumerate','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>zip_and_enumerate(names, scores)</code> that:</p>
+VALUES (85,'85. zip and enumerate','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>zip_and_enumerate(names, scores)</code> that:</p>
 <ol class="list-decimal pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li>Creates a list of <code>(index, name, score)</code> tuples using <code>enumerate</code> and <code>zip</code></li>
 <li>Returns the tuple list sorted by score descending</li>
@@ -4697,7 +4242,7 @@ VALUES (95,'95. zip and enumerate','<p class="mb-4 leading-relaxed text-sm font-
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>Both lists have the same length</code></li>
-</ul>','easy',100,'python-lists-arrays','def zip_and_enumerate(names, scores):
+</ul>','easy',100,'python-basics','def zip_and_enumerate(names, scores):
     # Return list of (idx, name, score) sorted by score descending
     pass','def ref_impl(*args):
     names,scores=args[0],args[1]
@@ -4722,7 +4267,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 2',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (96,'96. Remove Duplicates & Keep Order','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>unique_ordered(lst)</code> that removes duplicate elements from a list while maintaining the original order of first occurrences.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">For example: <code>[3,1,2,1,3]</code> → <code>[3,1,2]</code></p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Hint: Use a set to track seen elements and a list comprehension.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (86,'86. Remove Duplicates & Keep Order','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>unique_ordered(lst)</code> that removes duplicate elements from a list while maintaining the original order of first occurrences.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">For example: <code>[3,1,2,1,3]</code> → <code>[3,1,2]</code></p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Hint: Use a set to track seen elements and a list comprehension.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>lst = [3,1,2,1,3,4]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>[3,1,2,4]</code></div>
@@ -4737,7 +4282,7 @@ VALUES (96,'96. Remove Duplicates & Keep Order','<p class="mb-4 leading-relaxed 
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>lst = []</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>[]</code></div>
   
-</div>','easy',100,'python-lists-arrays','def unique_ordered(lst):
+</div>','easy',100,'python-basics','def unique_ordered(lst):
     # Remove duplicates preserving order
     pass','def ref_impl(*args):
     seen=set()
@@ -4766,7 +4311,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (97,'97. Flatten Nested List','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>flatten(nested)</code> that takes a list that may contain integers or other lists (one level of nesting), and returns a single flat list with all integers.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">For example: <code>[[1,2],[3,[4]],5]</code> → <code>[1,2,3,4,5]</code> — only one level of nesting is guaranteed.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (87,'87. Flatten Nested List','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>flatten(nested)</code> that takes a list that may contain integers or other lists (one level of nesting), and returns a single flat list with all integers.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">For example: <code>[[1,2],[3,[4]],5]</code> → <code>[1,2,3,4,5]</code> — only one level of nesting is guaranteed.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nested = [[1,2],[3,4],[5]]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>[1,2,3,4,5]</code></div>
@@ -4784,7 +4329,7 @@ VALUES (97,'97. Flatten Nested List','<p class="mb-4 leading-relaxed text-sm fon
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>At most one level of nesting</code></li>
-</ul>','medium',200,'python-lists-arrays','def flatten(nested):
+</ul>','medium',200,'python-basics','def flatten(nested):
     # Flatten one level of nesting
     pass','def ref_impl(*args):
     result=[]
@@ -4813,7 +4358,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (98,'98. Find Maximum and Minimum Element in a List','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums, find and return both the maximum element and the minimum element present in the list. Return the result as a tuple: (maximum, minimum).</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If the input list is completely empty, there are no elements to evaluate; in this case, return (None, None).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (88,'88. Find Maximum and Minimum Element in a List','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums, find and return both the maximum element and the minimum element present in the list. Return the result as a tuple: (maximum, minimum).</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If the input list is completely empty, there are no elements to evaluate; in this case, return (None, None).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [3, 5, 1, 9, -2, 7]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> (9, -2)</code></div>
@@ -4831,7 +4376,7 @@ VALUES (98,'98. Find Maximum and Minimum Element in a List','<p class="mb-4 lead
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [7] (Single-element list where maximum must equal minimum)</code></li><li><code>nums = [5, 5, 5, 5] (A list where all elements are identical values)</code></li><li><code>nums = [-10, -20, -3, -50] (A list containing exclusively negative integers)</code></li><li><code>nums = [] (An empty list)</code></li>
-</ul>','easy',100,'python-lists-arrays','def find_max_min(nums):
+</ul>','easy',100,'python-basics','def find_max_min(nums):
     pass','def ref_impl(*args):
     return (max(args[0]),min(args[0])) if args[0] else (None,None)
 
@@ -4853,7 +4398,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (99,'99. Find the Second Largest and Second Smallest Element','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an unsorted list of integers nums, find and return the second largest and the second smallest unique elements in the list. Return the result as a tuple: (second_largest, second_smallest).</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If a unique second largest element does not exist (due to insufficient unique numbers), its value should be returned as None. Similarly, if a unique second smallest element does not exist, its value should be returned as None. If the input list is empty, return (None, None).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (89,'89. Find the Second Largest and Second Smallest Element','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an unsorted list of integers nums, find and return the second largest and the second smallest unique elements in the list. Return the result as a tuple: (second_largest, second_smallest).</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If a unique second largest element does not exist (due to insufficient unique numbers), its value should be returned as None. Similarly, if a unique second smallest element does not exist, its value should be returned as None. If the input list is empty, return (None, None).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [12, 35, 1, 10, 34, 1]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> (34, 10)</code></div>
@@ -4871,7 +4416,7 @@ VALUES (99,'99. Find the Second Largest and Second Smallest Element','<p class="
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [10, 20, 20, 5, 5] (Duplicate maximum and duplicate minimum values present)</code></li><li><code>nums = [8, 8] (A list containing fewer than two unique elements)</code></li><li><code>nums = [-5, -1, -10, 0] (A list containing a mix of negative values and zero)</code></li><li><code>nums = [] (An empty list)</code></li>
-</ul>','easy',100,'python-lists-arrays','def find_second_largest_smallest(nums):
+</ul>','easy',100,'python-basics','def find_second_largest_smallest(nums):
     pass','def ref_impl(*args):
     nums=list(set(args[0]))
     if len(nums)<2: return (None,None)
@@ -4896,7 +4441,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (100,'100. Count Even and Odd Numbers in a List','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums, determine the total count of even integers and the total count of odd integers present in the list. Return the result as a tuple format: (even_count, odd_count).</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An integer is considered even if it is perfectly divisible by 2, and odd if it leaves a remainder. Negative numbers must be categorized accurately based on this rule. If the input list is completely empty, return (0, 0).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (90,'90. Count Even and Odd Numbers in a List','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums, determine the total count of even integers and the total count of odd integers present in the list. Return the result as a tuple format: (even_count, odd_count).</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An integer is considered even if it is perfectly divisible by 2, and odd if it leaves a remainder. Negative numbers must be categorized accurately based on this rule. If the input list is completely empty, return (0, 0).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [2, 7, 11, 44, 8, 9]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> (3, 3)</code></div>
@@ -4914,7 +4459,7 @@ VALUES (100,'100. Count Even and Odd Numbers in a List','<p class="mb-4 leading-
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [0] (A list containing only the number zero, which is mathematically even)</code></li><li><code>nums = [-3, -5, -6, -8] (A list containing negative odd and negative even integers)</code></li><li><code>nums = [] (An empty list)</code></li>
-</ul>','easy',100,'python-lists-arrays','def count_even_odd(nums):
+</ul>','easy',100,'python-basics','def count_even_odd(nums):
     pass','def ref_impl(*args):
     evens=sum(1 for x in args[0] if x%2==0)
     odds=len(args[0])-evens
@@ -4938,7 +4483,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (101,'101. Check if a List is Sorted (Ascending or Descending)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of numbers nums, check whether the list is completely sorted in non-decreasing (ascending) order OR completely sorted in non-increasing (descending) order.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Return True if the list satisfies either sorting condition from start to finish. Return False if the elements fluctuate up and down. By definition, an empty list or a list containing a single element has no out-of-order pairs and must return True.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (91,'91. Check if a List is Sorted (Ascending or Descending)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of numbers nums, check whether the list is completely sorted in non-decreasing (ascending) order OR completely sorted in non-increasing (descending) order.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Return True if the list satisfies either sorting condition from start to finish. Return False if the elements fluctuate up and down. By definition, an empty list or a list containing a single element has no out-of-order pairs and must return True.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [1, 2, 2, 5, 7]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> True</code></div>
@@ -4956,7 +4501,7 @@ VALUES (101,'101. Check if a List is Sorted (Ascending or Descending)','<p class
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [] (An empty list)</code></li><li><code>nums = [9] (A single-element list)</code></li><li><code>nums = [3, 3, 3, 3] (A list containing all identical elements)</code></li><li><code>nums = [20, 15, 10, 5] (A strictly descending list)</code></li>
-</ul>','easy',100,'python-lists-arrays','def is_sorted(nums):
+</ul>','easy',100,'python-basics','def is_sorted(nums):
     pass','def ref_impl(*args):
     nums=args[0]
     if len(nums)<=1: return True
@@ -4982,7 +4527,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (102,'102. Reverse a List In-Place','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list nums, reverse the order of its elements. You must perform this operation in-place by mutating the input list directly. Your function should modify the original object and not return a new copy. If the list is empty or contains only one element, it remains unchanged.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (92,'92. Reverse a List In-Place','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list nums, reverse the order of its elements. You must perform this operation in-place by mutating the input list directly. Your function should modify the original object and not return a new copy. If the list is empty or contains only one element, it remains unchanged.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [1, 2, 3, 4, 5]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> nums becomes [5, 4, 3, 2, 1]</code></div>
@@ -5000,7 +4545,7 @@ VALUES (102,'102. Reverse a List In-Place','<p class="mb-4 leading-relaxed text-
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [1, 2, 3] (An odd-length list where the middle element stays in position)</code></li><li><code>nums = [10, 20, 30, 40] (An even-length list where all elements change positions)</code></li><li><code>nums = [] or [5] (Empty or single-element boundary conditions)</code></li>
-</ul>','easy',100,'python-lists-arrays','def reverse_list(nums):
+</ul>','easy',100,'python-basics','def reverse_list(nums):
     pass','assert "reverse_list" in exec_globals
 fn=exec_globals["reverse_list"]
 a1=[1,2,3]; fn(a1); assert a1==[3,2,1], f"Got {a1}"
@@ -5010,7 +4555,7 @@ exec_globals["passed_cases"]=3
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (103,'103. Sum and Average of Elements in a List','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of numbers nums, calculate the total sum of all elements and their arithmetic average (mean). Return the result as a tuple: (total_sum, average).</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If the input list is completely empty, it has no mathematical sum or length; in this scenario, return (0, 0.0) to safeguard against division errors.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (93,'93. Sum and Average of Elements in a List','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of numbers nums, calculate the total sum of all elements and their arithmetic average (mean). Return the result as a tuple: (total_sum, average).</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If the input list is completely empty, it has no mathematical sum or length; in this scenario, return (0, 0.0) to safeguard against division errors.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [1, 2, 3, 4]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> (10, 2.5)</code></div>
@@ -5028,7 +4573,7 @@ VALUES (103,'103. Sum and Average of Elements in a List','<p class="mb-4 leading
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [] (An empty list)</code></li><li><code>nums = [-2, -4, -6] (A list containing exclusively negative integers)</code></li><li><code>nums = [0.1, 0.2, 0.3] (A list containing floating-point decimal numbers)</code></li>
-</ul>','easy',100,'python-lists-arrays','def sum_average(nums):
+</ul>','easy',100,'python-basics','def sum_average(nums):
     pass','def ref_impl(*args):
     nums=args[0]
     if not nums: return (0,0.0)
@@ -5053,7 +4598,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (104,'104. Move All Zeroes to the End of the List (In-Place)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums, move all 0s to the end of it while maintaining the relative order of the non-zero elements.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">In-Place: You must modify the input list directly by shifting elements within its existing memory. You are not allowed to create a copy of the list or allocate an auxiliary list.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Relative Order: The non-zero numbers must remain in the exact same sequence relative to one another after the zeroes are moved. For example, if 1 appeared before 3 originally, 1 must still appear before 3 in the final modified list.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If the list is empty or contains no zeroes, it remains unchanged.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (94,'94. Move All Zeroes to the End of the List (In-Place)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums, move all 0s to the end of it while maintaining the relative order of the non-zero elements.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">In-Place: You must modify the input list directly by shifting elements within its existing memory. You are not allowed to create a copy of the list or allocate an auxiliary list.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Relative Order: The non-zero numbers must remain in the exact same sequence relative to one another after the zeroes are moved. For example, if 1 appeared before 3 originally, 1 must still appear before 3 in the final modified list.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If the list is empty or contains no zeroes, it remains unchanged.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [0, 1, 0, 3, 12]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> nums becomes [1, 3, 12, 0, 0]</code></div>
@@ -5071,7 +4616,7 @@ VALUES (104,'104. Move All Zeroes to the End of the List (In-Place)','<p class="
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [] (An empty list)</code></li><li><code>nums = [0, 0, 0] (A list containing exclusively zeroes)</code></li><li><code>nums = [1, 2, 3, 0] (Zero is already at the correct terminal position)</code></li><li><code>nums = [0, 0, 9] (Multiple consecutive zeroes at the very front of the list)</code></li>
-</ul>','easy',100,'python-lists-arrays','def move_zeroes(nums):
+</ul>','easy',100,'python-basics','def move_zeroes(nums):
     pass','assert "move_zeroes" in exec_globals
 fn=exec_globals["move_zeroes"]
 a1=[0,1,0,3,12]; fn(a1); assert a1==[1,3,12,0,0], f"Got {a1}"
@@ -5081,7 +4626,7 @@ exec_globals["passed_cases"]=3
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (105,'105. Remove Duplicates from a Sorted List (In-Place)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list nums sorted in non-decreasing (ascending) order, remove the duplicate elements in-place such that each unique element appears only once. The relative order of the unique elements must be kept identical.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Since the final length of the unique elements will be smaller than or equal to the original list size, your function must return an integer k, representing the number of unique elements. The first k slots of the modified nums list must hold these unique elements. The values stored beyond the first k elements do not matter.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If the list is empty, return 0.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (95,'95. Remove Duplicates from a Sorted List (In-Place)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list nums sorted in non-decreasing (ascending) order, remove the duplicate elements in-place such that each unique element appears only once. The relative order of the unique elements must be kept identical.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Since the final length of the unique elements will be smaller than or equal to the original list size, your function must return an integer k, representing the number of unique elements. The first k slots of the modified nums list must hold these unique elements. The values stored beyond the first k elements do not matter.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If the list is empty, return 0.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [1, 1, 2]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> Return value = 2, nums becomes [1, 2, _] (where _ represents any don''t-care value)</code></div>
@@ -5099,7 +4644,7 @@ VALUES (105,'105. Remove Duplicates from a Sorted List (In-Place)','<p class="mb
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [1, 2, 3, 4] (A sorted list that contains zero duplicates initially)</code></li><li><code>nums = [5, 5, 5, 5] (A list where every single element is a duplicate of the first)</code></li><li><code>nums = [-3, -3, -1, 0, 0, 2] (Handling negative integers and zero across duplicates)</code></li>
-</ul>','easy',100,'python-lists-arrays','def remove_duplicates(nums):
+</ul>','easy',100,'python-basics','def remove_duplicates(nums):
     pass','assert "remove_duplicates" in exec_globals
 fn=exec_globals["remove_duplicates"]
 a1=[1,1,2]; k1=fn(a1); assert k1==2 and a1[:2]==[1,2], f"Got {k1},{a1}"
@@ -5109,7 +4654,7 @@ exec_globals["passed_cases"]=3
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (106,'106. Rotate a List Left or Right by k Steps','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list nums, rotate the list to the right by k steps, where k is a non-negative integer.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Rotate to the Right: Shifting elements toward the higher indices. An element at the last index wraps around to index 0. Moving a list right by 1 step means the last element becomes the first element, and all other elements slide one slot to the right.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The modification must be performed in-place. Note that k can be zero, or it can be significantly larger than the total length of the list.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (96,'96. Rotate a List Left or Right by k Steps','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list nums, rotate the list to the right by k steps, where k is a non-negative integer.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Rotate to the Right: Shifting elements toward the higher indices. An element at the last index wraps around to index 0. Moving a list right by 1 step means the last element becomes the first element, and all other elements slide one slot to the right.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The modification must be performed in-place. Note that k can be zero, or it can be significantly larger than the total length of the list.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [1, 2, 3, 4, 5, 6, 7], k = 3</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> nums becomes [5, 6, 7, 1, 2, 3, 4]</code></div>
@@ -5127,7 +4672,7 @@ VALUES (106,'106. Rotate a List Left or Right by k Steps','<p class="mb-4 leadin
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [1, 2], k = 5 (k is larger than the list length; must wrap around correctly via modulo scaling)</code></li><li><code>nums = [1, 2, 3], k = 3 (k is exactly equal to the list length; results in zero net positional change)</code></li><li><code>nums = [], k = 10 (An empty list modified by any rotation step value)</code></li>
-</ul>','easy',100,'python-lists-arrays','def rotate_list(nums, k):
+</ul>','easy',100,'python-advanced','def rotate_list(nums, k):
     pass','assert "rotate_list" in exec_globals
 fn=exec_globals["rotate_list"]
 a1=[1,2,3,4,5,6,7]; fn(a1,3); assert a1==[5,6,7,1,2,3,4], f"Got {a1}"
@@ -5138,7 +4683,7 @@ exec_globals["passed_cases"]=4
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (107,'107. Separate Even and Odd Numbers','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an unsorted list of integers nums, rearrange its elements in-place so that all even numbers appear at the beginning of the list, immediately followed by all odd numbers.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">You are not required to preserve the original relative order of the numbers within the even group or within the odd group; any arrangement is acceptable as long as all evens precede all odds. If the list is empty, it remains unchanged.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (97,'97. Separate Even and Odd Numbers','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an unsorted list of integers nums, rearrange its elements in-place so that all even numbers appear at the beginning of the list, immediately followed by all odd numbers.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">You are not required to preserve the original relative order of the numbers within the even group or within the odd group; any arrangement is acceptable as long as all evens precede all odds. If the list is empty, it remains unchanged.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [3, 5, 2, 4, 9, 8]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> nums becomes [2, 4, 8, 3, 9, 5] (Note: [8, 4, 2, 5, 9, 3] is also valid)</code></div>
@@ -5156,7 +4701,7 @@ VALUES (107,'107. Separate Even and Odd Numbers','<p class="mb-4 leading-relaxed
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [2, 4, 6, 8] (A list that contains only even numbers)</code></li><li><code>nums = [2, 4, 1, 3] (A list that is already perfectly partitioned with evens first)</code></li><li><code>nums = [1, 2, 1, 2] (Alternating odd and even integers)</code></li>
-</ul>','easy',100,'python-lists-arrays','def separate_even_odd(nums):
+</ul>','easy',100,'python-advanced','def separate_even_odd(nums):
     pass','assert "separate_even_odd" in exec_globals
 fn=exec_globals["separate_even_odd"]
 def check_partition(a):
@@ -5172,7 +4717,7 @@ exec_globals["passed_cases"]=3
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (108,'108. Two Sum in a Sorted List (Target Sum)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums that is already sorted in non-decreasing (ascending) order, find two distinct numbers in the list that add up to a specific target number.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Return the indices of these two numbers as a tuple: (index1, index2). Assume that each input has exactly one unique solution, and you are not allowed to use the same element twice. If no matching pair exists (due to bad input bounds), return (None, None).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (98,'98. Two Sum in a Sorted List (Target Sum)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums that is already sorted in non-decreasing (ascending) order, find two distinct numbers in the list that add up to a specific target number.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Return the indices of these two numbers as a tuple: (index1, index2). Assume that each input has exactly one unique solution, and you are not allowed to use the same element twice. If no matching pair exists (due to bad input bounds), return (None, None).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [2, 7, 11, 15], target = 9</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> (0, 1)</code></div>
@@ -5190,7 +4735,7 @@ VALUES (108,'108. Two Sum in a Sorted List (Target Sum)','<p class="mb-4 leading
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [-5, -3, -1, 2, 4], target = -4 (Target sum composed of negative sorted integers)</code></li><li><code>nums = [1, 2, 3, 3, 5], target = 6 (Target sum formed by two identical values at adjacent indices)</code></li><li><code>nums = [-10, 0, 10], target = 0 (Target sum matching exactly zero using values across the origin)</code></li>
-</ul>','easy',100,'python-lists-arrays','def two_sum_sorted(nums, target):
+</ul>','easy',100,'python-advanced','def two_sum_sorted(nums, target):
     pass','def ref_impl(*args):
     nums,target=args[0],args[1]
     l,r=0,len(nums)-1
@@ -5219,7 +4764,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (109,'109. Container With Most Water','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of non-negative integers height of length n, where each element represents the vertical height of a wall at coordinate index i, find two vertical lines that together with the x-axis form a container that holds the maximum volume of water.Container Volume: The volume of water trapped between two lines at indices left and right is limited by the shorter line and the horizontal distance between them. Return the maximum volume area of water the container can store. If height has a length less than 2, it cannot form a container; return 0.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (99,'99. Container With Most Water','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of non-negative integers height of length n, where each element represents the vertical height of a wall at coordinate index i, find two vertical lines that together with the x-axis form a container that holds the maximum volume of water.Container Volume: The volume of water trapped between two lines at indices left and right is limited by the shorter line and the horizontal distance between them. Return the maximum volume area of water the container can store. If height has a length less than 2, it cannot form a container; return 0.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>height = [1, 8, 6, 2, 5, 4, 8, 3, 7]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 49</code></div>
@@ -5234,7 +4779,7 @@ VALUES (109,'109. Container With Most Water','<p class="mb-4 leading-relaxed tex
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>height = [4]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 0</code></div>
   
-</div>','medium',200,'python-lists-arrays','def max_area(h):
+</div>','medium',200,'python-advanced','def max_area(h):
     pass','def ref_impl(*args):
     h=args[0]
     l,r=0,len(h)-1
@@ -5263,7 +4808,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (110,'110. Maximum Subarray Sum (Kadane''s Algorithm)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums, find the contiguous subarray which has the largest sum and return its sum.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Contiguous Subarray: A connected, unbroken sequence of elements taken directly from inside the list without skipping any elements. For example, in [1, 2, 3, 4], [2, 3] is a contiguous subarray, but [1, 3] is not.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A single element can qualify as a valid subarray. If the list is completely empty, return 0.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (100,'100. Maximum Subarray Sum (Kadane''s Algorithm)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums, find the contiguous subarray which has the largest sum and return its sum.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Contiguous Subarray: A connected, unbroken sequence of elements taken directly from inside the list without skipping any elements. For example, in [1, 2, 3, 4], [2, 3] is a contiguous subarray, but [1, 3] is not.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A single element can qualify as a valid subarray. If the list is completely empty, return 0.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 6 (The contiguous subarray with the largest sum is [4, -1, 2, 1])</code></div>
@@ -5281,7 +4826,7 @@ VALUES (110,'110. Maximum Subarray Sum (Kadane''s Algorithm)','<p class="mb-4 le
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [-2, -3, -1, -5] (A list containing exclusively negative numbers; must return the single highest negative number, not 0)</code></li><li><code>nums = [5, -2, 5] (A list containing a small negative bridge between two large positive numbers)</code></li><li><code>nums = [1, 2, 3, 4] (A list containing entirely positive integers)</code></li>
-</ul>','medium',200,'python-lists-arrays','def max_sub_array(nums):
+</ul>','medium',200,'python-advanced','def max_sub_array(nums):
     pass','def ref_impl(*args):
     nums=args[0]
     if not nums: return 0
@@ -5309,7 +4854,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (111,'111. Find All Subarrays of a List (Subarray Generation)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums, find and generate every possible contiguous subarray that can be formed from the list. Return the result as a list of lists containing all the generated subarrays.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The individual subarrays can appear in any order in the output, but the interior elements of each individual subarray must preserve their original sequential placement. If the input list is empty, return an empty list [].</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (101,'101. Find All Subarrays of a List (Subarray Generation)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums, find and generate every possible contiguous subarray that can be formed from the list. Return the result as a list of lists containing all the generated subarrays.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The individual subarrays can appear in any order in the output, but the interior elements of each individual subarray must preserve their original sequential placement. If the input list is empty, return an empty list [].</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [1, 2, 3]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> [[1], [1, 2], [1, 2, 3], [2], [2, 3], [3]]</code></div>
@@ -5327,7 +4872,7 @@ VALUES (111,'111. Find All Subarrays of a List (Subarray Generation)','<p class=
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [1, 2, 3, 4] (Must generate exactly (N * (N + 1)) // 2 subarrays, which is 10 unique subarrays)</code></li><li><code>nums = [5, 5] (Handling duplicate elements correctly; the subarrays generated are separate items based on index coordinates: [[5], [5, 5], [5]])</code></li><li><code>nums = [] (Empty list boundary condition)</code></li>
-</ul>','easy',100,'python-lists-arrays','def find_subarrays(nums):
+</ul>','easy',100,'python-advanced','def find_subarrays(nums):
     pass','def ref_impl(*args):
     nums=args[0]
     res=[]
@@ -5354,7 +4899,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (112,'112. Maximum Sum Subarray of Fixed Size k','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums and a positive integer k, calculate the maximum possible sum of any contiguous subarray that has a fixed size equal to exactly k.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Fixed Size Window: The subarray must contain exactly k items. If the total length of the input list nums is strictly less than k, it is impossible to form a window of the required size; in this case, return 0.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (102,'102. Maximum Sum Subarray of Fixed Size k','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums and a positive integer k, calculate the maximum possible sum of any contiguous subarray that has a fixed size equal to exactly k.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Fixed Size Window: The subarray must contain exactly k items. If the total length of the input list nums is strictly less than k, it is impossible to form a window of the required size; in this case, return 0.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [2, 1, 5, 1, 3, 2], k = 3</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 9 (The subarray [5, 1, 3] has the maximum sum of 9)</code></div>
@@ -5372,7 +4917,7 @@ VALUES (112,'112. Maximum Sum Subarray of Fixed Size k','<p class="mb-4 leading-
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [1, 2, 3], k = 3 (k is exactly equal to the length of the list)</code></li><li><code>nums = [-1, 4, -2, 3, -5], k = 2 (Window spans across alternating positive and negative values)</code></li><li><code>nums = [0, 0, 0, 0], k = 2 (A list containing entirely zeroes)</code></li>
-</ul>','easy',100,'python-lists-arrays','def max_sub_array_k(nums, k):
+</ul>','easy',100,'python-advanced','def max_sub_array_k(nums, k):
     pass','def ref_impl(*args):
     nums,k=args[0],args[1]
     if len(nums)<k or k<=0: return 0
@@ -5401,7 +4946,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (113,'113. Minimum Size Subarray Sum (Variable Window Size)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of positive integers nums and a positive integer target, return the minimal length of a contiguous subarray whose sum is greater than or equal to target.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Variable Window Size: The length of the subarray is dynamic. You are looking for the shortest possible span of elements that satisfies the target condition.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If no such contiguous subarray exists within the list, return 0 instead.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (103,'103. Minimum Size Subarray Sum (Variable Window Size)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of positive integers nums and a positive integer target, return the minimal length of a contiguous subarray whose sum is greater than or equal to target.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Variable Window Size: The length of the subarray is dynamic. You are looking for the shortest possible span of elements that satisfies the target condition.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If no such contiguous subarray exists within the list, return 0 instead.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>target = 7, nums = [2, 3, 1, 2, 4, 3]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 2 (The shortest subarray meeting the condition is [4, 3] with a length of 2)</code></div>
@@ -5419,7 +4964,7 @@ VALUES (113,'113. Minimum Size Subarray Sum (Variable Window Size)','<p class="m
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [1, 2, 10, 3], target = 10 (A single element exactly matches the target value mid-list)</code></li><li><code>nums = [5], target = 5 (A single-element list that meets the target value exactly)</code></li><li><code>nums = [1, 1, 1, 1, 1, 5], target = 5 (A large number at the very end of a list of small numbers)</code></li>
-</ul>','medium',200,'python-lists-arrays','def min_sub_array_len(target, nums):
+</ul>','medium',200,'python-advanced','def min_sub_array_len(target, nums):
     pass','def ref_impl(*args):
     target,nums=args[0],args[1]
     l,total,ans=0,0,float("inf")
@@ -5449,7 +4994,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (114,'114. Product of List Except Self','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums, return an output list answer such that answer[i] is equal to the product of all the elements of nums except nums[i].</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Product Except Self: For an element at index i, its output value is the combined product of all numbers appearing before it (Prefix Product) multiplied by all numbers appearing after it (Suffix Product).</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Constraint: You must solve this without using the division operator / or //. If the list contains only 1 element, it has no outer items to multiply; return [1]. If the list is empty, return [].</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (104,'104. Product of List Except Self','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums, return an output list answer such that answer[i] is equal to the product of all the elements of nums except nums[i].</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Product Except Self: For an element at index i, its output value is the combined product of all numbers appearing before it (Prefix Product) multiplied by all numbers appearing after it (Suffix Product).</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Constraint: You must solve this without using the division operator / or //. If the list contains only 1 element, it has no outer items to multiply; return [1]. If the list is empty, return [].</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [1, 2, 3, 4]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> [24, 12, 8, 6]</code></div>
@@ -5467,7 +5012,7 @@ VALUES (114,'114. Product of List Except Self','<p class="mb-4 leading-relaxed t
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [4, 5, 0, 2] (A list containing exactly one zero element)</code></li><li><code>nums = [0, 2, 3, 0] (A list containing multiple zero elements)</code></li><li><code>nums = [-1, -2, -3] (A list containing negative values that flip signs based on position)</code></li>
-</ul>','medium',200,'python-lists-arrays','def product_except_self(nums):
+</ul>','medium',200,'python-advanced','def product_except_self(nums):
     pass','def ref_impl(*args):
     nums=args[0]
     n=len(nums)
@@ -5500,7 +5045,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 2',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (115,'115. Majority Element','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums of size n, find and return the majority element.Majority Element: The specific element that appears more than n // 2 times in the list. The problem guarantees that a majority element always exists in the input list.Your algorithm must find this element using constant $O(1)$ extra space, meaning you cannot duplicate the list or allocate structural counters.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (105,'105. Majority Element','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums of size n, find and return the majority element.Majority Element: The specific element that appears more than n // 2 times in the list. The problem guarantees that a majority element always exists in the input list.Your algorithm must find this element using constant $O(1)$ extra space, meaning you cannot duplicate the list or allocate structural counters.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [3, 2, 3]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 3</code></div>
@@ -5515,7 +5060,7 @@ VALUES (115,'115. Majority Element','<p class="mb-4 leading-relaxed text-sm font
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [7]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 7</code></div>
   
-</div>','easy',100,'python-lists-arrays','def majority_element(nums):
+</div>','easy',100,'python-advanced','def majority_element(nums):
     pass','def ref_impl(*args):
     nums=args[0]
     cand,count=None,0
@@ -5542,7 +5087,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (116,'116. Sort an Array of 0s, 1s, and 2s (Dutch National Flag)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An unsorted list nums contains only three types of integer elements: 0, 1, and 2. Rearrange this list in-place so that all elements are sorted in ascending order (all 0s first, followed by all 1s, and ending with all 2s).Partitioning: You must sort the list in a single pass over the elements using constant $O(1)$ extra space. You are not allowed to use Python''s built-in .sort() function or count the frequencies to rebuild the list.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (106,'106. Sort an Array of 0s, 1s, and 2s (Dutch National Flag)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An unsorted list nums contains only three types of integer elements: 0, 1, and 2. Rearrange this list in-place so that all elements are sorted in ascending order (all 0s first, followed by all 1s, and ending with all 2s).Partitioning: You must sort the list in a single pass over the elements using constant $O(1)$ extra space. You are not allowed to use Python''s built-in .sort() function or count the frequencies to rebuild the list.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [2, 0, 2, 1, 1, 0]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> nums becomes [0, 0, 1, 1, 2, 2]</code></div>
@@ -5557,7 +5102,7 @@ VALUES (116,'116. Sort an Array of 0s, 1s, and 2s (Dutch National Flag)','<p cla
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [1]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> nums becomes [1]</code></div>
   
-</div>','medium',200,'python-lists-arrays','def sort_colors(nums):
+</div>','medium',200,'python-advanced','def sort_colors(nums):
     pass','assert "sort_colors" in exec_globals
 fn=exec_globals["sort_colors"]
 a1=[2,0,2,1,1,0]; fn(a1); assert a1==[0,0,1,1,2,2], f"Got {a1}"
@@ -5567,7 +5112,7 @@ exec_globals["passed_cases"]=3
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (117,'117. Next Permutation of a List','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums, rearrange the numbers into the lexicographically next greater permutation of numbers.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Lexicographical Order: The dictionary order of numbers. For example, the permutations of [1,2,3] sorted in increasing order are [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], and [3,2,1].</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The rearrangement must be done in-place using constant extra memory. If no greater permutation can be formed because the list is already in its maximum possible sorted state (strictly descending order), rearrange the list into its lowest possible lexicographical order (sorted completely in ascending order).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (107,'107. Next Permutation of a List','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums, rearrange the numbers into the lexicographically next greater permutation of numbers.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Lexicographical Order: The dictionary order of numbers. For example, the permutations of [1,2,3] sorted in increasing order are [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], and [3,2,1].</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The rearrangement must be done in-place using constant extra memory. If no greater permutation can be formed because the list is already in its maximum possible sorted state (strictly descending order), rearrange the list into its lowest possible lexicographical order (sorted completely in ascending order).</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [1, 2, 3]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> nums becomes [1, 3, 2]</code></div>
@@ -5585,7 +5130,7 @@ VALUES (117,'117. Next Permutation of a List','<p class="mb-4 leading-relaxed te
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [1, 5, 1] (Handling duplicate elements correctly during pivot search)</code></li><li><code>nums = [2, 3, 1] (The pivot point requiring modification is located at the very first index)</code></li><li><code>nums = [1, 3, 2] (Requires finding the next structural step where values change columns across multiple trailing elements)</code></li>
-</ul>','medium',200,'python-lists-arrays','def next_permutation(nums):
+</ul>','medium',200,'python-advanced','def next_permutation(nums):
     pass','assert "next_permutation" in exec_globals
 fn=exec_globals["next_permutation"]
 a1=[1,2,3]; fn(a1); assert a1==[1,3,2], f"Got {a1}"
@@ -5595,7 +5140,7 @@ exec_globals["passed_cases"]=3
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (118,'118. Trapping Rain Water','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of non-negative integers height where each element represents the height of a vertical bar on a structural grid map (width of each bar is 1), calculate the total units of water that can be trapped within the valleys after a rainstorm.Elevation Trapping: Water is trapped on top of a bar at index i only if there are higher bars blocking it on both its far left and far right sides. The level of water trapped at index i is determined by:$$\text{Water Level} = \min(\text{Max Left Height}, \text{Max Right Height}) - \text{height[i]}$$Return the total accumulation value. If the list contains fewer than 3 bars, it cannot form a valley; return 0.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (108,'108. Trapping Rain Water','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of non-negative integers height where each element represents the height of a vertical bar on a structural grid map (width of each bar is 1), calculate the total units of water that can be trapped within the valleys after a rainstorm.Elevation Trapping: Water is trapped on top of a bar at index i only if there are higher bars blocking it on both its far left and far right sides. The level of water trapped at index i is determined by:$$\text{Water Level} = \min(\text{Max Left Height}, \text{Max Right Height}) - \text{height[i]}$$Return the total accumulation value. If the list contains fewer than 3 bars, it cannot form a valley; return 0.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 6</code></div>
@@ -5610,7 +5155,7 @@ VALUES (118,'118. Trapping Rain Water','<p class="mb-4 leading-relaxed text-sm f
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>height = [1, 2]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 0</code></div>
   
-</div>','hard',300,'python-lists-arrays','def trap(h):
+</div>','hard',300,'python-advanced','def trap(h):
     pass','def ref_impl(*args):
     h=args[0]
     if not h: return 0
@@ -5646,7 +5191,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (119,'119. Merge Sorted Lists In-Place','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">You are given two integer lists, nums1 and nums2, both sorted in non-decreasing (ascending) order. You are also given two integers, m and n, representing the exact number of elements that should be merged from nums1 and nums2 respectively.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Merge nums2 directly into nums1 so that the combined elements form a single sorted list inside nums1.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Constraint: To hold the incoming numbers, nums1 has an expanded total structural length of m + n. The first m elements denote the numbers that should be merged, and the last n positions are initialized to 0 as empty space placeholders. You must modify nums1 in-place without using a second list.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (109,'109. Merge Sorted Lists In-Place','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">You are given two integer lists, nums1 and nums2, both sorted in non-decreasing (ascending) order. You are also given two integers, m and n, representing the exact number of elements that should be merged from nums1 and nums2 respectively.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Merge nums2 directly into nums1 so that the combined elements form a single sorted list inside nums1.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Constraint: To hold the incoming numbers, nums1 has an expanded total structural length of m + n. The first m elements denote the numbers that should be merged, and the last n positions are initialized to 0 as empty space placeholders. You must modify nums1 in-place without using a second list.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums1 = [1, 2, 3, 0, 0, 0], m = 3, nums2 = [2, 5, 6], n = 3</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> nums1 becomes [1, 2, 2, 3, 5, 6]</code></div>
@@ -5664,7 +5209,7 @@ VALUES (119,'119. Merge Sorted Lists In-Place','<p class="mb-4 leading-relaxed t
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums1 = [4, 5, 6, 0, 0, 0], m = 3; nums2 = [1, 2, 3], n = 3 (All elements in nums2 are strictly smaller than all elements in nums1)</code></li><li><code>nums1 = [1, 2, 3, 0, 0, 0], m = 3; nums2 = [4, 5, 6], n = 3 (All elements in nums2 are strictly larger than all elements in nums1)</code></li><li><code>nums1 = [0], m = 0; nums2 = [1], n = 1 (The active portion of nums1 is completely empty)</code></li>
-</ul>','medium',200,'python-lists-arrays','def merge(nums1, m, nums2, n):
+</ul>','medium',200,'python-advanced','def merge(nums1, m, nums2, n):
     pass','assert "merge" in exec_globals
 fn=exec_globals["merge"]
 a1=[1,2,3,0,0,0]; fn(a1,3,[2,5,6],3); assert a1==[1,2,2,3,5,6], f"Got {a1}"
@@ -5674,7 +5219,7 @@ exec_globals["passed_cases"]=3
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (120,'120. Interval List Intersections','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given two lists of closed intervals, firstList and secondList, where each individual interval is represented as a pair [start, end]. Each list contains intervals that are already sorted in ascending order by their start times and do not overlap with other intervals in the same list.Find and return the intersection of these two interval lists.Interval Intersection: A closed interval [a, b] (with $a \le b$) represents the set of real numbers from $a$ to $b$. The intersection of two intervals is the set of points that are common to both intervals (e.g., the intersection of [1, 4] and [3, 6] is [3, 4]).Return the overlapping pairs as a list of lists. If there is no overlap at all, return an empty list [].</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (110,'110. Interval List Intersections','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given two lists of closed intervals, firstList and secondList, where each individual interval is represented as a pair [start, end]. Each list contains intervals that are already sorted in ascending order by their start times and do not overlap with other intervals in the same list.Find and return the intersection of these two interval lists.Interval Intersection: A closed interval [a, b] (with $a \le b$) represents the set of real numbers from $a$ to $b$. The intersection of two intervals is the set of points that are common to both intervals (e.g., the intersection of [1, 4] and [3, 6] is [3, 4]).Return the overlapping pairs as a list of lists. If there is no overlap at all, return an empty list [].</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>firstList = [[0, 2], [5, 10], [13, 23], [24, 25]], secondList = [[1, 5], [8, 12], [15, 24], [25, 26]]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> [[1, 2], [5, 5], [8, 10], [15, 23], [24, 24], [25, 25]]</code></div>
@@ -5689,7 +5234,7 @@ VALUES (120,'120. Interval List Intersections','<p class="mb-4 leading-relaxed t
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>firstList = [[1, 10]], secondList = [[3, 5], [6, 8]]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> [[3, 5], [6, 8]]</code></div>
   
-</div>','medium',200,'python-lists-arrays','def interval_intersection(firstList, secondList):
+</div>','medium',200,'python-advanced','def interval_intersection(firstList, secondList):
     pass','def ref_impl(*args):
     l1,l2=args[0],args[1]
     i,j=0,0
@@ -5720,7 +5265,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (121,'121. Rotate Matrix 90 Degrees Clockwise In-Place','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">You are given an n x n 2D matrix represented as a nested list of lists, where matrix[i][j] represents the element at row i and column j. Rotate the entire grid image by 90 degrees in a clockwise direction.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">In-Place Transformation: You must modify the 2D list directly within its allocated memory structure. You are not allowed to create or allocate a new second matrix to map the coordinates.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (111,'111. Rotate Matrix 90 Degrees Clockwise In-Place','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">You are given an n x n 2D matrix represented as a nested list of lists, where matrix[i][j] represents the element at row i and column j. Rotate the entire grid image by 90 degrees in a clockwise direction.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">In-Place Transformation: You must modify the 2D list directly within its allocated memory structure. You are not allowed to create or allocate a new second matrix to map the coordinates.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>matrix = [[1, 2], [3, 4]]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> matrix becomes [[3, 1], [4, 2]]</code></div>
@@ -5738,7 +5283,7 @@ VALUES (121,'121. Rotate Matrix 90 Degrees Clockwise In-Place','<p class="mb-4 l
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>matrix = [[1]] (A 1x1 minimal matrix boundary case)</code></li><li><code>matrix = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]] (An even-dimensioned 4x4 grid testing nested boundary layer coordinates)</code></li><li><code>A matrix where elements along the primary diagonal are completely identical (e.g., matrix[i][i] == 5 for all i), ensuring structural transposition checks do not stall.</code></li>
-</ul>','medium',200,'python-lists-arrays','def rotate_matrix(matrix):
+</ul>','medium',200,'python-advanced','def rotate_matrix(matrix):
     pass','assert "rotate_matrix" in exec_globals
 fn=exec_globals["rotate_matrix"]
 m1=[[1,2,3],[4,5,6],[7,8,9]]; fn(m1); assert m1==[[7,4,1],[8,5,2],[9,6,3]], f"Got {m1}"
@@ -5747,7 +5292,7 @@ exec_globals["passed_cases"]=2
 exec_globals["total_cases"] = 2',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (122,'122. Spiral Matrix Traversal','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an m x n matrix (a nested list containing m rows and n columns), return a flat 1D list containing all the elements of the matrix ordered by a spiral traversal path.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Spiral Order: Reading elements by starting from the top-left corner (0,0), moving horizontally across the first row to the right edge, turning downward along the final column to the bottom edge, turning left across the bottom row, and climbing back up the first column. This outer loop boundary then shrinks inward layer by layer until every coordinate is visited exactly once.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If the matrix is empty, return an empty list [].</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (112,'112. Spiral Matrix Traversal','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an m x n matrix (a nested list containing m rows and n columns), return a flat 1D list containing all the elements of the matrix ordered by a spiral traversal path.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Spiral Order: Reading elements by starting from the top-left corner (0,0), moving horizontally across the first row to the right edge, turning downward along the final column to the bottom edge, turning left across the bottom row, and climbing back up the first column. This outer loop boundary then shrinks inward layer by layer until every coordinate is visited exactly once.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">If the matrix is empty, return an empty list [].</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> [1, 2, 3, 6, 9, 8, 7, 4, 5]</code></div>
@@ -5765,7 +5310,7 @@ VALUES (122,'122. Spiral Matrix Traversal','<p class="mb-4 leading-relaxed text-
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>matrix = [[1, 2, 3, 4]] (A single-row matrix layout; must terminate right after reading left-to-right without performing invalid reverse loops)</code></li><li><code>matrix = [[1], [2], [3]] (A single-column matrix layout; must move directly down without processing width loops)</code></li><li><code>matrix = [[1, 2], [3, 4]] (A simple square matrix grid)</code></li>
-</ul>','medium',200,'python-lists-arrays','def spiral_order(matrix):
+</ul>','medium',200,'python-advanced','def spiral_order(matrix):
     pass','def ref_impl(*args):
     matrix=args[0]
     if not matrix: return []
@@ -5799,7 +5344,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 2',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (123,'123. Set Matrix Zeroes','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an m x n integer matrix, if any element inside the grid is originally equal to 0, modify the matrix in-place so that its entire corresponding row and entire corresponding column are completely filled with 0s.In-Place Flagging: You must solve this with a constant $O(1)$ extra space footprint. You cannot maintain a separate copy of the matrix or use separate tracking lists of size m or n to mark row/column states. Instead, you must utilize the matrix''s own first row and first column as interior status indicators.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (113,'113. Set Matrix Zeroes','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an m x n integer matrix, if any element inside the grid is originally equal to 0, modify the matrix in-place so that its entire corresponding row and entire corresponding column are completely filled with 0s.In-Place Flagging: You must solve this with a constant $O(1)$ extra space footprint. You cannot maintain a separate copy of the matrix or use separate tracking lists of size m or n to mark row/column states. Instead, you must utilize the matrix''s own first row and first column as interior status indicators.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>matrix = [[1, 1, 1], [1, 0, 1], [1, 1, 1]]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> matrix becomes [[1, 0, 1], [0, 0, 0], [1, 0, 1]]</code></div>
@@ -5814,7 +5359,7 @@ VALUES (123,'123. Set Matrix Zeroes','<p class="mb-4 leading-relaxed text-sm fon
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>matrix = [[1, 2], [3, 4]]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> matrix becomes [[1, 2], [3, 4]]</code></div>
   
-</div>','medium',200,'python-lists-arrays','def set_zeroes(matrix):
+</div>','medium',200,'python-advanced','def set_zeroes(matrix):
     pass','assert "set_zeroes" in exec_globals
 fn=exec_globals["set_zeroes"]
 m1=[[1,1,1],[1,0,1],[1,1,1]]; fn(m1); assert m1==[[1,0,1],[0,0,0],[1,0,1]], f"Got {m1}"
@@ -5823,7 +5368,7 @@ exec_globals["passed_cases"]=2
 exec_globals["total_cases"] = 2',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (124,'124. Standard Binary Search Implementation','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums which is sorted in non-decreasing (ascending) order, and an integer target, search for target inside the list.If the target exists within the collection, return its corresponding index position. If the target is not present in the list, return -1.Your algorithm must search for the target using a logarithmic range reduction strategy, meaning the search space must be cut in half at each comparative step to achieve an optimal time complexity of $O(\log N)$ instead of checking elements sequentially.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (114,'114. Standard Binary Search Implementation','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums which is sorted in non-decreasing (ascending) order, and an integer target, search for target inside the list.If the target exists within the collection, return its corresponding index position. If the target is not present in the list, return -1.Your algorithm must search for the target using a logarithmic range reduction strategy, meaning the search space must be cut in half at each comparative step to achieve an optimal time complexity of $O(\log N)$ instead of checking elements sequentially.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [-1, 0, 3, 5, 9, 12], target = 9</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 4</code></div>
@@ -5838,7 +5383,7 @@ VALUES (124,'124. Standard Binary Search Implementation','<p class="mb-4 leading
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [], target = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> -1</code></div>
   
-</div>','easy',100,'python-lists-arrays','def binary_search(nums, target):
+</div>','easy',100,'python-advanced','def binary_search(nums, target):
     pass','def ref_impl(*args):
     nums,target=args[0],args[1]
     l,r=0,len(nums)-1
@@ -5867,7 +5412,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 6',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (125,'125. Find Peak Element','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A peak element in a list is an element that is strictly greater than its immediate neighbors. Given an unsorted integer list nums, find a peak element and return its index position.Boundary Assumptions: You may imagine that the elements outside the boundary limits of the list act as negative infinity. This means that if an element is at the very front or very back of the list, it only needs to be strictly greater than its single interior neighbor to qualify as a peak.If the list contains multiple peak elements, returning the index position of any of the peaks is considered correct. Your solution must run within an optimal time complexity constraint of $O(\log N)$.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (115,'115. Find Peak Element','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A peak element in a list is an element that is strictly greater than its immediate neighbors. Given an unsorted integer list nums, find a peak element and return its index position.Boundary Assumptions: You may imagine that the elements outside the boundary limits of the list act as negative infinity. This means that if an element is at the very front or very back of the list, it only needs to be strictly greater than its single interior neighbor to qualify as a peak.If the list contains multiple peak elements, returning the index position of any of the peaks is considered correct. Your solution must run within an optimal time complexity constraint of $O(\log N)$.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [1, 2, 3, 1]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 2 (The value at index 2 is 3, which is greater than its neighbors 2 and 1)</code></div>
@@ -5882,7 +5427,7 @@ VALUES (125,'125. Find Peak Element','<p class="mb-4 leading-relaxed text-sm fon
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [1]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 0 (A single element qualifies as a peak by default)</code></div>
   
-</div>','medium',200,'python-lists-arrays','def find_peak_element(nums):
+</div>','medium',200,'python-advanced','def find_peak_element(nums):
     pass','def ref_impl(*args):
     nums=args[0]
     l,r=0,len(nums)-1
@@ -5910,7 +5455,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (126,'126. Search in Rotated Sorted List','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An integer list nums is initially sorted in strictly ascending order with completely unique values. Prior to being passed to your function, the list is rotated at an unknown pivot index k ($1 \le k < \text{len(nums)}$) such that the resulting array shifts its structural segments (e.g., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]).Given the rotated list nums and an integer target, return the index of the target if it is present in the list, or -1 if it cannot be found.Your algorithm must search for the target element within an optimal time complexity layout of $O(\log N)$.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (116,'116. Search in Rotated Sorted List','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An integer list nums is initially sorted in strictly ascending order with completely unique values. Prior to being passed to your function, the list is rotated at an unknown pivot index k ($1 \le k < \text{len(nums)}$) such that the resulting array shifts its structural segments (e.g., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]).Given the rotated list nums and an integer target, return the index of the target if it is present in the list, or -1 if it cannot be found.Your algorithm must search for the target element within an optimal time complexity layout of $O(\log N)$.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [4, 5, 6, 7, 0, 1, 2], target = 0</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 4</code></div>
@@ -5925,7 +5470,7 @@ VALUES (126,'126. Search in Rotated Sorted List','<p class="mb-4 leading-relaxed
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [1], target = 0</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> -1</code></div>
   
-</div>','medium',200,'python-lists-arrays','def search_rotated(nums, target):
+</div>','medium',200,'python-advanced','def search_rotated(nums, target):
     pass','def ref_impl(*args):
     nums,target=args[0],args[1]
     l,r=0,len(nums)-1
@@ -5958,7 +5503,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (127,'127. Next Greater Element','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums, find and return a new list answer of the exact same length, where answer[i] represents the next greater element for nums[i].</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Next Greater Element: The first element located to the strict right of index i that has a value larger than nums[i]. If no such element exists because you hit the right boundary or all subsequent numbers are smaller, the value for that position must be recorded as -1.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (117,'117. Next Greater Element','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers nums, find and return a new list answer of the exact same length, where answer[i] represents the next greater element for nums[i].</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Next Greater Element: The first element located to the strict right of index i that has a value larger than nums[i]. If no such element exists because you hit the right boundary or all subsequent numbers are smaller, the value for that position must be recorded as -1.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [1, 3, 4, 2]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> [3, 4, -1, -1]</code></div>
@@ -5976,7 +5521,7 @@ VALUES (127,'127. Next Greater Element','<p class="mb-4 leading-relaxed text-sm 
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>nums = [1, 2, 3, 4, 5] (A list sorted in strictly increasing order, where every single element except the last maps to its immediate right neighbor)</code></li><li><code>nums = [5, 4, 3, 2, 10] (A long descending run terminated by a massive value at the very end that resolves the entire sequence)</code></li><li><code>nums = [] (An empty list boundary case, which must return an empty list [])</code></li>
-</ul>','medium',200,'python-lists-arrays','def next_greater_element_array(nums):
+</ul>','medium',200,'python-advanced','def next_greater_element_array(nums):
     pass','def ref_impl(*args):
     nums=args[0]
     ans=[-1]*len(nums)
@@ -6005,7 +5550,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (128,'128. Daily Temperatures (Monotonic Decreasing Property)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers temperatures representing the daily temperature records, compute and return a list answer where answer[i] is the exact number of days you would have to wait after index i to get a warmer temperature.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Lookup Offsets: You must calculate the index distance index difference (j - i) rather than recording the raw temperature value itself. If there is no future day for which this condition is met, record 0 for that position instead.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (118,'118. Daily Temperatures (Monotonic Decreasing Property)','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of integers temperatures representing the daily temperature records, compute and return a list answer where answer[i] is the exact number of days you would have to wait after index i to get a warmer temperature.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Lookup Offsets: You must calculate the index distance index difference (j - i) rather than recording the raw temperature value itself. If there is no future day for which this condition is met, record 0 for that position instead.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>temperatures = [73, 74, 75, 71, 69, 72, 76, 73]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> [1, 1, 4, 2, 1, 1, 0, 0]</code></div>
@@ -6023,7 +5568,7 @@ VALUES (128,'128. Daily Temperatures (Monotonic Decreasing Property)','<p class=
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>temperatures = [89, 89, 89] (A sequence of identical temperatures; since it requires a strictly warmer day, they must all resolve to 0)</code></li><li><code>temperatures = [50, 40, 30, 60] (A multi-day drop that is completely broken and resolved by a single massive jump at the end)</code></li><li><code>temperatures = [40] (A single-element list boundary case, returning [0])</code></li>
-</ul>','medium',200,'python-lists-arrays','def daily_temperatures(temps):
+</ul>','medium',200,'python-advanced','def daily_temperatures(temps):
     pass','def ref_impl(*args):
     t=args[0]
     ans=[0]*len(t)
@@ -6053,7 +5598,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (129,'129. Largest Rectangle in Histogram','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of non-negative integers heights where each element represents the height of a bar in a histogram chart layout (where the horizontal width of each individual bar is exactly 1), find the largest rectangular area that can be formed within the boundaries of the histogram.Bounding Rectangle Volume: The maximum area of a rectangle spanning from index left to index right is restricted by the absolute shortest bar contained within that span multiplied by the total wide index distance:$$\text{Area} = \min(\text{heights[left \dots right]}) \times (\text{right} - \text{left} + 1)$$Return the maximum calculated area value. If the list is empty, return 0.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (119,'119. Largest Rectangle in Histogram','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given a list of non-negative integers heights where each element represents the height of a bar in a histogram chart layout (where the horizontal width of each individual bar is exactly 1), find the largest rectangular area that can be formed within the boundaries of the histogram.Bounding Rectangle Volume: The maximum area of a rectangle spanning from index left to index right is restricted by the absolute shortest bar contained within that span multiplied by the total wide index distance:$$\text{Area} = \min(\text{heights[left \dots right]}) \times (\text{right} - \text{left} + 1)$$Return the maximum calculated area value. If the list is empty, return 0.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>heights = [2, 1, 5, 6, 2, 3]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 10 (The largest rectangle is formed by the bars 5 and 6 with a width of 2, yielding an area of $5 \times 2 = 10$)</code></div>
@@ -6068,7 +5613,7 @@ VALUES (129,'129. Largest Rectangle in Histogram','<p class="mb-4 leading-relaxe
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>heights = []</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code> 0</code></div>
   
-</div>','hard',300,'python-lists-arrays','def largest_rectangle_area(heights):
+</div>','hard',300,'python-advanced','def largest_rectangle_area(heights):
     pass','def ref_impl(*args):
     heights=args[0]
     heights.append(0)
@@ -6101,7 +5646,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (130,'130. Create and Access a Dictionary','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>student_dict(name, age, grade)</code> that creates and returns a dictionary with keys <code>"name"</code>, <code>"age"</code>, <code>"grade"</code>.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Dictionaries (dicts) are Python''s key-value store. You create them with <code>{key: value}</code> syntax and access values with <code>dict[key]</code> or <code>dict.get(key)</code>.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (120,'120. Create and Access a Dictionary','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>student_dict(name, age, grade)</code> that creates and returns a dictionary with keys <code>"name"</code>, <code>"age"</code>, <code>"grade"</code>.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Dictionaries (dicts) are Python''s key-value store. You create them with <code>{key: value}</code> syntax and access values with <code>dict[key]</code> or <code>dict.get(key)</code>.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>name="Alice", age=18, grade="A"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>{"name":"Alice","age":18,"grade":"A"}</code></div>
@@ -6111,7 +5656,7 @@ VALUES (130,'130. Create and Access a Dictionary','<p class="mb-4 leading-relaxe
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>name="Bob", age=20, grade="B"</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>{"name":"Bob","age":20,"grade":"B"}</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Create dictionary → {''name'': ''Bob'', ''age'': 20, ''grade'': ''B''}</span></div>
-</div>','easy',100,'python-dicts','def student_dict(name, age, grade):
+</div>','easy',100,'python-advanced','def student_dict(name, age, grade):
     # Return a dict with name, age, grade
     pass','def ref_impl(*args):
     return {"name":args[0],"age":args[1],"grade":args[2]}
@@ -6134,13 +5679,13 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (131,'131. Dictionary Methods — keys, values, items','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>dict_info(d)</code> that takes a dictionary and returns a tuple:
+VALUES (121,'121. Dictionary Methods — keys, values, items','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>dict_info(d)</code> that takes a dictionary and returns a tuple:
 <code>(sorted_keys, sorted_values, items_list)</code></p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Use <code>dict.keys()</code>, <code>dict.values()</code>, <code>dict.items()</code>. Sort the keys and values for consistent comparison.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>d = {"b":2,"a":1,"c":3}</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>(["a","b","c"], [1,2,3], [("a",1),("b",2),("c",3)])</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">keys() sorted → [''a'',''b'',''c''], values() sorted → [1,2,3], items() → key-value tuples</span></div>
-</div>','easy',100,'python-dicts','def dict_info(d):
+</div>','easy',100,'python-advanced','def dict_info(d):
     # Return (sorted_keys, sorted_values, sorted_items)
     pass','def ref_impl(*args):
     d=args[0]
@@ -6167,7 +5712,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (132,'132. Merge and Update Dictionaries','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>merge_dicts(d1, d2)</code> that merges two dictionaries. If a key exists in both, sum the values. Return the merged dictionary.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Use <code>.update()</code> or <code>dict.get()</code> to handle overlapping keys.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (122,'122. Merge and Update Dictionaries','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>merge_dicts(d1, d2)</code> that merges two dictionaries. If a key exists in both, sum the values. Return the merged dictionary.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Use <code>.update()</code> or <code>dict.get()</code> to handle overlapping keys.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>d1={"a":1,"b":2}, d2={"b":3,"c":4}</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>{"a":1,"b":5,"c":4}</code></div>
@@ -6177,7 +5722,7 @@ VALUES (132,'132. Merge and Update Dictionaries','<p class="mb-4 leading-relaxed
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>d1={"x":10}, d2={"y":20}</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>{"x":10,"y":20}</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Merge dictionaries → {''x'': 10, ''y'': 20}</span></div>
-</div>','easy',100,'python-dicts','def merge_dicts(d1, d2):
+</div>','easy',100,'python-advanced','def merge_dicts(d1, d2):
     # Merge d1 and d2, summing values for duplicate keys
     pass','def ref_impl(*args):
     d1,d2=dict(args[0]),args[1]
@@ -6203,7 +5748,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (133,'133. Frequency Counter with Dict','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>count_elements(lst)</code> that takes a list and returns a dictionary mapping each unique element to its count.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">This is one of the most common dict patterns in real Python programs. You can use a plain dict with <code>.get()</code>, or use <code>collections.Counter</code>.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (123,'123. Frequency Counter with Dict','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>count_elements(lst)</code> that takes a list and returns a dictionary mapping each unique element to its count.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">This is one of the most common dict patterns in real Python programs. You can use a plain dict with <code>.get()</code>, or use <code>collections.Counter</code>.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>lst = [1,2,2,3,3,3]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>{1:1, 2:2, 3:3}</code></div>
@@ -6213,7 +5758,7 @@ VALUES (133,'133. Frequency Counter with Dict','<p class="mb-4 leading-relaxed t
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>lst = ["a","b","a","c","b","a"]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>{"a":3,"b":2,"c":1}</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">''a'' appears 3 times, ''b'' twice, ''c'' once → {''a'': 3, ''b'': 2, ''c'': 1}</span></div>
-</div>','easy',100,'python-dicts','def count_elements(lst):
+</div>','easy',100,'python-advanced','def count_elements(lst):
     # Return frequency dict
     pass','def ref_impl(*args):
     freq={}
@@ -6239,7 +5784,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (134,'134. Dict Comprehension','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>squares_dict(n)</code> that uses a dict comprehension to create a dictionary mapping each integer from 1 to n to its square.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Dict comprehension syntax: <code>{key: value for var in iterable}</code></p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">For example, n=4 → <code>{1:1, 2:4, 3:9, 4:16}</code></p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (124,'124. Dict Comprehension','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>squares_dict(n)</code> that uses a dict comprehension to create a dictionary mapping each integer from 1 to n to its square.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Dict comprehension syntax: <code>{key: value for var in iterable}</code></p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">For example, n=4 → <code>{1:1, 2:4, 3:9, 4:16}</code></p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 5</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>{1:1, 2:4, 3:9, 4:16, 5:25}</code></div>
@@ -6249,7 +5794,7 @@ VALUES (134,'134. Dict Comprehension','<p class="mb-4 leading-relaxed text-sm fo
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 3</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>{1:1, 2:4, 3:9}</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Dictionary of squares for 1 to 3 → {1:1, 2:4, 3:9}</span></div>
-</div>','easy',100,'python-dicts','def squares_dict(n):
+</div>','easy',100,'python-advanced','def squares_dict(n):
     # Return {i: i**2 for i in 1..n} using dict comprehension
     pass','def ref_impl(*args):
     return {i:i**2 for i in range(1,args[0]+1)}
@@ -6272,7 +5817,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (135,'135. Two Sum with Dictionary','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>two_sum(nums, target)</code> that returns the indices of the two numbers in <code>nums</code> that add up to <code>target</code>.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Use a dictionary to achieve O(n) time: for each number, check if <code>target - number</code> is already in the dict. Each input has exactly one valid solution.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (125,'125. Two Sum with Dictionary','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>two_sum(nums, target)</code> that returns the indices of the two numbers in <code>nums</code> that add up to <code>target</code>.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Use a dictionary to achieve O(n) time: for each number, check if <code>target - number</code> is already in the dict. Each input has exactly one valid solution.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums=[2,7,11,15], target=9</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>[0,1]</code></div>
@@ -6285,7 +5830,7 @@ VALUES (135,'135. Two Sum with Dictionary','<p class="mb-4 leading-relaxed text-
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>Each input has exactly one solution</code></li><li><code>You may not use the same element twice</code></li>
-</ul>','medium',200,'python-dicts','def two_sum(nums, target):
+</ul>','medium',200,'python-advanced','def two_sum(nums, target):
     # Return [i, j] where nums[i]+nums[j]==target
     pass','def ref_impl(*args):
     nums,target=args[0],args[1]
@@ -6314,7 +5859,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (136,'136. Group Anagrams','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>group_anagrams(strs)</code> that takes a list of strings and groups them into lists of anagrams. Return the groups in any order.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Key insight: anagrams have the same sorted characters. Use <code>tuple(sorted(word))</code> as the dict key to group them.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (126,'126. Group Anagrams','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>group_anagrams(strs)</code> that takes a list of strings and groups them into lists of anagrams. Return the groups in any order.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Key insight: anagrams have the same sorted characters. Use <code>tuple(sorted(word))</code> as the dict key to group them.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>strs = ["eat","tea","tan","ate","nat","bat"]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>[["eat","tea","ate"],["tan","nat"],["bat"]]</code></div>
@@ -6324,7 +5869,7 @@ VALUES (136,'136. Group Anagrams','<p class="mb-4 leading-relaxed text-sm font-n
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>strs = [""]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>[[""]]</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Single empty string → [['''']]</span></div>
-</div>','medium',200,'python-dicts','def group_anagrams(strs):
+</div>','medium',200,'python-advanced','def group_anagrams(strs):
     # Group strings that are anagrams of each other
     pass','assert "group_anagrams" in exec_globals, "Function group_anagrams not found"
 fn = exec_globals["group_anagrams"]
@@ -6347,7 +5892,7 @@ exec_globals["passed_cases"] = 3
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (137,'137. Nested Dictionary — Student Records','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>top_student(records)</code> that takes a nested dictionary where each key is a student name and each value is a dict with <code>"scores"</code> (list) and <code>"grade"</code> (string). Return the name of the student with the highest average score.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">This tests navigating nested data structures — a common real-world skill.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (127,'127. Nested Dictionary — Student Records','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>top_student(records)</code> that takes a nested dictionary where each key is a student name and each value is a dict with <code>"scores"</code> (list) and <code>"grade"</code> (string). Return the name of the student with the highest average score.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">This tests navigating nested data structures — a common real-world skill.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>records = {"Alice":{"scores":[90,85,92],"grade":"A"}, "Bob":{"scores":[70,80,75],"grade":"B"}}</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Alice"</code></div>
@@ -6355,7 +5900,7 @@ VALUES (137,'137. Nested Dictionary — Student Records','<p class="mb-4 leading
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>At least one student in records</code></li>
-</ul>','medium',200,'python-dicts','def top_student(records):
+</ul>','medium',200,'python-advanced','def top_student(records):
     # Return name of student with highest average score
     pass','def ref_impl(*args):
     return max(args[0],key=lambda name:sum(args[0][name]["scores"])/len(args[0][name]["scores"]))
@@ -6378,7 +5923,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 2',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (138,'138. Lambda Functions','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>apply_operations(nums)</code> that uses lambda functions to perform 3 operations on a list:</p>
+VALUES (128,'128. Lambda Functions','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>apply_operations(nums)</code> that uses lambda functions to perform 3 operations on a list:</p>
 <ol class="list-decimal pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li>Double each number: use <code>lambda x: x*2</code> with <code>map()</code></li>
 <li>Keep only positives: use <code>lambda x: x>0</code> with <code>filter()</code></li>
@@ -6388,7 +5933,7 @@ VALUES (138,'138. Lambda Functions','<p class="mb-4 leading-relaxed text-sm font
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [-3,1,-2,4,0]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>([-6,2,-4,8,0], [1,4], [-3,-2,0,1,4])</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Filter even numbers [-2, 4, 0] and square them → [4, 16, 0]; positives=[1, 4]</span></div>
-</div>','easy',100,'python-oop','def apply_operations(nums):
+</div>','easy',100,'python-advanced','def apply_operations(nums):
     # Return (doubled, positives_only, sorted_by_abs)
     pass','def ref_impl(*args):
     n=args[0]
@@ -6415,7 +5960,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (139,'139. Map and Filter','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>transform_list(words)</code> that takes a list of strings and applies these transformations:</p>
+VALUES (129,'129. Map and Filter','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>transform_list(words)</code> that takes a list of strings and applies these transformations:</p>
 <ol class="list-decimal pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li>Convert each word to uppercase using <code>map(str.upper, words)</code></li>
 <li>Keep only words longer than 3 characters using <code>filter()</code></li>
@@ -6425,7 +5970,7 @@ VALUES (139,'139. Map and Filter','<p class="mb-4 leading-relaxed text-sm font-n
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>words = ["hi","hello","cat","python","a"]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>(["HI","HELLO","CAT","PYTHON","A"], ["hello","python"], [2,5,3,6,1])</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Map to uppercase; filter words with length > 3 → [''HELLO'', ''PYTHON'']</span></div>
-</div>','easy',100,'python-oop','def transform_list(words):
+</div>','easy',100,'python-advanced','def transform_list(words):
     # Return (upper_words, long_words, lengths)
     pass','def ref_impl(*args):
     w=args[0]
@@ -6452,12 +5997,12 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (140,'140. sorted() with Key Function','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>custom_sort(people)</code> that takes a list of tuples <code>(name, age)</code> and returns them sorted by age ascending, then by name alphabetically for ties.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Use <code>sorted()</code> with a <code>key=lambda</code> that returns a tuple — Python compares tuples element by element.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (130,'130. sorted() with Key Function','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>custom_sort(people)</code> that takes a list of tuples <code>(name, age)</code> and returns them sorted by age ascending, then by name alphabetically for ties.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Use <code>sorted()</code> with a <code>key=lambda</code> that returns a tuple — Python compares tuples element by element.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>people = [("Alice",30),("Bob",25),("Carol",30),("Dave",25)]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>[("Bob",25),("Dave",25),("Alice",30),("Carol",30)]</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Sort by age ascending, then name alphabetically → Bob(25), Dave(25), Alice(30), Carol(30)</span></div>
-</div>','easy',100,'python-oop','def custom_sort(people):
+</div>','easy',100,'python-advanced','def custom_sort(people):
     # Sort by age, then by name for ties
     pass','def ref_impl(*args):
     return sorted(args[0],key=lambda x:(x[1],x[0]))
@@ -6480,7 +6025,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (141,'141. Advanced List Comprehensions','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>comprehension_advanced(matrix)</code> that takes a 2D list (matrix) and returns a tuple:</p>
+VALUES (131,'131. Advanced List Comprehensions','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>comprehension_advanced(matrix)</code> that takes a 2D list (matrix) and returns a tuple:</p>
 <ol class="list-decimal pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li><code>flat_evens</code> — all even numbers from the entire matrix flattened</li>
 <li><code>row_sums</code> — list of sums of each row</li>
@@ -6490,7 +6035,7 @@ VALUES (141,'141. Advanced List Comprehensions','<p class="mb-4 leading-relaxed 
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>matrix = [[1,-2,3],[4,-5,6]]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>([4,6], [2,5], [(0,0),(0,2),(1,0),(1,2)])</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Filter positives, take absolute value of negatives, find positions of elements > 0</span></div>
-</div>','medium',200,'python-oop','def comprehension_advanced(matrix):
+</div>','medium',200,'python-advanced','def comprehension_advanced(matrix):
     # Return (flat_evens, row_sums, positive_coords)
     pass','def ref_impl(*args):
     m=args[0]
@@ -6517,7 +6062,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (142,'142. Generator Function','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>even_generator(n)</code> that returns a list of all even numbers from 0 to n (inclusive) using a generator expression inside <code>list()</code>.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Generator expressions look like list comprehensions but use <code>()</code> instead of <code>[]</code>. They are memory-efficient as they generate values on-demand.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (132,'132. Generator Function','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>even_generator(n)</code> that returns a list of all even numbers from 0 to n (inclusive) using a generator expression inside <code>list()</code>.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Generator expressions look like list comprehensions but use <code>()</code> instead of <code>[]</code>. They are memory-efficient as they generate values on-demand.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 10</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>[0,2,4,6,8,10]</code></div>
@@ -6535,7 +6080,7 @@ VALUES (142,'142. Generator Function','<p class="mb-4 leading-relaxed text-sm fo
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n >= 0</code></li>
-</ul>','medium',200,'python-oop','def even_generator(n):
+</ul>','medium',200,'python-advanced','def even_generator(n):
     # Use a generator expression to return list of evens 0..n
     pass','def ref_impl(*args):
     return list(x for x in range(args[0]+1) if x%2==0)
@@ -6558,7 +6103,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (143,'143. Reduce for Cumulative Operations','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>cumulative_ops(nums)</code> that uses <code>functools.reduce</code> to compute:</p>
+VALUES (133,'133. Reduce for Cumulative Operations','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>cumulative_ops(nums)</code> that uses <code>functools.reduce</code> to compute:</p>
 <ol class="list-decimal pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li><code>product</code> — the product of all numbers (using reduce with <code>lambda a,b: a*b</code>)</li>
 <li><code>max_val</code> — the maximum value (using reduce with <code>lambda a,b: a if a>b else b</code>)</li>
@@ -6572,7 +6117,7 @@ VALUES (143,'143. Reduce for Cumulative Operations','<p class="mb-4 leading-rela
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>nums = [3]</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>(3, 3)</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Single element → cumulative product = 3, max = 3</span></div>
-</div>','medium',200,'python-oop','def cumulative_ops(nums):
+</div>','medium',200,'python-advanced','def cumulative_ops(nums):
     # Use reduce to compute product and max
     from functools import reduce
     pass','def ref_impl(*args):
@@ -6601,7 +6146,7 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (144,'144. Create a Class','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Define a class <code>Animal</code> with:</p>
+VALUES (134,'134. Create a Class','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Define a class <code>Animal</code> with:</p>
 <ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li><code>__init__(self, name, sound)</code> that stores <code>name</code> and <code>sound</code> as instance attributes</li>
 <li>A method <code>speak()</code> that returns <code>f"{self.name} says {self.sound}!"</code></li>
@@ -6615,7 +6160,7 @@ VALUES (144,'144. Create a Class','<p class="mb-4 leading-relaxed text-sm font-n
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>Animal("Cat", "Meow").speak()</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Cat says Meow!"</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Animal(''Cat'', ''Meow'').speak() → ''Cat says Meow!''</span></div>
-</div>','easy',100,'python-oop','class Animal:
+</div>','easy',100,'python-advanced','class Animal:
     def __init__(self, name, sound):
         # Store name and sound
         pass
@@ -6635,7 +6180,7 @@ exec_globals["passed_cases"] = 3
 exec_globals["total_cases"] = 3',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (145,'145. Class with Methods & Attributes','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Define a class <code>BankAccount</code> with:</p>
+VALUES (135,'135. Class with Methods & Attributes','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Define a class <code>BankAccount</code> with:</p>
 <ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li><code>__init__(self, owner, balance=0)</code></li>
 <li><code>deposit(self, amount)</code> — adds to balance, returns new balance</li>
@@ -6646,7 +6191,7 @@ VALUES (145,'145. Class with Methods & Attributes','<p class="mb-4 leading-relax
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>acc = BankAccount("Alice", 100)</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>acc.deposit(50) → 150, acc.withdraw(30) → 120, acc.withdraw(200) → "Insufficient funds"</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">deposit(50) updates balance to 150; withdraw(30) updates balance to 120</span></div>
-</div>','easy',100,'python-oop','class BankAccount:
+</div>','easy',100,'python-advanced','class BankAccount:
     def __init__(self, owner, balance=0):
         pass
     
@@ -6671,7 +6216,7 @@ exec_globals["passed_cases"] = 5
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (146,'146. __str__ and __repr__','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Define a class <code>Point</code> that represents a 2D coordinate with:</p>
+VALUES (136,'136. __str__ and __repr__','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Define a class <code>Point</code> that represents a 2D coordinate with:</p>
 <ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li><code>__init__(self, x, y)</code></li>
 <li><code>__str__(self)</code> — returns <code>f"Point({self.x}, {self.y})"</code></li>
@@ -6682,7 +6227,7 @@ VALUES (146,'146. __str__ and __repr__','<p class="mb-4 leading-relaxed text-sm 
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>p = Point(3, 4)</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>str(p) → "Point(3, 4)", repr(p) → "Point(x=3, y=4)", p.distance_from_origin() → 5.0</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">str(p) gives Point(3, 4), repr(p) gives developer-friendly representation</span></div>
-</div>','easy',100,'python-oop','class Point:
+</div>','easy',100,'python-advanced','class Point:
     def __init__(self, x, y):
         pass
     
@@ -6705,7 +6250,7 @@ exec_globals["passed_cases"] = 4
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (147,'147. Inheritance','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Define a base class <code>Shape</code> with a method <code>area()</code> that returns <code>0</code>.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Then define two subclasses that inherit from <code>Shape</code>:</p>
+VALUES (137,'137. Inheritance','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Define a base class <code>Shape</code> with a method <code>area()</code> that returns <code>0</code>.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Then define two subclasses that inherit from <code>Shape</code>:</p>
 <ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li><code>Circle(radius)</code> — <code>area()</code> returns <code>π × radius²</code> (use <code>3.14159</code>)</li>
 <li><code>Rectangle(width, height)</code> — <code>area()</code> returns <code>width × height</code></li>
@@ -6719,7 +6264,7 @@ VALUES (147,'147. Inheritance','<p class="mb-4 leading-relaxed text-sm font-norm
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>Rectangle(4, 6).area()</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>24</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Rectangle area = 4 * 6 = 24</span></div>
-</div>','medium',200,'python-oop','class Shape:
+</div>','medium',200,'python-advanced','class Shape:
     def area(self):
         return 0
 
@@ -6751,7 +6296,7 @@ exec_globals["passed_cases"] = 4
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (148,'148. Class vs Instance Variables','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Define a class <code>Student</code> with:</p>
+VALUES (138,'138. Class vs Instance Variables','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Define a class <code>Student</code> with:</p>
 <ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li>A <strong>class variable</strong> <code>school = "PyCode Academy"</code> — shared by all instances</li>
 <li>Instance variables <code>name</code> and <code>grade</code> set in <code>__init__</code></li>
@@ -6767,7 +6312,7 @@ VALUES (148,'148. Class vs Instance Variables','<p class="mb-4 leading-relaxed t
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>Student.get_school()</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"PyCode Academy"</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Class method access: get_school() → ''PyCode Academy''</span></div>
-</div>','medium',200,'python-oop','class Student:
+</div>','medium',200,'python-advanced','class Student:
     school = "PyCode Academy"
     
     def __init__(self, name, grade):
@@ -6790,7 +6335,7 @@ exec_globals["passed_cases"] = 4
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (149,'149. Property Decorator','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Define a class <code>Temperature</code> with:</p>
+VALUES (139,'139. Property Decorator','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Define a class <code>Temperature</code> with:</p>
 <ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li><code>__init__(self, celsius)</code> that stores the temperature</li>
 <li>A <code>@property</code> <code>celsius</code> that returns the value</li>
@@ -6806,7 +6351,7 @@ VALUES (149,'149. Property Decorator','<p class="mb-4 leading-relaxed text-sm fo
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>Temperature(-300) raises ValueError</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>ValueError raised</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Negative temperature below absolute zero (-300°C) is invalid</span></div>
-</div>','medium',200,'python-oop','class Temperature:
+</div>','medium',200,'python-advanced','class Temperature:
     def __init__(self, celsius):
         self.celsius = celsius  # uses the setter
     
@@ -6836,7 +6381,7 @@ exec_globals["passed_cases"] = 4
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (150,'150. Dunder Methods — Making Objects Comparable','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Define a class <code>Box</code> with:</p>
+VALUES (140,'140. Dunder Methods — Making Objects Comparable','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Define a class <code>Box</code> with:</p>
 <ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li><code>__init__(self, length, width, height)</code></li>
 <li><code>volume(self)</code> that returns <code>l × w × h</code></li>
@@ -6853,7 +6398,7 @@ VALUES (150,'150. Dunder Methods — Making Objects Comparable','<p class="mb-4 
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>Box(1,1,1) < Box(2,2,2)</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>True</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Box volumes: 1 < 8 → Box(1,1,1) < Box(2,2,2) → True</span></div>
-</div>','medium',200,'python-oop','class Box:
+</div>','medium',200,'python-advanced','class Box:
     def __init__(self, length, width, height):
         pass
     
@@ -6881,7 +6426,7 @@ exec_globals["passed_cases"] = 5
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (151,'151. Exception Handling','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>safe_divide(a, b)</code> that uses <code>try/except/finally</code> to:</p>
+VALUES (141,'141. Exception Handling','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Write a function <code>safe_divide(a, b)</code> that uses <code>try/except/finally</code> to:</p>
 <ul class="list-disc pl-5 mb-4 text-xs text-ink space-y-1.5 font-normal font-sans">
 <li>Return <code>a / b</code> if b is non-zero</li>
 <li>Catch <code>ZeroDivisionError</code> and return <code>"Error: Cannot divide by zero"</code></li>
@@ -6901,7 +6446,7 @@ VALUES (151,'151. Exception Handling','<p class="mb-4 leading-relaxed text-sm fo
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>safe_index([1,2,3], 10)</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <code>"Error: Index out of range"</code></div>
   <div><span class="text-ink/80 font-bold font-sans mr-2">Explanation:</span> <span class="text-ink font-normal font-sans">Index 10 of list size 3 is caught → ''Error: Index out of range''</span></div>
-</div>','medium',200,'python-oop','def safe_divide(a, b):
+</div>','medium',200,'python-advanced','def safe_divide(a, b):
     # Handle ZeroDivisionError and TypeError
     pass
 
@@ -6920,7 +6465,7 @@ exec_globals["passed_cases"] = 5
 exec_globals["total_cases"] = 5',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (152,'152. Pascal''s Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print Pascal''s Triangle up to n rows. Pascal''s Triangle is a numerical triangle where each number is the sum of the two numbers directly above it.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">To keep the shape centered and symmetric, format each row with appropriate leading spaces, and separate adjacent numbers in a row by a single space. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
+VALUES (142,'142. Pascal''s Triangle','<p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Given an integer n, print Pascal''s Triangle up to n rows. Pascal''s Triangle is a numerical triangle where each number is the sum of the two numbers directly above it.</p><p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">To keep the shape centered and symmetric, format each row with appropriate leading spaces, and separate adjacent numbers in a row by a single space. If n is less than or equal to 0, print nothing.</p><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Example 1</h3>
 <div class="border-l-2 border-primary/40 dark:border-primary/50 pl-4 py-1.5 space-y-1.5 my-3.5 font-mono text-xs text-ink font-normal">
   <div><span class="text-ink/80 font-bold font-sans mr-2">Input:</span> <code>n = 4</code></div>
   <div><span class="text-primary font-bold font-sans mr-2">Output:</span> <div class="mt-2"><pre class="bg-surface-soft p-3.5 rounded-2xl font-mono text-xs text-ink whitespace-pre my-2 border border-hairline overflow-x-auto leading-normal select-all">   1
@@ -6941,7 +6486,7 @@ VALUES (152,'152. Pascal''s Triangle','<p class="mb-4 leading-relaxed text-sm fo
 </div><h3 class="text-xs font-extrabold text-ink uppercase tracking-widest mb-2 mt-6">Constraints / Edge Cases</h3>
 <ul class="list-disc pl-5 text-xs text-ink space-y-1.5 font-normal">
   <li><code>n = 1 (Solitary cell showing only the top number 1)</code></li><li><code>n = 5 (Checks proper alignment and values for higher rows)</code></li><li><code>n = -3 (Negative boundary safety check)</code></li>
-</ul>','medium',200,'python-patterns','def pascal_triangle(n):
+</ul>','medium',200,'python-advanced','def pascal_triangle(n):
     # Write your code here
     pass','def ref_impl(*args):
     n = args[0]
@@ -7004,15 +6549,15 @@ exec_globals["passed_cases"] = passed
 exec_globals["total_cases"] = 4',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (153,'153. NumPy Zero Array','Create a 1D NumPy array `arr` of size 10 filled with zeros, except the 5th element (index 4) which must be set to 1.','easy',100,'numpy','import numpy as np
+VALUES (143,'143. NumPy Zero Array','Create a 1D NumPy array `arr` of size 10 filled with zeros, except the 5th element (index 4) which must be set to 1.','easy',100,'numpy','import numpy as np
 # Assign array to variable "arr"','',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (154,'154. Reshape 1D to 2D Matrix','Create a 1D NumPy array containing values from 10 to 18 (inclusive), and reshape it into a 3x3 matrix. Save this matrix as `mat`.','easy',100,'numpy','import numpy as np
+VALUES (144,'144. Reshape 1D to 2D Matrix','Create a 1D NumPy array containing values from 10 to 18 (inclusive), and reshape it into a 3x3 matrix. Save this matrix as `mat`.','easy',100,'numpy','import numpy as np
 # Assign matrix to variable "mat"','',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (155,'155. Line Chart Trend','### 📊 Dataset Reference
+VALUES (145,'145. Line Chart Trend','### 📊 Dataset Reference
 * **File Name**: `stock_market.csv`
 * **Task**: Generate a standard line chart of the `Close` price over `Date` using Matplotlib. Add a title `"Stock Trend"` and x-label `"Date"`.','medium',200,'matplotlib-seaborn','import matplotlib.pyplot as plt
 import pandas as pd
@@ -7020,7 +6565,7 @@ df = pd.read_csv("stock_market.csv")
 # Write your plotting code here','','stock_market.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (156,'156. Bar Chart Categories','### 📊 Dataset Reference
+VALUES (146,'146. Bar Chart Categories','### 📊 Dataset Reference
 * **File Name**: `superstore.csv`
 * **Task**: Create a bar plot showing the total sales generated in each category using Seaborn (`sns.barplot`). Add a title `"Sales by Category"`.','medium',200,'matplotlib-seaborn','import seaborn as sns
 import matplotlib.pyplot as plt
@@ -7029,7 +6574,7 @@ df = pd.read_csv("superstore.csv")
 # Write your plotting code here','','superstore.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (157,'157. Simple Student Marks Bar Plot','
+VALUES (147,'147. Simple Student Marks Bar Plot','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Your teacher wants a visual representation of student performance. Write a Python function <code>plot_student_marks(df: pd.DataFrame)</code> that generates a basic bar plot comparing student names against their marks:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Plot Generation:</strong> Create a bar plot using Matplotlib or Pandas where the x-axis displays the student <code>Name</code> and the y-axis displays their corresponding <code>Marks</code>.</li><li class="py-0.5"><strong>Axis Labeling:</strong> Set the x-axis label to <code>"Student Name"</code> and the y-axis label to <code>"Marks"</code>.</li><li class="py-0.5"><strong>Title Assignment:</strong> Set the chart title to <code>"Student Marks Overview"</code>.</li><li class="py-0.5"><strong>Return Object:</strong> Return the Matplotlib <code>Axes</code> object (<code>ax</code>).</li></ul>
@@ -7077,7 +6622,7 @@ def plot_student_marks(df: pd.DataFrame):
     return ax','',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (158,'158. Age vs Marks Scatter Plot','
+VALUES (148,'148. Age vs Marks Scatter Plot','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">To investigate whether older students score differently than younger students, write a Python function <code>plot_age_vs_marks(df: pd.DataFrame)</code> that generates a simple scatter plot:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Plot Generation:</strong> Plot <code>Age</code> on the x-axis and <code>Marks</code> on the y-axis using a scatter plot.</li><li class="py-0.5"><strong>Axis Labeling:</strong> Set the x-axis label to <code>"Age"</code> and the y-axis label to <code>"Marks"</code>.</li><li class="py-0.5"><strong>Title Assignment:</strong> Set the chart title to <code>"Age vs Marks Distribution"</code>.</li><li class="py-0.5"><strong>Return Object:</strong> Return the Matplotlib <code>Axes</code> object (<code>ax</code>).</li></ul>
@@ -7125,7 +6670,7 @@ def plot_age_vs_marks(df: pd.DataFrame):
     return ax','',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (159,'159. Average Marks by Age Group Bar Plot','
+VALUES (149,'149. Average Marks by Age Group Bar Plot','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Your teacher wants to compare the average exam mark for each age group in the class. Write a Python function <code>plot_avg_marks_by_age(df: pd.DataFrame)</code> that aggregates data before plotting:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Data Aggregation:</strong> Group the DataFrame by <code>Age</code> and calculate the mean (average) <code>Marks</code> for each age.</li><li class="py-0.5"><strong>Bar Chart Plotting:</strong> Plot a bar chart showing <code>Age</code> on the x-axis and the calculated average <code>Marks</code> on the y-axis.</li><li class="py-0.5"><strong>Labels &amp; Title:</strong> Set the x-axis label to <code>"Age"</code>, y-axis label to <code>"Average Marks"</code>, and chart title to <code>"Average Marks by Age"</code>.</li><li class="py-0.5"><strong>Return Object:</strong> Return the Matplotlib <code>Axes</code> object (<code>ax</code>).</li></ul>
@@ -7173,7 +6718,7 @@ def plot_avg_marks_by_age(df: pd.DataFrame):
     return ax','',NULL);
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (160,'160. Isolate Student Identity Columns','
+VALUES (150,'150. Isolate Student Identity Columns','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Your teacher has provided a class roster containing academic performance metrics. Before performing any data analysis, you need to isolate only the basic identification fields of the students to create an administrative contact list. Write a Python function extract_student_identity(df: pd. DataFrame) -> pd. DataFrame that extracts a specific vertical slice of the dataset:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Column Selection:</strong> Extract only the Name and Age columns from the input DataFrame.</li><li class="py-0.5"><strong>Order Preservation:</strong> Ensure that the columns remain in the exact order requested (Name first, Age second).</li><li class="py-0.5"><strong>Row Retention:</strong> Keep all rows intact, including rows that contain missing values (NaN).</li></ul>
@@ -7229,7 +6774,7 @@ def extract_student_identity(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (161,'161. Fill Missing Grade Entries','
+VALUES (151,'151. Fill Missing Grade Entries','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A class roster contains some missing final grades. Write a Python function fill_missing_grades(df: pd. DataFrame) -> pd. DataFrame that cleanses the dataset:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Null Grade Identification:</strong> Scan the Marks column to find any missing (NaN) values.</li><li class="py-0.5"><strong>Value Imputation:</strong> Fill those missing cells with a baseline default float value of 0.0.</li><li class="py-0.5"><strong>Data Modification:</strong> Modify the Marks column directly or reassign it, returning the updated DataFrame.</li></ul>
@@ -7287,7 +6832,7 @@ def fill_missing_grades(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (162,'162. Count Missing Grade Entries','
+VALUES (152,'152. Count Missing Grade Entries','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The school wants to know how many final exam grades are currently missing from the roster database. Write a Python function count_missing_grades(df: pd. DataFrame) -> int that counts missing values:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Null Detection:</strong> Scan the Marks column to identify any missing (NaN) values.</li><li class="py-0.5"><strong>Sum Tally:</strong> Calculate the total number of missing cells in that column.</li><li class="py-0.5"><strong>Return Type:</strong> Return the count as a standard Python integer.</li></ul>
@@ -7341,7 +6886,7 @@ def count_missing_grades(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (163,'163. Purge Duplicate Student Records','
+VALUES (153,'153. Purge Duplicate Student Records','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Due to duplicate submission errors, some student records were entered multiple times in the database roster. Write a Python function remove_duplicate_students(df: pd. DataFrame) -> pd. DataFrame that cleans the ledger:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Duplicate Purging:</strong> Remove any rows that are exact duplicates of previous rows.</li><li class="py-0.5"><strong>First Instance Preservation:</strong> Retain only the first occurrence of each duplicate record.</li><li class="py-0.5"><strong>Output Structure:</strong> Return the clean DataFrame without shifting or resetting index numbers.</li></ul>
@@ -7398,7 +6943,7 @@ def remove_duplicate_students(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (164,'164. Count Duplicate Student Records','
+VALUES (154,'154. Count Duplicate Student Records','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Due to duplicate submission errors, some student records were entered multiple times in the database roster. Write a Python function count_duplicate_students(df: pd. DataFrame) -> int that identifies duplicates:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Duplicate Detection:</strong> Find the number of duplicate rows in the DataFrame where all columns (Name, Age, Marks) are identical to a previous row.</li><li class="py-0.5"><strong>Return Type:</strong> Return the count as a standard Python integer.</li></ul>
@@ -7452,7 +6997,7 @@ def count_duplicate_students(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (165,'165. Drop Empty Student Names','
+VALUES (155,'155. Drop Empty Student Names','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An administrative record requires every student to have a valid name. If a row is missing the student''s name, that record must be deleted. Write a Python function remove_empty_names(df: pd. DataFrame) -> pd. DataFrame that cleanses the dataset:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Null Name Identification:</strong> Scan the Name column to find any missing (NaN or null) entries.</li><li class="py-0.5"><strong>Row Dropping:</strong> Remove all rows where the student''s Name is missing.</li><li class="py-0.5"><strong>Data Preservation:</strong> Retain rows where the Age or Marks values are missing, as long as the Name is present.</li></ul>
@@ -7509,7 +7054,7 @@ def remove_empty_names(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (166,'166. Filter Mature Student Cohorts','
+VALUES (156,'156. Filter Mature Student Cohorts','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The university is organizing a specialized seminar intended exclusively for students who are 22 years of age or older. You need to filter the master roster down to this specific group. Write a Python function filter_mature_students(df: pd. DataFrame) -> pd. DataFrame that performs basic row filtering:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Conditional Filtering:</strong> Filter the rows to retain only students where their Age is greater than or equal to 22 ($\text{Age} \ge 22$).</li><li class="py-0.5"><strong>Missing Data Handling:</strong> Completely exclude rows where the student''s Age is missing (NaN), as they cannot be verified.</li><li class="py-0.5"><strong>Structure Output:</strong> Return the filtered DataFrame with all original columns intact.</li></ul>
@@ -7567,7 +7112,7 @@ def filter_mature_students(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (167,'167. Count Unique Student Cohorts','
+VALUES (157,'157. Count Unique Student Cohorts','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The academic office needs to know how many distinct student names are registered in the course roster database. Write a Python function count_unique_students(df: pd. DataFrame) -> int that counts unique entries:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Uniqueness Detection:</strong> Find the total number of unique values in the Name column.</li><li class="py-0.5"><strong>Return Type:</strong> Return the count as a standard Python integer.</li></ul>
@@ -7621,7 +7166,7 @@ def count_unique_students(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (168,'168. Purge Completely Corrupted Student Records','
+VALUES (158,'158. Purge Completely Corrupted Student Records','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Due to a minor database glitch during a weekly update loop, some rows were saved without both the student''s age and their exam mark. A row is considered completely corrupted if it contains missing values in both columns at the same time. Write a Python function purge_corrupted_records(df: pd. DataFrame) -> pd. DataFrame that checks for multiple missing values:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Double Null Isolation:</strong> Identify rows where the Age column AND the Marks column are missing (NaN) at the same time.</li><li class="py-0.5"><strong>Row Removal:</strong> Drop those specific double-null rows from the dataset.</li><li class="py-0.5"><strong>Partial Record Safe Harbor:</strong> Retain rows where at least one of the two metrics is valid (e.g., if age is missing but marks are valid, or vice-versa, do not drop the row).</li></ul>
@@ -7680,7 +7225,7 @@ def purge_corrupted_records(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (169,'169. Reset Structural Data Alignment Indices','
+VALUES (159,'159. Reset Structural Data Alignment Indices','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">When you drop rows from a DataFrame, the row numbers (indices) keep their original positions, leaving gaps in the sequence (e.g., jumping from row 0 directly to row 2). Before exporting data to a clean Excel spreadsheet, you need to reset these row numbers so they run continuously again. Write a Python function reset_dataframe_index(df: pd. DataFrame) -> pd. DataFrame that fixes index sequences:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Index Rebuilding:</strong> Rebuild the row numbers so they run in a continuous, unbroken sequence starting from 0 to $N-1$.</li><li class="py-0.5"><strong>Old Index Cleanup:</strong> Ensure the old, broken index numbers are completely dropped and not saved as a new data column (Hint: check the parameters of your index reset function).</li><li class="py-0.5"><strong>Return Matrix:</strong> Return the re-indexed DataFrame.</li></ul>
@@ -7730,7 +7275,7 @@ def reset_dataframe_index(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (170,'170. Fix Product Registry','
+VALUES (160,'160. Fix Product Registry','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">You are building an automated pipeline for an e-commerce platform''s transaction registry using the dirty_store_transactions.csv dataset. Due to software integration glitches, the incoming stream contains corrupted data layers. Write a Python function clean_product_registry(df: pd. DataFrame) -> pd. DataFrame that cleanses the structural anomalies by enforcing the following four data regulations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Whitespace Elimination:</strong> Strip all leading and trailing whitespaces from strings within the product_name column.</li><li class="py-0.5"><strong>Absolute Pricing Resolution:</strong> System synchronization bugs have inverted some valuations. Convert any negative values in the price column to their absolute, positive equivalents.</li><li class="py-0.5"><strong>Identity Verification:</strong> Drop all records where the product_id field is missing (NaN or null).</li><li class="py-0.5"><strong>Type Enforcement:</strong> Cast the remaining valid product_id column explicitly into a standard integer type (int64).</li></ul>
@@ -7789,7 +7334,7 @@ def clean_product_registry(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (171,'171. Standardize Employee Directory','
+VALUES (161,'161. Standardize Employee Directory','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A human resources tracking module processes corporate identifiers using the student_performance_factors.csv infrastructure mapping engine. Data entries compiled across multi-regional divisions exhibit heavy input variations. Write a Python function standardize_directory(df: pd. DataFrame) -> pd. DataFrame to format the registry based on three systemic rules:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Title-Case Alignment:</strong> Standardize the name column such that only the first letter of each separate word is capitalized, converting all remaining characters to lowercase (Title Case).</li><li class="py-0.5"><strong>Normalized Communication Channels:</strong> Force all character components in the email column into absolute lowercase.</li><li class="py-0.5"><strong>Domain Authorization:</strong> Filter and retain only rows where the user''s email explicitly finishes with the valid company suffix: "@company.com". Drop all other domains.</li></ul>
@@ -7847,7 +7392,7 @@ def standardize_directory(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (172,'172. Correct Invalid Transaction Types','
+VALUES (162,'162. Correct Invalid Transaction Types','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Financial accounting systems audit corporate ledgers by isolating processing issues inside the dirty_store_transactions.csv collection. A core pipeline requires identifying valid transactions while segregating records containing invalid or system-breaking variables. Write a Python function filter_transaction_types(df: pd. DataFrame) -> pd. DataFrame that flags structural processing anomalies by executing these validations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Null Categorical Exclusion:</strong> Remove any transaction where PaymentMethod or ProductCategory fields contain empty, null, or missing data entries.</li><li class="py-0.5"><strong>Boolean Transaction Verification:</strong> Filter out transactions where Quantity or UnitPrice fields drop below or equal $0$. Return only records representing true positive economic exchange.</li><li class="py-0.5"><strong>Calculated Field Evaluation:</strong> Introduce a new column named CalculatedGross computed by multiplying Quantity by UnitPrice.</li></ul>
@@ -7908,7 +7453,7 @@ def filter_transaction_types(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (173,'173. Parse Raw Sensor Streams','
+VALUES (163,'163. Parse Raw Sensor Streams','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Telemetry infrastructure units broadcast raw log strings containing multi-variant metadata layers in the sensor_readings_noisy.csv grid system. Downstream analytics engines crash when trying to interpret unparsed data streams. Write a Python function parse_sensor_stream(df: pd. DataFrame) -> pd. DataFrame that extracts distinct target information from composite data fields based on these parameters:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Component String Breakdown:</strong> The input column RawReading contains comma-separated data packets structured exactly as: "SensorName,MetricValue". Split this column into two distinct, standalone columns named SensorName (String) and MetricValue (Float64).</li><li class="py-0.5"><strong>Missing Element Protection:</strong> Drop the original source column RawReading once the data extraction operation is complete.</li><li class="py-0.5"><strong>Invalid Component Resolution:</strong> If a text record cannot be split or contains empty strings within its parameters, discard that row from the final output table.</li></ul>
@@ -7966,7 +7511,7 @@ def parse_sensor_stream(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (174,'174. Filter and Threshold Missing Demographics','
+VALUES (164,'164. Filter and Threshold Missing Demographics','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">When processing student performance records from the student_performance_factors.csv dataset, records with excessive missing values corrupt downstream statistical models. Write a Python function filter_null_threshold(df: pd. DataFrame, max_allowed_missing: int) -> pd. DataFrame that cleanses the dataset by evaluating individual rows:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Null Counting:</strong> Count the total number of missing (NaN) values across the numeric tracking columns (StudyHours, AttendanceRate, SleepHours, ScreenTime, and ExamScore) for each row.</li><li class="py-0.5"><strong>Threshold Filtering:</strong> Drop any row where the count of missing values strictly exceeds the max_allowed_missing parameter.</li><li class="py-0.5"><strong>Index Reset:</strong> Ensure the resulting DataFrame has a clean, continuous, and reset integer index starting from 0.</li></ul>
@@ -8024,7 +7569,7 @@ def filter_null_threshold(df, max_allowed_missing):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (175,'175. Standardize Mixed Discount Percentages','
+VALUES (165,'165. Standardize Mixed Discount Percentages','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">In the dirty_store_transactions.csv dataset, the Discount column contains messy, heterogeneous data types: raw floating-point numbers (e.g., 0.15) mixed with formatted string percentage representations (e.g., "15%", " 20% "). Write a Python function standardize_discounts(df: pd. DataFrame) -> pd. DataFrame that transforms this column into a uniform data standard:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>String Percentage Conversion:</strong> Identify any string entries ending with %, strip all surrounding whitespaces, remove the % symbol, convert the remaining value to a float, and divide by 100 to yield a standard decimal format (e.g., " 20% " $\rightarrow$ 0.20).</li><li class="py-0.5"><strong>Type Harmonization:</strong> Ensure all numeric float values remain unchanged in their decimal form.</li><li class="py-0.5"><strong>Null Imputation:</strong> If a discount entry is missing (NaN) or completely malformed/unparseable, replace it with a default baseline float value of 0.0.</li><li class="py-0.5"><strong>Type Casting:</strong> Ensure the final Discount column is explicitly typed as float64.</li></ul>
@@ -8085,7 +7630,7 @@ def standardize_discounts(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (176,'176. Purge Exact Duplicate Transaction Logs','
+VALUES (166,'166. Purge Exact Duplicate Transaction Logs','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Software system glitches in dirty_store_transactions.csv cause exact, full-line redundant rows to be inserted consecutively at specific indices (e.g., duplicating row entries multiple times). Write a Python function purge_transaction_duplicates(df: pd. DataFrame) -> pd. DataFrame that cleans the ledger by executing these rules:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Exact Row Deduplication:</strong> Identify rows where every column value matches an identical preceding row.</li><li class="py-0.5"><strong>Instance Preservation:</strong> Retain only the first occurrence of any duplicated block and drop all subsequent identical rows.</li><li class="py-0.5"><strong>Index Cleanup:</strong> Rebuild and reset the DataFrame index so it runs sequentially from $0$ to $N-1$ without missing index gaps.</li></ul>
@@ -8144,7 +7689,7 @@ def purge_transaction_duplicates(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (177,'177. Isolate Frozen and Out-of-Bound Sensor Metrics','
+VALUES (167,'167. Isolate Frozen and Out-of-Bound Sensor Metrics','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Telemetry streams recorded in sensor_readings_noisy.csv occasionally register hardware freezes where sensors output fixed systemic error values, or extreme meteorological spikes. Write a Python function isolate_sensor_failures(df: pd. DataFrame) -> pd. DataFrame that filters and tags operational anomalies:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Frozen Sensor Exclusion:</strong> Remove any row where Temperature equals -99.0 and Humidity equals 0.0 simultaneously (representing complete hardware freezes).</li><li class="py-0.5"><strong>Thermal Spike Flagging:</strong> Add a new boolean column named IsThermalSpike which evaluates to True if the Temperature value is strictly greater than 80.0, and False otherwise.</li><li class="py-0.5"><strong>Integrity Preservation:</strong> Keep all other active records intact while maintaining original data types for numerical columns.</li></ul>
@@ -8202,7 +7747,7 @@ def isolate_sensor_failures(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (178,'178. Clamp Impossible Outliers','
+VALUES (168,'168. Clamp Impossible Outliers','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Data compilation channels for the store analytics engine (dirty_store_transactions.csv) and student registry datasets contain highly impossible numeric metrics caused by front-end entry forms lacking validation limits (e.g., negative ages, triple-digit human ages, or extreme overflow scores). Write a Python function clamp_demographic_outliers(df: pd. DataFrame) -> pd. DataFrame that caps outliers by executing the following transformations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Age Truncation:</strong> For the column CustomerAge, any value strictly less than 0 must be replaced with a lower boundary value of 0. Any value strictly greater than 100 must be replaced with an upper boundary value of 100.</li><li class="py-0.5"><strong>Satisfaction Normalization:</strong> The standard SatisfactionRating scale must operate strictly within the bounds of 1 to 5. Clamp any value lower than 1 to 1, and clamp any value higher than 5 to 5.</li><li class="py-0.5"><strong>Null Preservation:</strong> Do not overwrite true NaN values with boundary elements during the clamping process; missing markers must remain missing.</li></ul>
@@ -8263,7 +7808,7 @@ def clamp_demographic_outliers(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (179,'179. Standardize Messy Categorical Alignments','
+VALUES (169,'169. Standardize Messy Categorical Alignments','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The ProductCategory column within the dirty_store_transactions.csv file contains heavy casing discrepancies, excess padding noise, and truncated abbreviations due to historical schema shifts. This fragmentation breaks structural grouping routines. Write a Python function standardize_categories(df: pd. DataFrame) -> pd. DataFrame that clean-maps text categories down to an absolute, canonical standard set based on these rules:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Whitespace Purge:</strong> Strip all trailing and leading space characters from the text.</li><li class="py-0.5"><strong>Abbreviation Expansion:</strong> Map specific structural shorthand markers to their full expanded forms:If the text matches "Elec." or "electronics" (regardless of original spacing/case), map it to "Electronics". If the text matches "Office" or "office supplies", map it to "Office Supplies".</li><li class="py-0.5"><strong>Title Casing:</strong> If a category does not match an abbreviation rule but has mixed-casing (e.g., "CLOTHING", "Home & kitchen"), transform it into true Title Case ("Clothing", "Home & Kitchen").</li><li class="py-0.5"><strong>Missing Preservation:</strong> Leave any true missing row values (NaN) as null.</li></ul>
@@ -8326,7 +7871,7 @@ def standardize_categories(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (180,'180. High-Performing VIP Segment Breakdown','
+VALUES (170,'170. High-Performing VIP Segment Breakdown','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">For reporting operations within the customer tracking module, you must extract a specific snapshot of top-tier accounts matching strict regional spend thresholds. Write a Python function isolate_vip_metrics(df: pd. DataFrame) -> pd. DataFrame that queries the transaction space under the following logical parameters:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Compound Segment Filter:</strong> Retain rows where the account tier is strictly equal to "VIP" AND the monthly_spend value is strictly greater than 10000.</li><li class="py-0.5"><strong>Alternative Regional Qualifier:</strong> Proactively include any row where the country column matches "USA", regardless of their tier, provided their monthly_spend is strictly greater than 15000.</li><li class="py-0.5"><strong>Dimensional Projection:</strong> The resulting DataFrame must discard all other tracking variables, returning only two specific columns in this exact sequence: client_id followed by monthly_spend.</li></ul>
@@ -8386,7 +7931,7 @@ def isolate_vip_metrics(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (181,'181. Identify Outlier Academic Variances','
+VALUES (171,'171. Identify Outlier Academic Variances','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">In the student_performance_factors.csv engine, typical correlation models are heavily skewed by anomalous regression outliers—specifically, students displaying high inputs but extremely low outputs (failure outliers), or zero input paired with maximum performance outputs (genius outliers). Write a Python function isolate_academic_anomalies(df: pd. DataFrame) -> pd. DataFrame that flags these specific tracking records:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Failure Outlier Extraction:</strong> Identify records where StudyHours is strictly greater than 25.0 but the final ExamScore is strictly less than 20.0.</li><li class="py-0.5"><strong>Genius Outlier Extraction:</strong> Identify records where StudyHours is strictly less than 1.0 but the final ExamScore is strictly greater than 95.0.</li><li class="py-0.5"><strong>Union Unionization:</strong> Return a single consolidated DataFrame containing all rows that meet either the failure outlier criteria or the genius outlier criteria. The index of the source rows must be preserved.</li></ul>
@@ -8445,7 +7990,7 @@ def isolate_academic_anomalies(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (182,'182. Detect Suspicious Telemetry Patterns','
+VALUES (172,'172. Detect Suspicious Telemetry Patterns','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Network operations teams auditing the sensor_readings_noisy.csv pipeline need to flag hardware instances that log corrupted environmental metrics. An input stream is considered highly suspicious if it reports extreme environmental combinations caused by sensor short-circuits. Write a Python function detect_suspicious_telemetry(df: pd. DataFrame) -> pd. DataFrame that screens for these occurrences:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Critical Anomaly Screening:</strong> Isolate rows where the Temperature is strictly greater than 80.0 OR the localized Pressure surge is strictly greater than 1000.0.</li><li class="py-0.5"><strong>Normal State Exception:</strong> From that filtered subset, explicitly exclude any row where the Status column matches "Normal" or "active" (ignoring leading/trailing whitespaces and casing variants).</li><li class="py-0.5"><strong>Index Ordering:</strong> Sort the final matching DataFrame by Temperature in descending order. If temperatures are equal, sort by Pressure in ascending order.</li></ul>
@@ -8504,7 +8049,7 @@ def detect_suspicious_telemetry(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (183,'183. Dynamic Column Dropping and Projection','
+VALUES (173,'173. Dynamic Column Dropping and Projection','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Upstream analytical pipelines feeding the store ledger engine require flexible formatting scripts that dynamically drop empty or metadata-heavy tracking attributes depending on the operational context. Write a Python function drop_unwanted_features(df: pd. DataFrame, target_columns: list) -> pd. DataFrame that alters the structural profile of a dataset:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Dynamic Drop Execution:</strong> Remove all columns listed inside the target_columns array from the incoming DataFrame.</li><li class="py-0.5"><strong>Missing Feature Resilience:</strong> If the target_columns array contains column names that do not exist within the current DataFrame schema, the function must ignore those specific names and drop the valid ones without throwing an exception or error.</li><li class="py-0.5"><strong>Minimum Shape Check:</strong> If the dropping operation results in zero remaining columns, return an empty DataFrame with an entirely blank layout.</li></ul>
@@ -8560,7 +8105,7 @@ def drop_unwanted_features(df, target_columns):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (184,'184. Select Even-Indexed Analytical Runs','
+VALUES (174,'174. Select Even-Indexed Analytical Runs','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Laboratory automation tests recording microsecond ticks inside high_frequency_stock_ticks.csv require downsampling validation runs by extracting alternate rows to verify model throughput stability. Write a Python function extract_even_segments(df: pd. DataFrame) -> pd. DataFrame that filters rows strictly by their positional orientation:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Positional Filtering:</strong> Select and retain only the rows located at even-indexed positions of the incoming DataFrame (i.e., row position index 0, 2, 4, 6, etc.).</li><li class="py-0.5"><strong>Index Separation:</strong> This selection must look strictly at the integer positional row index from the top of the table, completely independent of whatever arbitrary values are currently set as the DataFrame''s custom index labels.</li><li class="py-0.5"><strong>Structure Retention:</strong> Do not reset or modify the original index labels or data configurations of the extracted rows.</li></ul>
@@ -8610,7 +8155,7 @@ def extract_even_segments(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (185,'185. Temporal Business Hours Snapshot','
+VALUES (175,'175. Temporal Business Hours Snapshot','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Operations managers auditing telemetry flows inside sensor_readings_noisy.csv need to extract a chronological window of sensor events to analyze shift performance during standard corporate operational hours. Write a Python function extract_business_hours_snapshot(df: pd. DataFrame, target_date: str) -> pd. DataFrame that isolates records based on datetime indexes:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Index Initialization:</strong> Convert the Timestamp column to a true Pandas datetime format and establish it as the definitive index of the DataFrame.</li><li class="py-0.5"><strong>Chronological Sorting:</strong> Sort the DataFrame explicitly by this new datetime index in ascending order.</li><li class="py-0.5"><strong>Window Extraction:</strong> Extract and return all records that occurred on the specified target_date strictly between the core operating hours of 09:00:00 and 17:00:00 (inclusive of both boundary seconds).</li></ul>
@@ -8669,7 +8214,7 @@ def extract_business_hours_snapshot(df, target_date):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (186,'186. Identify Underperforming Products','
+VALUES (176,'176. Identify Underperforming Products','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Inventory coordinators auditing sales data in dirty_store_transactions.csv need to identify specific products that are stalling or causing systemic losses. A product name entry is classified as underperforming if its net yields drop significantly across multiple transactional metrics. Write a Python function locate_underperforming_products(df: pd. DataFrame) -> pd. DataFrame that queries the ledger based on these three filtering parameters:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Low-Volume High-Loss Mask:</strong> Filter for records where the transaction Quantity is strictly less than 3 AND the resulting Profit is strictly less than -100.00.</li><li class="py-0.5"><strong>Systemic Error Clean:</strong> Discard any rows where the UnitPrice is logged at the known system error configuration of 9999.99.</li><li class="py-0.5"><strong>Projection Output:</strong> Return the filtered DataFrame retaining only the TransactionID, ProductName, Quantity, and Profit columns, sorted by Profit in ascending order (worst losses first).</li></ul>
@@ -8727,7 +8272,7 @@ def locate_underperforming_products(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (187,'187. Locate Multi-Country Supply Nodes','
+VALUES (177,'177. Locate Multi-Country Supply Nodes','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Global client distributors require regional isolation matrices to separate logistics networks. You must pull transaction indicators spanning specific regional nodes without generating multiple disjoint query iterations. Write a Python function isolate_regional_nodes(df: pd. DataFrame, target_countries: list) -> pd. DataFrame that targets active geographic profiles:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Dynamic Vector Membership:</strong> Select all rows from the DataFrame where the value in the country column matches any of the string names supplied within the target_countries array list.</li><li class="py-0.5"><strong>Case-Insensitive Normalization:</strong> Ensure the match operation is robust against minor data differences by evaluating the country strings in a case-insensitive manner (e.g., if "usa" is in the target list, it should match "USA", "Usa", and "usa").</li><li class="py-0.5"><strong>Index Ordering:</strong> Do not change the original row indices or delete unrelated data rows that successfully match the validation array.</li></ul>
@@ -8786,7 +8331,7 @@ def isolate_regional_nodes(df, target_countries):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (188,'188. Filter Outliers by Absolute Variance','
+VALUES (178,'178. Filter Outliers by Absolute Variance','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">In the educational diagnostic tracking system (student_performance_factors.csv), individual records showing extreme absolute deviation from typical baseline midpoints must be flagged for secondary counselor review. Write a Python function filter_absolute_variance(df: pd. DataFrame) -> pd. DataFrame that separates variance indicators:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Baseline Deviation Scan:</strong> Extract all rows where the student''s ExamScore deviates from the global median score of the entire input dataset by an absolute value of strictly greater than 35.0 scale points.</li><li class="py-0.5"><strong>Missing Element Safe:</strong> Exclude any records where the ExamScore value is logged as missing (NaN).</li><li class="py-0.5"><strong>Index Sorting:</strong> Sort the resulting anomaly DataFrame by the absolute variance from the median in descending order.</li></ul>
@@ -8845,7 +8390,7 @@ def filter_absolute_variance(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (189,'189. Select Records by Dynamic Value Arrays','
+VALUES (179,'179. Select Records by Dynamic Value Arrays','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Data analysts frequently pass dynamic external criterion masks down to the transaction space to sample operational flows. You must design a flexible filtering module that matches internal indices against dynamic integer parameter maps. Write a Python function select_by_index_bounds(df: pd. DataFrame, allowed_keys: list) -> pd. DataFrame that implements the following operations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Index Assignment:</strong> Move the TransactionID column out of the data space and set it as the explicit row index of the DataFrame.</li><li class="py-0.5"><strong>Label Filtering:</strong> Query this new index to isolate and retain only those rows whose index label matches an integer present in the allowed_keys array list.</li><li class="py-0.5"><strong>Missing Label Management:</strong> If an integer within the allowed_keys array list does not map to any existing row label in the DataFrame index, ignore it without raising a runtime key exception.</li></ul>
@@ -8901,7 +8446,7 @@ def select_by_index_bounds(df, allowed_keys):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (190,'190. Compute Store Department Averages','
+VALUES (180,'180. Compute Store Department Averages','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Retail operations management requires regular performance report updates across all active segments in the dirty_store_transactions.csv ledger. Write a Python function compute_department_averages(df: pd. DataFrame) -> pd. DataFrame that condenses the transactional metrics through the following analytical steps:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Categorical Normalization:</strong> Prior to grouping, strip all leading and trailing whitespaces from the ProductCategory column, and force all characters to lowercase.</li><li class="py-0.5"><strong>Missing Attribute Removal:</strong> Exclude any records where the Profit metric or the normalized ProductCategory is missing (NaN).</li><li class="py-0.5"><strong>Group Aggregation:</strong> Group the dataset by the cleaned ProductCategory column and calculate the mathematical mean of the Profit column for each category.</li><li class="py-0.5"><strong>Output Alignment:</strong> Return a new DataFrame containing exactly two columns: ProductCategory (acting as a standard data column, not the index) and AverageProfit. Round the AverageProfit metrics to exactly 2 decimal places.</li></ul>
@@ -8961,7 +8506,7 @@ def compute_department_averages(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (191,'191. Calculate Fleet Fuel Efficiency Metrics','
+VALUES (181,'181. Calculate Fleet Fuel Efficiency Metrics','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Logistics tracking engines evaluate transport fleet efficiency variables. You are given a dense operational performance ledger tracking asset runs over different routes. Write a Python function calculate_fuel_efficiency(df: pd. DataFrame) -> pd. DataFrame that converts raw log metrics into operational performance factors:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Aggregation Operations:</strong> Group the dataset by VehicleID and RouteType simultaneously.</li><li class="py-0.5"><strong>Multi-Column Summarization:</strong> For each composite group, compute the following two distinct metrics:The total cumulative sum of the DistanceTraveled column. The total cumulative sum of the FuelConsumed column.</li><li class="py-0.5"><strong>Calculated Column Injection:</strong> Create a new column named MilesPerGallon defined precisely as the total cumulative distance traveled divided by the total cumulative fuel consumed for that specific group.</li><li class="py-0.5"><strong>Index Flattening:</strong> Rebuild the structural shape of the output so that VehicleID and RouteType become flat, standard data columns, sorted by VehicleID in ascending order. Round the calculated metrics to 2 decimal places.</li></ul>
@@ -9023,7 +8568,7 @@ def calculate_fuel_efficiency(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (192,'192. Find Maximum Monthly Sales Representatives','
+VALUES (182,'182. Find Maximum Monthly Sales Representatives','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Corporate revenue managers parsing the dirty_store_transactions.csv regional operations logs need to identify peak-performing sales representatives across distinct calendar windows. Write a Python function find_top_sales_reps(df: pd. DataFrame) -> pd. DataFrame that extracts top performance milestones:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Temporal Truncation:</strong> Parse the Date column into standard datetimes, and introduce a new tracking column named YearMonth formatted as a string matching the format "YYYY-MM".</li><li class="py-0.5"><strong>Aggregation Processing:</strong> Group the dataset by YearMonth and SalesRepID to calculate the cumulative sum of the Profit column generated by each individual representative within that month.</li><li class="py-0.5"><strong>Extreme Identification:</strong> For each unique YearMonth group, isolate the specific SalesRepID who achieved the absolute maximum cumulative profit.</li><li class="py-0.5"><strong>Tie Resolution:</strong> If multiple representatives tie for the maximum profit within a specific month, retain the representative with the lower numerical SalesRepID. The final output must be sorted chronologically by YearMonth.</li></ul>
@@ -9083,7 +8628,7 @@ def find_top_sales_reps(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (193,'193. Count Distinct Class Categories Per School','
+VALUES (183,'183. Count Distinct Class Categories Per School','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Educational analytics units processing records structurally similar to student_performance_factors.csv need to audit class diversification matrices across multiple physical school sites. Write a Python function count_distinct_classes(df: pd. DataFrame) -> pd. DataFrame that processes structural configurations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Uniqueness Quantification:</strong> Group the dataset by the SchoolID column.</li><li class="py-0.5"><strong>Cardinality Aggregation:</strong> For each unique school, count the number of unique, distinct values present inside the ClassSubject column.</li><li class="py-0.5"><strong>Missing Category Protection:</strong> Do not count missing data points (NaN) as valid distinct subject items.</li><li class="py-0.5"><strong>Column Alignment:</strong> Name the final aggregated count column UniqueSubjectCount. Ensure the result is returned as a standard flat DataFrame with SchoolID as a column, sorted by UniqueSubjectCount in descending order.</li></ul>
@@ -9143,7 +8688,7 @@ def count_distinct_classes(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (194,'194. Calculate Multi-Column Inventory Aggregates','
+VALUES (184,'184. Calculate Multi-Column Inventory Aggregates','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Inventory coordinators managing stock portfolios across distributed storefronts require consolidated summaries of warehouse allocations derived from the dirty_store_transactions.csv ledger architecture. Write a Python function calculate_inventory_metrics(df: pd. DataFrame) -> pd. DataFrame that condenses asset records by performing multiple group calculations simultaneously:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Multi-Column Target Aggregation:</strong> Group the incoming table by the ProductCategory column.</li><li class="py-0.5"><strong>Distinct Mathematical Operations:</strong> For each category group, execute three distinct aggregations concurrently:Calculate the total sum of the Quantity column. Calculate the mathematical mean of the UnitPrice column. Calculate the maximum value found within the Discount column.</li><li class="py-0.5"><strong>Canonical Structural Renaming:</strong> The resulting summary columns must be explicitly named TotalQuantity, AveragePrice, and MaxDiscount respectively.</li><li class="py-0.5"><strong>Index Flattening:</strong> Convert the grouped index level into a standard flat column, and ensure the entire output table is sorted by TotalQuantity in descending order.</li></ul>
@@ -9202,7 +8747,7 @@ def calculate_inventory_metrics(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (195,'195. Extract First and Last Transaction Dates','
+VALUES (185,'185. Extract First and Last Transaction Dates','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Corporate auditors auditing user lifecycle milestones require tracking timelines to trace operational durations from active transaction logs. Write a Python function extract_transaction_bounds(df: pd. DataFrame) -> pd. DataFrame that performs chronological sorting and boundary mapping:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Timestamp Normalization:</strong> Convert the Date column into a standard Pandas datetime format. Exclude any rows where the Date value is missing (NaN or empty).</li><li class="py-0.5"><strong>Aggregation Processing:</strong> Group the dataset by the CustomerID column.</li><li class="py-0.5"><strong>Boundary Extraction:</strong> For each customer, determine the absolute earliest transaction date and the absolute latest transaction date.</li><li class="py-0.5"><strong>Layout Normalization:</strong> Name the output tracking columns FirstTransaction and LastTransaction respectively. Return a flat DataFrame where CustomerID is a regular column, sorted by CustomerID in ascending order.</li></ul>
@@ -9261,7 +8806,7 @@ def extract_transaction_bounds(df):
     pass','','store_dim_customers.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (196,'196. Quantify Total Active Users Per Region','
+VALUES (186,'186. Quantify Total Active Users Per Region','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Regional distribution planning panels querying the customer dimension matrix (store_dim_customers.csv) must compile unique density maps showing where high-value profiles cluster. Write a Python function count_active_regional_users(df: pd. DataFrame) -> pd. DataFrame that filters and computes distinct user footprints:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Clean Alignment:</strong> Strip all leading and trailing space noise from the Region column, and force all characters to upper case.</li><li class="py-0.5"><strong>Null Elimination:</strong> Remove any records where the cleaned Region or the VIP_Tier field contains missing values (NaN).</li><li class="py-0.5"><strong>Aggregation Operations:</strong> Group the dataset by the cleaned Region column and count the number of unique, distinct CustomerID elements matching that partition.</li><li class="py-0.5"><strong>Output Framing:</strong> Name the final tally column ActiveUserCount. Return the data as a flat DataFrame sorted by ActiveUserCount in descending order.</li></ul>
@@ -9321,7 +8866,7 @@ def count_active_regional_users(df):
     pass','','store_dim_customers.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (197,'197. Find the Most Common Log Error Codes','
+VALUES (187,'187. Find the Most Common Log Error Codes','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Operations engineering infrastructure processing noisy sensor networks (sensor_readings_noisy.csv) must isolate frequent system failure alerts to schedule preventive hardware maintenance routines. Write a Python function identify_frequent_errors(df: pd. DataFrame) -> pd. DataFrame that processes structural string frequencies:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Anomaly Filtration:</strong> Filter for rows where the Status column indicates an error condition. This includes text records matching "Error", "error", "ACTIVE", or "Err" (ignoring whitespaces).</li><li class="py-0.5"><strong>Frequency Count:</strong> Calculate the total frequency count of occurrences for each unique string configuration remaining within this filtered Status space.</li><li class="py-0.5"><strong>Output Formatting:</strong> Rename the output tracking columns to ErrorCode (containing the original string values) and OccurrenceCount. Sort the output table by OccurrenceCount in descending order.</li></ul>
@@ -9382,7 +8927,7 @@ def identify_frequent_errors(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (198,'198. Compute Weighted Passenger Fare Averages','
+VALUES (188,'188. Compute Weighted Passenger Fare Averages','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Standard mathematical means fail to accurately reflect unit dynamics when transaction volumes vary heavily across transactional segments. In the dirty_store_transactions.csv structure, computing a true category cost baseline requires weighting item unit prices against the volumes purchased. Write a Python function compute_weighted_prices(df: pd. DataFrame) -> pd. DataFrame that builds a custom mathematical aggregation layer:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Clean Anomaly Masks:</strong> Exclude rows where ProductCategory is null, or where Quantity or UnitPrice is missing, negative, or equal to zero.</li><li class="py-0.5"><strong>Weighted Valuation:</strong> For each row, calculate the total gross spend (Quantity $\times$ UnitPrice).</li><li class="py-0.5"><strong>Group Operation:</strong> Group the table by the ProductCategory column.</li><li class="py-0.5"><strong>Weighted Formula:</strong> For each category group, calculate its true weighted average price using the formula:$$\text{Weighted Average Price} = \frac{\sum (\text{Quantity} \times \text{UnitPrice})}{\sum \text{Quantity}}$$Output</li><li class="py-0.5"><strong>Standardization:</strong> Return a flat DataFrame with columns ProductCategory and WeightedPrice. Sort alphabetically by ProductCategory. Round the WeightedPrice to exactly 2 decimal places.</li></ul>
@@ -9441,7 +8986,7 @@ def compute_weighted_prices(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (199,'199. Determine Warehouse Capacity Utilization','
+VALUES (189,'189. Determine Warehouse Capacity Utilization','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Logistics managers evaluating layout allocations require an operational profile of warehouse density metrics. You are provided an unsummarized stock log showing structural load balances across facilities. Write a Python function analyze_warehouse_capacity(df: pd. DataFrame) -> pd. DataFrame that constructs utilization matrices:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Multi-Factor Aggregation:</strong> Group the asset table by WarehouseID and Zone simultaneously.</li><li class="py-0.5"><strong>Aggregated Capacity Metrics:</strong> For each unique facility partition, compute:The total sum of the CurrentVolume column. The absolute maximum value found within the MaxCapacity column.</li><li class="py-0.5"><strong>Utilization Index:</strong> Calculate a new column named UtilizationRate defined as the total accumulated volume divided by the maximum capacity value, multiplied by 100 to yield a percentage.</li><li class="py-0.5"><strong>Critical Flagging:</strong> Add a boolean column named IsOverloaded that evaluates to True if UtilizationRate is strictly greater than 95.0, and False otherwise.</li><li class="py-0.5"><strong>Output Flatness:</strong> Flatten the hierarchical indexes. Sort the resulting table by UtilizationRate in descending order. Round all float outputs to 2 decimal places.</li></ul>
@@ -9501,7 +9046,7 @@ def analyze_warehouse_capacity(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (200,'200. Broadcast Departmental Variance to Employees','
+VALUES (190,'190. Broadcast Departmental Variance to Employees','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">HR analysts evaluating performance data inside student_performance_factors.csv structures must broadcast group-level baselines back onto individual records to evaluate how individual entities deviate from localized cohort trends. Write a Python function broadcast_group_metrics(df: pd. DataFrame) -> pd. DataFrame that performs advanced vector broadcasting:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Missing Data Scrub:</strong> Remove rows where ParentEducation or ExamScore is missing (NaN).</li><li class="py-0.5"><strong>Broadcast Group Baseline:</strong> For each row, calculate the mathematical mean of the ExamScore column for that specific student''s corresponding ParentEducation group.</li><li class="py-0.5"><strong>Vector Vectorization:</strong> Append this group-level calculated metric back onto the source rows as a new column named GroupMeanScore.</li><li class="py-0.5"><strong>Deviation Vector Calculation:</strong> Create an additional column named ScoreDeviation computed by subtracting GroupMeanScore from the individual student''s ExamScore.</li><li class="py-0.5"><strong>Structural Preservation:</strong> The original number of rows (post-scrub) and the original row sequences must remain entirely unchanged. Do not drop non-target columns.</li></ul>
@@ -9560,7 +9105,7 @@ def broadcast_group_metrics(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (201,'201. Filter Teams by Average Performance Thresholds','
+VALUES (191,'191. Filter Teams by Average Performance Thresholds','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Project optimization frameworks require evaluating performance indices across working divisions. When processing group metrics, you must discard entire cohort segments if their aggregate metrics fail to pass structural filters. Write a Python function filter_underperforming_cohorts(df: pd. DataFrame) -> pd. DataFrame that drops whole categorical subsets based on group criteria:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Aggregate Condition Evaluation:</strong> Group the incoming table by the Gender and ParentEducation columns combined.</li><li class="py-0.5"><strong>Cohort Filtration Rule:</strong> Evaluate the mathematical mean of the ExamScore column for each composite partition block. If the calculated mean score of a group is less than or equal to 60.0, the entire group must be purged from the final dataset.</li><li class="py-0.5"><strong>Data Preservation:</strong> For groups whose average score is strictly greater than 60.0, all original rows belonging to those groups must be returned completely intact, along with all their original descriptive attributes.</li><li class="py-0.5"><strong>Index Alignment:</strong> Keep the original row indices of the preserved entries unchanged.</li></ul>
@@ -9616,7 +9161,7 @@ def filter_underperforming_cohorts(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (202,'202. Calculate Running Regional Revenue Subtotals','
+VALUES (192,'192. Calculate Running Regional Revenue Subtotals','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Financial accounting systems audit corporate transactional ledgers by tracking liquidity inflows over time. When analyzing records from the dirty_store_transactions.csv file, static aggregate profits fail to capture spatial momentum. Write a Python function calculate_regional_running_totals(df: pd. DataFrame) -> pd. DataFrame that builds chronological tracking structures:Temporal Cleaning &</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Sorting:</strong> Parse the Date column into a standard datetime data type. Remove any rows where Date, ProductCategory, or Profit contains missing (NaN) values. Sort the entire dataset chronologically by the verified Date column in ascending order.</li><li class="py-0.5"><strong>Cumulative Windows:</strong> Partition the sorted dataset by the ProductCategory column.</li><li class="py-0.5"><strong>Running Metrics:</strong> For each separate category partition, compute the cumulative running sum of the Profit column across the sorted timeline.</li><li class="py-0.5"><strong>Calculated Field Mapping:</strong> Assign these sequential values to a new column named RunningTotalProfit.</li><li class="py-0.5"><strong>Structural Preservation:</strong> The final returned table must preserve the chronological sorted order established in Step 1, retaining all original columns alongside the new running metric.</li></ul>
@@ -9677,7 +9222,7 @@ def calculate_regional_running_totals(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (203,'203. Find the N-th Highest Earning Freelancer Per Category','
+VALUES (193,'193. Find the N-th Highest Earning Freelancer Per Category','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Talent operations boards track freelance compensation matrices across diverse service fields. You are provided a transaction ledger mapping project payouts to independent contractors. Write a Python function find_nth_highest_earner(df: pd. DataFrame, n: int) -> pd. DataFrame that extracts precise localized rank achievements:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Aggregate Earnings Mapping:</strong> Group the input data by Category and FreelancerID combined, and calculate the total cumulative sum of the Payout column achieved by each freelancer inside that field.</li><li class="py-0.5"><strong>Dense Rank Assignment:</strong> Within each separate Category, rank the freelancers based on their total cumulative earnings in descending order (highest earnings ranked 1). Use the dense ranking method (i.e., ties receive identical ranks, and the next rank number is consecutive).</li><li class="py-0.5"><strong>Target Rank Extraction:</strong> Filter the ranked partitions to isolate the freelancer who achieved exactly the $N$-th rank within each category.</li><li class="py-0.5"><strong>Empty Handling:</strong> If a category does not contain enough unique earners to reach the requested $N$-th rank tier, omit that category from the output table entirely.</li><li class="py-0.5"><strong>Output Structure:</strong> Return a flat DataFrame containing the columns Category, FreelancerID, and TotalEarnings, sorted alphabetically by Category.</li></ul>
@@ -9736,7 +9281,7 @@ def find_nth_highest_earner(df, n):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (204,'204. Calculate Customer Segment Z-Scores','
+VALUES (194,'194. Calculate Customer Segment Z-Scores','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Statistical monitoring systems clean input variables inside the student_performance_factors.csv repository by standardizing metrics against subgroup parameters to detect non-standard performance deviations. Write a Python function calculate_segment_z_scores(df: pd. DataFrame) -> pd. DataFrame that constructs normalized statistical attributes:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Statistical Metrics Extraction:</strong> Group the dataset by the Gender and SchoolSupport columns combined.</li><li class="py-0.5"><strong>Z-Score Formula:</strong> For each row, calculate the statistical Z-score of its ExamScore against the mean ($\mu$) and standard deviation ($\sigma$) of that row''s corresponding group partition using the standard formula:$$Z = \frac{\text{ExamScore} - \mu}{\sigma}$$Anomalous</li><li class="py-0.5"><strong>Flagging Mapping:</strong> Append these calculated metrics as a new column named Score_ZScore. If a group partition contains an identical set of values causing the standard deviation to equal 0, fill the resulting Score_ZScore entry with a default value of 0.0.</li><li class="py-0.5"><strong>Data Integrity:</strong> Return the original DataFrame intact, retaining all source columns along with the newly appended Z-score values.</li></ul>
@@ -9794,7 +9339,7 @@ def calculate_z_scores(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (205,'205. Identify Bounded Inter-Group Running Maximums','
+VALUES (195,'195. Identify Bounded Inter-Group Running Maximums','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Logistics infrastructure nodes processing time-stamped streams inside sensor_readings_noisy.csv monitor sudden shifts by comparing current operational values against the historical ceiling reached by that specific unit. Write a Python function track_sensor_peak_bounds(df: pd. DataFrame) -> pd. DataFrame that evaluates rolling extreme records:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Temporal Structuring:</strong> Ensure the table is sorted chronologically by the Timestamp column in ascending order.</li><li class="py-0.5"><strong>Historical Ceiling Partition:</strong> Group the sorted records by the SensorID column.</li><li class="py-0.5"><strong>Cumulative Peak Tracking:</strong> For each sensor group, calculate the expanding cumulative maximum of the Temperature column up to the current row index point.</li><li class="py-0.5"><strong>Peak Column Mapping:</strong> Assign these metrics to a new column named HistoricalMaxTemp.</li><li class="py-0.5"><strong>Out-of-Bounds Flagging:</strong> Introduce a final boolean column named IsNewPeak that evaluates to True if the current row''s Temperature value is strictly equal to HistoricalMaxTemp AND is strictly greater than all previous temperature entries for that sensor. Otherwise, set it to False.</li></ul>
@@ -9855,7 +9400,7 @@ def compute_terminal_velocities(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (206,'206. Custom User-Defined Group Aggregations','
+VALUES (196,'196. Custom User-Defined Group Aggregations','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Standard descriptive summaries fail when financial auditing groups require custom mathematical spreads to evaluate liquidity distributions. Inside dirty_store_transactions.csv, evaluating risk margins requires computing a custom metric across categorized segments. Write a Python function compute_custom_group_spread(df: pd. DataFrame) -> pd. DataFrame that builds a custom multi-step aggregation engine:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Sanitization Mask:</strong> Drop any records where ProductCategory is null, or where Profit is missing (NaN).</li><li class="py-0.5"><strong>Custom Operational Metrics:</strong> Group the dataset by the sanitized ProductCategory column.</li><li class="py-0.5"><strong>Mathematical Spread Formula:</strong> For each distinct category group, calculate a custom metric named RiskSpread defined exactly as:$$\text{RiskSpread} = \frac{\text{Maximum Profit} - \text{Minimum Profit}}{\text{Median Profit} + 1.00}$$Data</li><li class="py-0.5"><strong>Normalization:</strong> Return a flat DataFrame containing the columns ProductCategory and the calculated RiskSpread. Sort the results alphabetically by ProductCategory. Round the RiskSpread values to exactly 2 decimal places.</li></ul>
@@ -9915,7 +9460,7 @@ def calculate_risk_spread(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (207,'207. Impute Missing Values with Group Medians','
+VALUES (197,'197. Impute Missing Values with Group Medians','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Machine learning training blocks mapped to the student_performance_factors.csv engine will fail if structural features contain null fields. Rather than dropping columns or running flat global fills, you must run high-fidelity localized statistical imputations. Write a Python function impute_group_medians(df: pd. DataFrame) -> pd. DataFrame that processes variable gaps:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Target Feature Traversal:</strong> The operational target columns requiring imputation are StudyHours, SleepHours, and ScreenTime.</li><li class="py-0.5"><strong>Group Metric Formulation:</strong> Group the DataFrame by the composite attributes Gender and ParentEducation combined.</li><li class="py-0.5"><strong>Localized Anomaly Filling:</strong> For each target column, detect missing values (NaN) and replace them with the median value of that specific column calculated strictly within that row''s matching Gender + ParentEducation cohort.</li><li class="py-0.5"><strong>Subgroup Depletion Fallback:</strong> If an entire cohort partition possesses missing values for a target feature, preventing a group median from being calculated, fill those specific fields with a flat global fallback value of 0.0.</li><li class="py-0.5"><strong>Preservation Layout:</strong> Return the entire original DataFrame structure with missing spaces patched, retaining all other source attributes and original row ordering.</li></ul>
@@ -9975,7 +9520,7 @@ def identify_churn_signals(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (208,'208. Isolate Top N Dynamic Records Per Group','
+VALUES (198,'198. Isolate Top N Dynamic Records Per Group','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">E-commerce retail systems must extract active tracking logs to find top transaction tiers for regional fulfillment analysis without running costly loops over multi-million row datasets. Write a Python function extract_top_n_per_category(df: pd. DataFrame, n: int) -> pd. DataFrame that executes partitioned sorting slices:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Aggregated Group Sorting:</strong> Sort the incoming transaction ledger globally by ProductCategory in alphabetical order, and then by Quantity in descending order.</li><li class="py-0.5"><strong>Partition Segment Slicing:</strong> Within each unique ProductCategory group, isolate and retain the first $N$ rows containing the largest Quantity metrics.</li><li class="py-0.5"><strong>Volume Tie-Breaking:</strong> If multiple transaction records share identical Quantity values within a category group, break ties by selecting the transaction with the higher Profit value.</li><li class="py-0.5"><strong>Index Ordering:</strong> The final output table must return a flat structure containing all original columns, retaining the index numbers from the source dataset.</li></ul>
@@ -10034,7 +9579,7 @@ def find_top_sales_percentile(df, percentile):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (209,'209. Calculate Group-Level Retention Rates','
+VALUES (199,'199. Calculate Group-Level Retention Rates','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Subscription management layers require historical tracking vectors to measure lifecycle drop-offs across user cohorts. You are provided an unsummarized user database recording signups and subsequent event logs. Write a Python function calculate_cohort_retention(df: pd. DataFrame) -> pd. DataFrame that constructs systemic behavioral rates:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Multi-Column Category Grouping:</strong> Group the source dataset by the columns SignupYear and AcquisitionChannel.</li><li class="py-0.5"><strong>Volume Tally Formulation:</strong> For each cohort partition, execute two distinct metrics:Tally the total unique count of users who registered, using the UserID column (name this summary column TotalRegistered). Sum the total number of users who remained active beyond 90 days, indicated by a 1 in the IsRetained boolean column (name this summary column TotalRetained).</li><li class="py-0.5"><strong>Retention Matrix Calculation:</strong> Create a final column named RetentionRate defined as TotalRetained divided by TotalRegistered, multiplied by 100 to yield a percentage.</li><li class="py-0.5"><strong>Output Framing:</strong> Flatten the MultiIndex headers. Sort the final output structure chronologically by SignupYear in ascending order, then by RetentionRate in descending order. Round all float rates to exactly 2 decimal places.</li></ul>
@@ -10096,7 +9641,7 @@ def bin_student_grades(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (210,'210. Relational Database Inner Reconciliation','
+VALUES (200,'200. Relational Database Inner Reconciliation','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Data warehouses frequently store records in normalized partitions. To build comprehensive sales profiles, you must join transaction logs with demographic metadata tables. Write a Python function reconcile_transaction_demographics(df_transactions: pd. DataFrame, df_customers: pd. DataFrame) -> pd. DataFrame that performs a tight relational pairing:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Inner Intersection Execution:</strong> Merge df_transactions with df_customers using their shared CustomerID attribute as the join key. Perform a strict Inner Join (discarding any records that do not exist in both tables).</li><li class="py-0.5"><strong>Ambiguity Resolution:</strong> If both DataFrames contain columns with overlapping names (excluding the join key), append the suffix _ledger to the column coming from df_transactions and _dim to the column coming from df_customers.</li><li class="py-0.5"><strong>Index Ordering:</strong> Sort the unified output table by TransactionID in ascending order, resetting the positional index back to a clean sequential range starting from 0.</li></ul>
@@ -10159,7 +9704,7 @@ def melt_financials_to_long(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (211,'211. Complete Outer Inventory Alignment','
+VALUES (201,'201. Complete Outer Inventory Alignment','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">To identify inventory data drift, supply chain managers require an absolute mapping of all catalog components alongside active warehouse supply sheets, ensuring that disconnected stock lines are caught immediately. Write a Python function align_full_inventory(df_catalog: pd. DataFrame, df_warehouse: pd. DataFrame) -> pd. DataFrame that executes an expansive match matrix:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Full Relational Union:</strong> Perform a Full Outer Join between df_catalog and df_warehouse using ProductID as the relational key.</li><li class="py-0.5"><strong>Defensive Structural Imputation:</strong> Post-merge, if a record was present in the warehouse sheet but lacked a matching catalog entry, the resulting ProductName will be null. Replace these specific null cells with the string "UNREGISTERED_PRODUCT".</li><li class="py-0.5"><strong>Numeric Discrepancy Zeroing:</strong> For rows where stock balances or pricing values are missing due to structural join mismatches, fill those fields with a flat default value of 0.0.</li><li class="py-0.5"><strong>Sorting Profile:</strong> Sort the complete joined matrix by ProductID in ascending order.</li></ul>
@@ -10221,7 +9766,7 @@ def pivot_monthly_performance(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (212,'212. Left Join Audits with Origin Flags','
+VALUES (202,'202. Left Join Audits with Origin Flags','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Auditors evaluating transaction data integrity must isolate exactly which transactions fail to connect to active user demographic files. Your platform contains intentional mismatch client IDs (specifically the C1500 to C1549 block inside store_dim_customers.csv) designed to test this exact edge tracking scenario. Write a Python function audit_transaction_origins(df_transactions: pd. DataFrame, df_customers: pd. DataFrame) -> pd. DataFrame that builds tracking indicators:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Preservation Merge Operation:</strong> Perform a Left Join mapping df_transactions to df_customers using CustomerID as the anchor key, keeping all ledger lines intact.</li><li class="py-0.5"><strong>Relational Source Tracking:</strong> Use the structural indicator=True parameter within the merge execution to track the lineage origins of each row.</li><li class="py-0.5"><strong>Indicator Custom Mapping:</strong> Rename the resulting indicator column to AuditStatus. Map its structural string output values as follows:If a transaction successfully matched a customer account, map it to "MATCHED". If a transaction has no matching record in the customer directory, map it to "ORPHANED_TRANSACTION".</li><li class="py-0.5"><strong>Data Slicing:</strong> Return the entire left-joined DataFrame containing all original metrics alongside the new AuditStatus column.</li></ul>
@@ -10281,7 +9826,7 @@ def unstack_nested_metrics(df):
     pass','','store_dim_customers.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (213,'213. Timestamp Match Using Asynchronous Tolerances','
+VALUES (203,'203. Timestamp Match Using Asynchronous Tolerances','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">In high-frequency monitoring networks like sensor_readings_noisy.csv, events logged across separate physical units occur asynchronously. Standard joins fail because timestamps rarely align perfectly. You must pair event logs with closest matching baseline parameters within an explicit time tolerance window. Write a Python function merge_asynchronous_telemetry(df_readings: pd. DataFrame, df_baselines: pd. DataFrame) -> pd. DataFrame that executes an asynchronous timeline alignment:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Index Preparation:</strong> Ensure the Timestamp column in both DataFrames is converted into a true Pandas datetime format and sorted in ascending chronological order.</li><li class="py-0.5"><strong>Asynchronous Alignment:</strong> Execute a rolling timeline merge using pd.merge_asof(). Match each row in df_readings to the closest preceding baseline record in df_baselines based on their timestamps.</li><li class="py-0.5"><strong>Directional Boundary Matching:</strong> The alignment direction must look strictly backward (matching the closest baseline timestamp that is less than or equal to the reading timestamp).</li><li class="py-0.5"><strong>Tolerance Constraints:</strong> Enforce a strict maximum time window tolerance of 2 seconds. If a baseline event occurred more than 2 seconds prior to the reading timestamp, do not join it (leave the inherited baseline columns as NaN).</li></ul>
@@ -10341,7 +9886,7 @@ def reshape_sensor_readings(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (214,'214. Cartesian Product Resource Assignment','
+VALUES (204,'204. Cartesian Product Resource Assignment','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Operations teams planning resource allocation strategies must evaluate every possible combination of standalone units against active operational zones. This requires executing a full relational Cartesian product without shared lookup keys. Write a Python function generate_resource_matrix(df_teams: pd. DataFrame, df_zones: pd. DataFrame) -> pd. DataFrame that builds a complete cross-combination array:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Cartesian Multiplication:</strong> Generate a cross-join (Cartesian product) representing every single mathematical combination between rows in df_teams and rows in df_zones.</li><li class="py-0.5"><strong>Column Retention:</strong> The final combined output must retain all descriptive attributes from both source tables.</li><li class="py-0.5"><strong>Sorting Protocol:</strong> Sort the final DataFrame primary-keyed by TeamID in ascending order, and secondary-keyed by ZoneCode in alphabetical order.</li><li class="py-0.5"><strong>Index Reset:</strong> Rebuild the positional row numbers so they run continuously from 0 to $N-1$.</li></ul>
@@ -10404,7 +9949,7 @@ def multi_index_corporate_financials(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (215,'215. Multi-Key Index Merging','
+VALUES (205,'205. Multi-Key Index Merging','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">In advanced analytical pipelines, datasets are frequently stored using MultiIndexed formats to keep complex dimensional relationships organized. To align information correctly, you must run an exact merge using multiple key tracking layers simultaneously. Write a Python function merge_multikey_indices(df_left: pd. DataFrame, df_right: pd. DataFrame) -> pd. DataFrame that executes a composite index alignment:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Multi-Key Intersection:</strong> Merge df_left and df_right using a strict Inner Join.</li><li class="py-0.5"><strong>Composite Binding:</strong> The merge operations must map concurrently across two separate structural elements: the Company data column and the Year index level of the datasets.</li><li class="py-0.5"><strong>Index Restoration:</strong> Ensure the final unified table maintains a clean structural layout where Company and Year act as flat, standard data columns, sorted alphabetically by Company first and chronologically by Year second.</li></ul>
@@ -10458,7 +10003,7 @@ def melt_stock_volume_wide(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (216,'216. Conditional Overlap Fill and Merge','
+VALUES (206,'206. Conditional Overlap Fill and Merge','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Data compilation networks frequently face issues with fragmented tables where primary tracking columns contain structural missing values. You must patch empty cells in a main log by overlaying valid records from a secondary baseline file using an overlapping layout strategy. Write a Python function patch_transaction_gaps(df_main: pd. DataFrame, df_backup: pd. DataFrame) -> pd. DataFrame that implements a repair routine:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Alignment Anchor Setup:</strong> Set the TransactionID attribute as the definitive index anchor in both input tables.</li><li class="py-0.5"><strong>Overlay Remediation:</strong> Use df_main.combine_first(df_backup) to fill missing cells (NaN) in the main dataset with matching row-and-column values found inside the backup dataset.</li><li class="py-0.5"><strong>Index Preservation:</strong> Ensure that rows present in df_main but missing from df_backup keep their original values completely intact, while any entirely new rows unique to df_backup are added to the final table.</li><li class="py-0.5"><strong>Structural Output:</strong> Return a flat DataFrame where TransactionID is restored as a regular data column, sorted in ascending numerical order.</li></ul>
@@ -10520,7 +10065,7 @@ def pivot_aggregate_sales(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (217,'217. Evaluate Delta Deviations Across Tables','
+VALUES (207,'207. Evaluate Delta Deviations Across Tables','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Financial compliance systems cross-reference internal transaction data grids against monthly statements generated by external banks. You must parse both tables to generate a variance audit log that isolates discrepancies between them. Write a Python function audit_statement_variances(df_internal: pd. DataFrame, df_bank: pd. DataFrame) -> pd. DataFrame that evaluates variances across files:2.</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Relational Pairing:</strong> Perform an Inner Join between df_internal and df_bank using the unique TransactionID column as the shared key.3.</li><li class="py-0.5"><strong>Variance Vector Calculation:</strong> Create a new column named PriceVariance computed by subtracting the bank''s record (UnitPrice_bank) from the internal ledger''s record (UnitPrice_internal).4.</li><li class="py-0.5"><strong>Discrepancy Filtration:</strong> Filter the combined table to retain only rows where PriceVariance is not equal to 0.00 (ignoring records that match perfectly).5.</li><li class="py-0.5"><strong>Output Cleanliness:</strong> The output table must contain only four columns: TransactionID, UnitPrice_internal, UnitPrice_bank, and PriceVariance, sorted by the absolute value of PriceVariance in descending order.</li></ul>
@@ -10583,7 +10128,7 @@ def flatten_hierarchical_financials(df):
     pass','','corporate_financials_wide.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (218,'218. Track Historical Schema Changes','
+VALUES (208,'208. Track Historical Schema Changes','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Legacy financial systems occasionally export data tables where standard column names have drifted over different quarters (e.g., changing from Cost to Expense or Rev to Revenue). To analyze this data, you must map historical schema layouts back to a unified master structure before combining them. Write a Python function normalize_and_combine_schemas(df_q1: pd. DataFrame, df_q2: pd. DataFrame) -> pd. DataFrame that standardizes distinct table structures:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Schema Renaming:</strong> In df_q1, rename the column Rev to Revenue and Cost to Expense. In df_q2, rename the column Gross Income to Revenue.</li><li class="py-0.5"><strong>Vertical Stack Composition:</strong> Perform a vertical concatenation (pd.concat(axis=0)) placing df_q1 on top of df_q2.</li><li class="py-0.5"><strong>Missing Value Homogenization:</strong> Because the schemas originally differed, the stacked DataFrame will contain NaN values where column structures did not perfectly overlap. Fill all resulting missing values across numeric columns with a flat 0.0.</li><li class="py-0.5"><strong>Index Reset:</strong> Rebuild the positional row numbers sequentially so the combined DataFrame operates smoothly from $0$ to $N-1$.</li></ul>
@@ -10642,7 +10187,7 @@ def unpivot_sensor_telemetry(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (219,'219. Merge Mismatched Categorical Columns','
+VALUES (209,'209. Merge Mismatched Categorical Columns','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Integrating regional marketing logs into the corporate financial ledger is difficult because demographic inputs use different categorical codes for identical concepts (e.g., "M" vs "Male" vs "1"). Write a Python function merge_categorical_crosswalk(df_financials: pd. DataFrame, df_demographics: pd. DataFrame, crosswalk_dict: dict) -> pd. DataFrame that standardizes and joins data:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Dictionary Crosswalk Mapping:</strong> Within the df_demographics table, map the values inside the ClientGender column against the provided crosswalk_dict to standardize them (e.g., converting "M" to "Male"). If a value is missing from the crosswalk dictionary, leave it completely unchanged.</li><li class="py-0.5"><strong>Relational Join Execution:</strong> Perform a Left Join mapping df_financials to the newly standardized df_demographics using the column ClientID as the shared key.</li><li class="py-0.5"><strong>Missing Value Isolation:</strong> Filter the resulting combined DataFrame to retain only the rows where ClientGender remains missing (NaN) post-merge, isolating unresolved profiles.</li><li class="py-0.5"><strong>Output Framing:</strong> Return the filtered DataFrame sorted by ClientID in ascending order.</li></ul>
@@ -10704,7 +10249,7 @@ def stack_stock_price_trends(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (220,'220. Unpivot Quarterly Financial Summary Tables','
+VALUES (210,'210. Unpivot Quarterly Financial Summary Tables','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">The corporate_financials_wide.csv dataset logs revenue and profit metrics horizontally across columns (e.g., Q1_Revenue, Q1_Profit, Q2_Revenue). Time-series machine learning models cannot process this "wide" format; they require a vertical, "long" format architecture. Write a Python function unpivot_quarterly_financials(df: pd. DataFrame) -> pd. DataFrame that performs advanced data melting:Vertical Melting (pd.melt): Unpivot the wide structural DataFrame so that the original horizontal column names are collapsed into a new string column named QuarterMetric, and their numeric values drop into a new column named Value. Preserve Company and Year as persistent identifier variables.</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>String Breakdown:</strong> Split the newly formed string identifiers inside the QuarterMetric column on the underscore _ (e.g., dividing "Q1_Revenue" into "Q1" and "Revenue").</li><li class="py-0.5"><strong>Column Reassignment:</strong> Map these split components into two distinct new tracking columns named Quarter and MetricType. Drop the original QuarterMetric column once the split is successfully completed.</li><li class="py-0.5"><strong>Missing Quarters Purge:</strong> Because Q4 metrics are often empty for active fiscal years, remove any rows where Value is currently logged as NaN.</li></ul>
@@ -10761,7 +10306,7 @@ def resample_to_hourly_averages(df):
     pass','','corporate_financials_wide.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (221,'221. Generate Variable-Width Analytical Bins','
+VALUES (211,'211. Generate Variable-Width Analytical Bins','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">To build categorical machine learning classifiers out of student_performance_factors.csv, continuous tracking metrics like exam grades must be bucketed into distinct, ordinal strings representing letter grades. Write a Python function generate_grade_bins(df: pd. DataFrame) -> pd. DataFrame that discretizes continuous variables into formatted strings:Dynamic Bin Cutting (pd.cut): Segregate the continuous ExamScore float numbers into exactly five distinct bins mapped across the following hard numerical boundaries:$\text{Score} < 60.0 \rightarrow$ "F"$60.0 \le \text{Score} < 70.0 \rightarrow$ "D"$70.0 \le \text{Score} < 80.0 \rightarrow$ "C"$80.0 \le \text{Score} < 90.0 \rightarrow$ "B"$\text{Score} \ge 90.0 \rightarrow$ "A"Column</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Creation:</strong> Apply these resulting string grades to a new column called LetterGrade.</li><li class="py-0.5"><strong>Invalid Range Imputation:</strong> Because some extreme systemic outliers in the dataset fall outside the standard $0-100$ boundary (e.g., $-25.0$ or $180.0$), they must evaluate to an NaN bin. Impute any resulting NaN grades by filling them with the explicit string "Invalid".</li><li class="py-0.5"><strong>Output Framing:</strong> Return the DataFrame holding all its initial metrics with the finalized LetterGrade tracking column attached to the far right.</li></ul>
@@ -10822,7 +10367,7 @@ def compute_rolling_volatility(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (222,'222. One-Hot Encode Categorical Model Pipelines','
+VALUES (212,'212. One-Hot Encode Categorical Model Pipelines','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Machine learning frameworks require categorical text columns to be converted into binary numeric matrices (One-Hot Encoding) before entering training models. When engineering pipelines for the student_performance_factors.csv dataset, you must convert the student categorical features while handling value noise cleanly. Write a Python function encode_categorical_pipeline(df: pd. DataFrame) -> pd. DataFrame that performs binary vector transformations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Value Cleaning:</strong> Prior to encoding, strip all leading/trailing whitespaces from the SchoolSupport column and force all characters to lowercase (e.g., "  Yes" $\rightarrow$ "yes"). One-Hot Encoding (pd.get_dummies): Generate binary indicator columns for the cleaned SchoolSupport column.</li><li class="py-0.5"><strong>Prefix Enforcement:</strong> Enforce an explicit prefix string of "support" on the newly generated columns. The resulting columns must be named precisely "support_yes" and "support_no".</li><li class="py-0.5"><strong>Data Type Casting:</strong> Cast these newly generated indicator columns explicitly into standard integers (int64), where 1 represents presence and 0 represents absence.</li><li class="py-0.5"><strong>Concatenation Output:</strong> Drop the original raw text SchoolSupport column and return the modified DataFrame retaining all original columns with the two binary indicator columns appended.</li></ul>
@@ -10881,7 +10426,7 @@ def align_asynchronous_ticks(df1, df2):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (223,'223. Resample Daily Financial Data to Monthly Averages','
+VALUES (213,'213. Resample Daily Financial Data to Monthly Averages','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">High-frequency streams inside sensor_readings_noisy.csv capture metrics across varied intervals. To conduct higher-level macro analysis, analysts downsample raw, irregular timestamps into consolidated regular blocks. Write a Python function downsample_sensor_stream(df: pd. DataFrame) -> pd. DataFrame that implements chronological downsampling:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Index Standardization:</strong> Convert the Timestamp column into a true Pandas datetime format. Remove any rows where Timestamp or Temperature is missing (NaN). Set Timestamp as the explicit index anchor of the DataFrame.</li><li class="py-0.5"><strong>Chronological Sorting:</strong> Sort the DataFrame explicitly by the datetime index in ascending order. Downsampling Resample (.resample()): Downsample the time-series matrix from its original irregular frequency down to a uniform Daily Frequency (assigned using the rule code ''D'').</li><li class="py-0.5"><strong>Multi-Column Down-Aggregation:</strong> For each daily window, compute:The mathematical mean of the Temperature column (name this output column MeanTemperature). The maximum value found within the Humidity column (name this output column MaxHumidity).</li><li class="py-0.5"><strong>Output Cleanliness:</strong> Round all calculated float values to exactly 2 decimal places. Return a flat DataFrame where the index date is reset to a regular column named Date containing true date-only markers.</li></ul>
@@ -10939,7 +10484,7 @@ def compute_ewma_temperatures(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (224,'224. Calculate Rolling 7-Day Asset Volatility','
+VALUES (214,'214. Calculate Rolling 7-Day Asset Volatility','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Quantitative trading engines tracking microsecond price feeds in high_frequency_stock_ticks.csv use moving standard deviations to evaluate structural market risks. Static global stats hide sudden price shocks (such as the 5% TSLA surge or 6% AAPL crash embedded in your sandbox file). Write a Python function calculate_rolling_volatility(df: pd. DataFrame, window_size: int) -> pd. DataFrame that calculates moving historical window calculations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Sorting Protocol:</strong> Sort the incoming dataset globally by Ticker in alphabetical order, and then by Timestamp in ascending chronological order.</li><li class="py-0.5"><strong>Rolling Partition Matrix:</strong> Group the sorted dataset by the Ticker column. Rolling Window Function (.rolling()): For each ticker, execute a moving rolling window calculation across the Price column. Set the window to look back across exactly $N$ rows specified by the window_size parameter.</li><li class="py-0.5"><strong>Statistical Standard Deviation:</strong> Calculate the rolling sample standard deviation within this moving window. Set the min_periods=1 parameter so the calculation yields a valid value from the very first row instead of generating leading NaN cells.</li><li class="py-0.5"><strong>Column Appending:</strong> Append the calculated metrics back onto the source dataset as a new column named RollingPriceStd. Round the output metrics to exactly 4 decimal places. Return the complete DataFrame.</li></ul>
@@ -10998,7 +10543,7 @@ def ohlc_stock_candles(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (225,'225. Compute Multi-Column Percentage Change Deltas (Intermediate)','
+VALUES (215,'215. Compute Multi-Column Percentage Change Deltas (Intermediate)','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Asset portfolio analysts measure price momentum over sequential tracking cycles. To establish velocity vectors quickly across massive matrices, you must compute percentage change sequences across adjacent rows natively. Write a Python function compute_percentage_deltas(df: pd. DataFrame) -> pd. DataFrame that executes native delta adjustments:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Index Assignment:</strong> Move the Timestamp column into the explicit index anchor of the DataFrame. Ensure the index is sorted chronologically. Percentage Step Calculation (.pct_change()): Calculate the percentage change of the numeric columns Price and Volume between the current row and the immediate preceding row.</li><li class="py-0.5"><strong>Leading Null Imputation:</strong> The very first row will evaluate to NaN because it lacks a prior row reference. Replace these resulting leading null cells with a flat default value of 0.0000.</li><li class="py-0.5"><strong>Structural Output:</strong> Rename the modified columns to Price_PctChange and Volume_PctChange. Return a flat DataFrame containing these two calculated tracking parameters with the Timestamp column fully restored as a regular data column.</li></ul>
@@ -11056,7 +10601,7 @@ def detect_stale_telemetry_periods(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (226,'226. Multi-Level Index Cross-Section Extractions','
+VALUES (216,'216. Multi-Level Index Cross-Section Extractions','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">When database matrices are deeply nested using MultiIndex structures across both rows and columns, standard label extraction using .loc[] becomes highly complex. You must build a flexible retrieval utility to isolate a clean cross-section of data across intermediate structural levels regardless of higher-tier values. Write a Python function extract_index_cross_section(df: pd. DataFrame, target_year: int) -> pd. DataFrame that targets deep hierarchical index slices:Cross-Section Isolation (.xs()): Query the incoming multi-indexed DataFrame to extract all records corresponding to the specific level value matching target_year.</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Level Target Specifier:</strong> Target the level named Year explicitly within the row index structure.</li><li class="py-0.5"><strong>Drop Configuration Maintenance:</strong> Ensure the target level Year is dropped from the index of the resulting DataFrame while keeping all other index layers intact.</li><li class="py-0.5"><strong>Column Flattening:</strong> If the columns exhibit a MultiIndex structure, flatten them into a single-level string index by joining the levels with a single underscore _ (e.g., "Q1", "Revenue" $\rightarrow$ "Q1_Revenue").</li></ul>
@@ -11110,7 +10655,7 @@ def calculate_session_drawdowns(df):
     pass','','corporate_financials_wide.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (227,'227. Calculate Cumulative Moving Limits','
+VALUES (217,'217. Calculate Cumulative Moving Limits','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Financial risk management systems processing transaction logs in dirty_store_transactions.csv monitor risk boundaries by tracking individual lifetime transaction counts while maintaining an absolute historical threshold filter. Write a Python function calculate_moving_caps(df: pd. DataFrame) -> pd. DataFrame that performs high-fidelity conditional accumulation tracking:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Cron Sorting Matrix:</strong> Sort the input ledger globally by CustomerID in ascending alphabetical order, and then by Date chronologically in ascending order.</li><li class="py-0.5"><strong>Cumulative Event Expansion:</strong> Group the sorted rows by CustomerID.</li><li class="py-0.5"><strong>Sequence Counting:</strong> Generate a new tracking column named TransactionSequence which calculates the expanding cumulative counter of transactions for each customer (i.e., first transaction = 1, second = 2, etc.).</li><li class="py-0.5"><strong>Threshold Filtration:</strong> Create a final boolean tracking column named IsWithinCap that evaluates to True if the individual''s TransactionSequence is less than or equal to 5 AND their expanding cumulative sum of Quantity does not exceed 150. Otherwise, evaluate to False.</li></ul>
@@ -11168,7 +10713,7 @@ def hourly_temperature_deviations(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (228,'228. Cross-Tabulate Multi-Factor Frequency Tables','
+VALUES (218,'218. Cross-Tabulate Multi-Factor Frequency Tables','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">To evaluate demographic preferences inside the student_performance_factors.csv workspace, marketing research units require contingency analysis arrays showing how multi-layer variables overlap across groups. Write a Python function generate_frequency_contingency(df: pd. DataFrame) -> pd. DataFrame that builds contingency frequency distributions:Cross-Tabulation Frequency Matrix (pd.crosstab): Generate a cross-tabulation table evaluating the frequencies of categorical pairings.</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Hierarchical Dimensions:</strong> The row constraints must track the ParentEducation column. The column constraints must exhibit a MultiIndex combining the Gender and InternetAccess attributes simultaneously.</li><li class="py-0.5"><strong>Margins Totals Integration:</strong> Include global row and column totals within the matrix by passing the margins=True parameter flag. Name the totals row and column index header string label "Total" exactly.</li><li class="py-0.5"><strong>Missing Representation:</strong> Any resulting blank frequency cells inside the contingency space must evaluate explicitly to a standard integer 0.</li></ul>
@@ -11222,7 +10767,7 @@ def resample_interpolate_sensor(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (229,'229. Explode Nested JSON Array Columns into Rows','
+VALUES (219,'219. Explode Nested JSON Array Columns into Rows','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Software logistics streams capture relational attributes inside unified payload fields. When parsing these objects, columns containing Python lists break structural processing routines. You must split these inline arrays out into flat, relational database rows. Write a Python function explode_nested_records(df: pd. DataFrame) -> pd. DataFrame that implements array expansion routines:Structural List Explosion (.explode()): Target the column named ItemsPurchased (which contains lists of string elements). Explode this column vertically so that each individual list item receives its own standalone row entry.</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Null Element Management:</strong> If a row''s ItemsPurchased attribute is an empty list or completely missing (NaN), ensure the row is preserved in the output table with the exploded cell logging an absolute NaN value.</li><li class="py-0.5"><strong>Whitespace Cleansing:</strong> Strip all leading and trailing space elements from the newly exploded text strings inside ItemsPurchased.</li><li class="py-0.5"><strong>Index Verification:</strong> Keep the original row index labels unchanged post-explosion, allowing downstream tracking blocks to map rows back to their source data logs.</li></ul>
@@ -11277,7 +10822,7 @@ def rolling_volume_weighted_price(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (230,'230. Extract Valid Nested Email Domains','
+VALUES (220,'220. Extract Valid Nested Email Domains','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A data hygiene pipeline processing corporate communication records needs to audit incoming contact logs. The system must parse corporate email routing paths to verify that domains comply with strict character restrictions. Write a Python function extract_valid_domains(df: pd. DataFrame) -> pd. DataFrame that evaluates communication matrices:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Regex Domain Capture:</strong> Use a regular expression pattern inside a vectorized .str.extract() routine to isolate the domain portion of strings within the email column (i.e., everything immediately following the @ symbol up to the end of the string).</li><li class="py-0.5"><strong>Structural Validation Filter:</strong> A domain string is considered structurally valid only if it consists entirely of lowercase alphanumeric characters, dots, and hyphens (e.g., company.com or sales-hub.net). It must not contain special symbols or trailing extensions (like .com.net nested blocks). Filtering &</li><li class="py-0.5"><strong>Output:</strong> Filter out rows containing unparseable or invalid domains. Return a flat DataFrame containing only three specific columns in this sequence: name, email, and the newly extracted domain named ExtractedDomain.</li></ul>
@@ -11336,7 +10881,7 @@ def extract_valid_domains(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (231,'231. Parse Raw Unstructured Log Strings via Regex Captures','
+VALUES (221,'221. Parse Raw Unstructured Log Strings via Regex Captures','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">System components inside sensor_readings_noisy.csv occasionally emit raw text message logs during failures. These lines mix error categories, localized status details, and hardware codes together in a single unparsed text block. Write a Python function parse_unstructured_logs(df: pd. DataFrame) -> pd. DataFrame that builds relational columns out of text blocks:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Regex Component Extraction:</strong> The input column RawLog contains unstructured text blocks that follow the syntax standard: "[STATUS_CODE] MessageBody (SystemID:X101)". Use a regular expression containing named capture groups to separate this text into three individual columns:StatusCode (The token inside the brackets, e.g., ERROR, WARN). LogMessage (The main description body following the brackets). SystemID (The identifier key nested inside the parenthesis following the prefix</li><li class="py-0.5"><strong>SystemID:</strong>).</li><li class="py-0.5"><strong>Missing Component Cleanup:</strong> If an incoming log line does not perfectly match this exact syntax pattern, it will generate null values across the capture groups. Drop all rows that fail to match the pattern.</li><li class="py-0.5"><strong>Output Structure:</strong> Remove the original RawLog column, returning all other initial fields along with the three newly extracted text columns.</li></ul>
@@ -11394,7 +10939,7 @@ def mask_confidential_names(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (232,'232. Sanitize and Standardize Variable Phone Formats','
+VALUES (222,'222. Sanitize and Standardize Variable Phone Formats','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Customer contact directories paired with the dirty_store_transactions.csv ledger store telephone metrics containing significant formatting discrepancies (e.g., extra dashes, parenthetical area codes, space adjustments, or missing country prefixes). Write a Python function sanitize_phone_numbers(df: pd. DataFrame) -> pd. DataFrame that standardizes variable text characters:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Non-Numeric Stripping:</strong> Remove all non-numeric characters (dashes, spaces, periods, parentheses) from the PhoneNumber string column using a vectorized regular expression replacement pattern.</li><li class="py-0.5"><strong>Length Validation Filtering:</strong> A phone number is considered valid only if the resulting stripped digit string contains exactly 10 digits (standard domestic line length) or exactly 11 digits (if it includes a leading country code prefix of 1).</li><li class="py-0.5"><strong>Country Code Normalization:</strong> For valid 11-digit numbers starting with 1, strip the leading 1 so that all numbers are consistently saved as a standard 10-digit string.</li><li class="py-0.5"><strong>Invalid Number Imputation:</strong> If a record fails the length validation criteria or is missing, replace its cell with the placeholder string "INVALID_NUMBER".</li></ul>
@@ -11455,7 +11000,7 @@ def split_multi_variant_codes(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (233,'233. Vectorized Substring Tokenization and Counting','
+VALUES (223,'223. Vectorized Substring Tokenization and Counting','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">To evaluate feedback trends in dirty_store_transactions.csv, text analysts isolate specific key indicators from unstructured product descriptions. Standard string matching breaks down when evaluating compound requirements across multi-word patterns. Write a Python function tokenize_and_tally_keywords(df: pd. DataFrame, target_keywords: list) -> pd. DataFrame that builds feature frequency matrices:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Vectorized Substring Search:</strong> Evaluate the ProductName text column. For each keyword present inside the target_keywords list, create a new column named count_[keyword] (e.g., count_keyboard).</li><li class="py-0.5"><strong>Case-Insensitive Regex Tally:</strong> The value of this new column must represent the total count of occurrences of that keyword within the row''s ProductName string. The search must be case-insensitive and match only whole words (using regex word boundaries \b).</li><li class="py-0.5"><strong>Null Defending:</strong> If ProductName is missing (NaN), assign a score value of 0 across all dynamic keyword count fields.</li><li class="py-0.5"><strong>Aggregation Output:</strong> Return the complete initial DataFrame with the dynamic keyword frequency counter columns attached to the right.</li></ul>
@@ -11514,7 +11059,7 @@ def standardize_phone_numbers(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (234,'234. Identify Partial Match Anomalies in Product Descriptions','
+VALUES (224,'224. Identify Partial Match Anomalies in Product Descriptions','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Inventory audit models scanning dirty_store_transactions.csv require isolating description strings that contain catalog classification contradictions. A transaction is considered anomalous if its descriptive string maps to one category label while containing character tokens that exclusively belong to a different department. Write a Python function detect_description_contradictions(df: pd. DataFrame) -> pd. DataFrame that flags these text discrepancies:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Contradiction Rule Layer:</strong> Identify records where the ProductCategory is logged as "Electronics" (ignoring padding and casing noise) BUT the ProductName text contains a partial string match for any of the following clothing-related tokens: "shirt", "shoes", "dress", or "pants".</li><li class="py-0.5"><strong>Alternative Contradiction Layer:</strong> Proactively include records where ProductCategory maps to "Clothing" BUT the ProductName string contains any of these technical tokens: "device", "drive", "cable", or "chip".</li><li class="py-0.5"><strong>Case-Insensitive Search:</strong> Ensure all token substring searches are entirely case-insensitive.</li><li class="py-0.5"><strong>Projection Output:</strong> Return the filtered rows preserving their initial indices, retaining only three specific columns in this exact sequence: TransactionID, ProductCategory, and ProductName.</li></ul>
@@ -11572,7 +11117,7 @@ def detect_description_contradictions(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (235,'235. Mask Sensitive Personally Identifiable Information','
+VALUES (225,'225. Mask Sensitive Personally Identifiable Information','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Security protocols dictate that before transaction files from dirty_store_transactions.csv enter public model testing grids, all columns containing personally identifiable information (PII) must be scrambled or masked to preserve user anonymity. Write a Python function mask_customer_pii(df: pd. DataFrame) -> pd. DataFrame that applies text masking patterns:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Account Index Masking:</strong> For the CustomerID string column, preserve the first character and the last two characters completely intact. Replace all intermediate characters with exactly three asterisks <strong>* (e.g., "C12345" $\rightarrow$ "C</strong>*45").</li><li class="py-0.5"><strong>Missing Token Resilience:</strong> If a row''s CustomerID field is completely missing (NaN), preserve the null marker without applying string masking substitutions.</li><li class="py-0.5"><strong>Short String Handling:</strong> If a valid string entry is too short to follow the default masking rule (e.g., length is less than or equal to 3 characters), replace the entire string with a flat value of "C***".</li><li class="py-0.5"><strong>Structure Retention:</strong> Return the original modified DataFrame holding all its initial features with the masked CustomerID values substituted in place.</li></ul>
@@ -11633,7 +11178,7 @@ def parse_nested_json_parameters(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (236,'236. Title-Case Multi-Word Exceptions in Names','
+VALUES (226,'226. Title-Case Multi-Word Exceptions in Names','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Standard string methods like .str.title() fail to format employee listings properly when surnames incorporate specific structural lowercase particles (such as "de", "van", or "von") or uppercase Roman numerals that must remain fully capitalized. Write a Python function format_exceptional_names(df: pd. DataFrame) -> pd. DataFrame that builds custom casing rules:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Initial Title Standardization:</strong> Capitalize the first letter of every space-separated word segment inside the name column, transforming all other characters to lowercase.</li><li class="py-0.5"><strong>Particle Correction Rule:</strong> Identify any standalone word components within the modified string that match corporate particle tokens: "De", "Van", or "Von". Transform these specific standalone words to absolute lowercase ("de", "van", "von").</li><li class="py-0.5"><strong>Suffix Capitalization Rule:</strong> If a word segment matches a standard generational suffix tier (such as "Ii", "Iii", or "Iv"), force the entire word segment to absolute uppercase ("II", "III", "IV").</li><li class="py-0.5"><strong>Data Protection:</strong> Ensure this custom formatting does not affect names lacking these specific components. Return the modified DataFrame.</li></ul>
@@ -11692,7 +11237,7 @@ def format_currency_values(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (237,'237. Split Variable-Length Delimited Fields into Matrix Columns','
+VALUES (227,'227. Split Variable-Length Delimited Fields into Matrix Columns','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">E-commerce tracking logs frequently store transactional metadata as a single comma-separated text string to save space. To run multi-dimensional analytical models, you must parse these variable-length strings and break them out into structured matrix columns. Write a Python function expand_delimited_properties(df: pd. DataFrame) -> pd. DataFrame that splits text columns:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Vectorized Matrix Splitting:</strong> Parse the ProductAttributes text column by splitting each string entry on every comma , character.</li><li class="py-0.5"><strong>Dynamic Column Generation:</strong> Expand these split tokens horizontally into distinct new columns. The newly generated columns must follow the explicit naming pattern attr_0, attr_1, attr_2, matching the positional sequence of the split elements.</li><li class="py-0.5"><strong>Variable Length Padding:</strong> Because different rows contain a variable number of attributes, short rows will generate missing cells at the higher levels. Ensure these missing slots evaluate cleanly to a standard string placeholder "NONE".</li><li class="py-0.5"><strong>Cleanup Protocol:</strong> Drop the original source column ProductAttributes once the horizontal expansion matrix is attached, returning all other initial fields.</li></ul>
@@ -11751,7 +11296,7 @@ def extract_url_parameters(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (238,'238. Flatten Deeply Nested Multi-Indexed Columns Post-Aggregation','
+VALUES (228,'228. Flatten Deeply Nested Multi-Indexed Columns Post-Aggregation','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Executing multiple disparate aggregation routines across separate fields using .groupby().agg() frequently results in a DataFrame with a MultiIndex (hierarchical) column structure. These multi-tiered headers break standard output writers (like database loaders or clean CSV builders). You must flatten these multi-tier headers into a single flat string layer. Write a Python function flatten_hierarchical_columns(df: pd. DataFrame) -> pd. DataFrame that cleans up multi-tiered data frames:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Multi-Column Processing:</strong> Group the incoming transaction ledger by the ProductCategory and PaymentMethod columns combined.</li><li class="py-0.5"><strong>Distinct Segment Operations:</strong> Calculate the following three aggregate statistics simultaneously:The sum of the Quantity column. The mean of the Profit column. The standard deviation of the Profit column.</li><li class="py-0.5"><strong>Column Index Flattening:</strong> The operations above generate a two-level column layout. Collapse this matrix layout into a single flat layer by joining the levels with an underscore character _ (e.g., Level 0: "Profit", Level 1: "mean" $\rightarrow$ "Profit_mean").</li><li class="py-0.5"><strong>Layout Normalization:</strong> Return the flat DataFrame with ProductCategory and PaymentMethod restored as normal data columns, sorted alphabetically by ProductCategory first. Round all calculated float columns to exactly 2 decimal places.</li></ul>
@@ -11806,7 +11351,7 @@ def clean_escaped_characters(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (239,'239. Construct Hierarchical Indexes from Dynamic String Cuts','
+VALUES (229,'229. Construct Hierarchical Indexes from Dynamic String Cuts','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Data engineering systems often parse flat operational log codes to generate MultiIndexed dimensions. This structures complex row spaces without requiring separate lookups. Write a Python function build_hierarchical_index(df: pd. DataFrame) -> pd. DataFrame that converts flat strings into structural rows:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>String Component Extraction:</strong> Look at the string column BatchCode. It follows a specific structural naming syntax: "REGION-YEAR-RUN" (e.g., "EAST-2026-R1").</li><li class="py-0.5"><strong>Index Generation:</strong> Split this string on the hyphen character -. Set the resulting three distinct elements as the definitive row MultiIndex of the DataFrame.</li><li class="py-0.5"><strong>Index Level Naming:</strong> Label these index levels exactly as Region, Year, and RunID from top to bottom.</li><li class="py-0.5"><strong>Cleanup Protocol:</strong> Delete the original source column BatchCode post-extraction, returning the rest of the numerical attributes intact.</li></ul>
@@ -11861,7 +11406,7 @@ def fuzzy_match_departments(df1, df2):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (240,'240. Cross-Sectional Analysis Across Asymmetric Index Levels','
+VALUES (230,'230. Cross-Sectional Analysis Across Asymmetric Index Levels','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">When running cross-sectional queries over a MultiIndexed DataFrame, accessing specific data values across inner tiers typically requires long chain commands or deep indexing hacks. You must isolate a clean slice of data across an absolute tier without destroying the higher organizational structures. Write a Python function query_asymmetric_tiers(df: pd. DataFrame, target_tier: str) -> pd. DataFrame that extracts localized index cross-sections:Inner Tier Extraction (.xs()): Query the multi-indexed table to pull out all rows matching the exact index value supplied by target_tier.</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Explicit Level Target:</strong> Isolate the rows by targeting the row index level named VIP_Tier exactly.</li><li class="py-0.5"><strong>Hierarchy Retention:</strong> Configure the cross-section operation using drop_level=False. This ensures the filtered level (VIP_Tier) remains as part of the MultiIndex structure in the final output table, keeping the full row history visible.</li></ul>
@@ -11914,7 +11459,7 @@ def merge_transactions_with_customers(df_transactions, df_customers):
     pass','','store_dim_customers.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (241,'241. Pivot Complex Aggregations with Variable Margins and Totals','
+VALUES (231,'231. Pivot Complex Aggregations with Variable Margins and Totals','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Generating summary tables from raw transaction files like dirty_store_transactions.csv often breaks down if the reshape command cannot group multi-layer fields and calculate global column limits simultaneously. Write a Python function pivot_financial_summary(df: pd. DataFrame) -> pd. DataFrame that builds multi-factor pivot tables:Pivot Table Matrix Setup (.pivot_table()): Construct an aggregated pivot summary table.</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Dimensional Layout Rules:</strong> Configure the pivot options so that:The row index tracks the ProductCategory column. The column layout groups by the PaymentMethod column. The aggregated data values reflect the metrics inside the Profit column.</li><li class="py-0.5"><strong>Aggregation Protocol:</strong> Calculate the cumulative sum of profits across all intersecting categories.</li><li class="py-0.5"><strong>Totals Margins Integration:</strong> Include global row and column summary calculations within the pivot matrix by passing margins=True. Set the explicit string label for the summary rows and columns to "Grand Total".</li><li class="py-0.5"><strong>Null Cells Correction:</strong> Fill any resulting blank or missing cells (NaN) inside the pivot grid with a flat default value of 0.00.</li></ul>
@@ -11968,7 +11513,7 @@ def unmatched_customer_audits(df_transactions, df_customers):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (242,'242. Unstacking Selective Tiers of Multi-Dimensional Arrays','
+VALUES (232,'232. Unstacking Selective Tiers of Multi-Dimensional Arrays','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Data warehouses frequently store highly aggregated records in deep, row-hierarchical formats. To present these records to data consumption layers or downstream visualization widgets, you must dynamically swing selective layers of a row MultiIndex horizontally into column headers without disturbing unselected structural tiers. Write a Python function unstack_selective_tiers(df: pd. DataFrame) -> pd. DataFrame that manipulates multi-index layout depths:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>MultiIndex Initialization:</strong> The incoming DataFrame contains standard data columns Company, Year, Quarter, and Revenue. Convert Company, Year, and Quarter into the definitive row MultiIndex layout of the DataFrame in that exact top-to-bottom sequence. Selective Level Unstacking (.unstack()): Rotate the Quarter level out of the row MultiIndex structure, swinging it horizontally to become the primary column index layer. The levels Company and Year must remain fixed as the persistent row MultiIndex. Data Integrity &</li><li class="py-0.5"><strong>Spacing:</strong> Any missing cell blocks generated by asymmetrical reporting cycles across quarterly buckets must evaluate strictly to a standard float 0.00.</li><li class="py-0.5"><strong>Structure Formatting:</strong> Ensure the resulting column headers match the unstacked values natively (e.g., "Q1", "Q2").</li></ul>
@@ -12025,7 +11570,7 @@ def cross_join_campaigns(df_customers, df_campaigns):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (243,'243. Multi-Index Swapping and Reordering for Matrix Math','
+VALUES (233,'233. Multi-Index Swapping and Reordering for Matrix Math','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Before running matrix multiplication operations or structural window analytics on MultiIndexed frames, the data tiers must align precisely by priority. You must design a utility to reorder the internal levels of a hierarchical index without losing the underlying cell links. Write a Python function reorder_hierarchical_levels(df: pd. DataFrame) -> pd. DataFrame that swaps multi-index prioritization structures:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Index Verification:</strong> The incoming input DataFrame exhibits a three-level row MultiIndex defined exactly as [Region, Year, Segment] from top to bottom. Level Position Swapping (.swaplevel() / .reorder_levels()): Reorder the internal layers of this MultiIndex structure so that Year becomes the primary level (Level 0), Segment becomes the intermediate level (Level 1), and Region drops to the bottom level (Level 2).</li><li class="py-0.5"><strong>Index Sorting Protocol:</strong> Post-reordering, you must execute an explicit .sort_index(level=0) to reorganize the structural row layout chronologically by the new primary Year tier.</li><li class="py-0.5"><strong>Data Preservation:</strong> Do not drop, modify, or pivot any of the numeric metric data columns present inside the data space.</li></ul>
@@ -12078,7 +11623,7 @@ def merge_asof_sensor_tolerances(df_transactions, df_sensor):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (244,'244. Reshape Sparse Matrices into Dense DataFrames','
+VALUES (234,'234. Reshape Sparse Matrices into Dense DataFrames','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Analytical algorithms process tabular inputs inefficiently when matrices are stored in sparse, unpivoted transactional records. You must transform flat relational rows containing structural interaction coordinate keys into a dense, classical wide matrix. Write a Python function convert_sparse_to_dense(df: pd. DataFrame) -> pd. DataFrame that generates dense feature arrays:Dense Matrix Setup (.pivot()): Pivot the flat tracking table so that the unique values inside the UserID column become the explicit row index, and the unique tags within the FeatureID column become the horizontal column headers.</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Coordinate Values Mapping:</strong> Populate the cells at each intersection with the corresponding value from the InteractionScore column.</li><li class="py-0.5"><strong>Sparse Null Amelioration:</strong> Because coordinate points are inherently sparse, many intersections will lack a record. Fill these specific missing grid slots with a flat default value of 0.</li><li class="py-0.5"><strong>Type Harmonization:</strong> Ensure that all scores inside the final dense matrix are explicitly cast to the standard integer type (int64).</li><li class="py-0.5"><strong>Index Cleanliness:</strong> The index name (UserID) and column name (FeatureID) must remain cleanly preserved.</li></ul>
@@ -12134,7 +11679,7 @@ def reconcile_disjoint_ledgers(df_ledger_a, df_ledger_b):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (245,'245. Conditional Melting of Multi-Column Data Blocks','
+VALUES (235,'235. Conditional Melting of Multi-Column Data Blocks','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Database schemas that record multi-metric variables side-by-side across sequential timeline steps (e.g., storing 2025_Target, 2025_Actual, 2026_Target, 2026_Actual as horizontal columns) require complex, multi-conditional melting steps to reshape them into tidy data tables. Write a Python function melt_conditional_data_blocks(df: pd. DataFrame) -> pd. DataFrame that implements conditional wide-to-long melting:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Structural Meltdown Execution:</strong> Unpivot the wide multi-column DataFrame using pd.melt(). Preserve ProjectID and Department as fixed structural identifier variables.</li><li class="py-0.5"><strong>Header Attribute Splitting:</strong> The horizontal variable columns collapse into a new string column named VariableYear. Split this string field on the underscore character _ to break it apart (e.g., dividing "2026_Target" into "2026" and "Target").</li><li class="py-0.5"><strong>Feature Column Allocation:</strong> Reassign these separated components into two distinct new tracking columns named CalendarYear and PerformanceMetric. Drop the intermediate VariableYear column.</li><li class="py-0.5"><strong>Target Variable Pivoting:</strong> Pivot the intermediate table so that the values inside PerformanceMetric (Target and Actual) swing into separate, dedicated parallel columns named exactly TargetValue and ActualValue.</li><li class="py-0.5"><strong>Output Cleanliness:</strong> Rebuild the layout into a flat DataFrame, sorted by ProjectID in ascending order and CalendarYear chronologically.</li></ul>
@@ -12189,7 +11734,7 @@ def join_aggregate_customer_value(df_transactions, df_customers):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (246,'246. Asynchronous Time-Zone Alignment and Localization','
+VALUES (236,'236. Asynchronous Time-Zone Alignment and Localization','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Global log systems ingest sensor timestamps from variable regional networks displaying conflicting time-zone markers or floating offsets. When processing streams for sensor_readings_noisy.csv, direct timeline comparison crashes unless strings are forced into absolute time-zone awareness and standardized to a single corporate standard. Write a Python function standardize_timezones(df: pd. DataFrame) -> pd. DataFrame that builds a uniform datetime timeline:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Datetime Standardization:</strong> Parse the incoming Timestamp column into a true Pandas datetime format. Handle mixed layouts (slashes, ISO-T, and space notations) by forcing unaligned strings into a clean datetime representation.</li><li class="py-0.5"><strong>Time-Zone Localization:</strong> If the converted timestamps are completely naive (lacking time-zone tracking metadata), localize them to Coordinated Universal Time (UTC) using .dt.tz_localize(''UTC'', ambient=''NaT'').</li><li class="py-0.5"><strong>Time-Zone Conversion:</strong> Convert all localized timestamps explicitly into the Eastern Standard Time zone using .dt.tz_convert(''US/Eastern'').</li><li class="py-0.5"><strong>Clean Index Sorting:</strong> Establish this new Eastern Time column as the absolute index anchor of the DataFrame. Drop any rows where the timestamp evaluated to NaT (missing or unparseable dates). Sort the dataset in ascending chronological order.</li></ul>
@@ -12248,7 +11793,7 @@ def standardize_timezones(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (247,'247. Calculate Custom Business-Day Deltas Excluding Arbitrary Holidays','
+VALUES (237,'237. Calculate Custom Business-Day Deltas Excluding Arbitrary Holidays','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Supply chain settlement matrices tracking fulfillment latency inside dirty_store_transactions.csv cannot rely on standard day calculations. Standard day counts fail because they count weekends and holiday factory shutdowns, leading to inaccurate calculations of true operational processing speed. Write a Python function calculate_business_duration(df: pd. DataFrame, custom_holidays: list) -> pd. DataFrame that isolates custom operational windows:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Date Validation:</strong> Convert OrderDate and ShipDate columns into standard Pandas datetime formats. Drop rows where either date is missing.</li><li class="py-0.5"><strong>Business Day Formula:</strong> Create a new column named ProcessingBusinessDays that calculates the exact count of business days elapsed between OrderDate (start date) and ShipDate (end date). Weekend and</li><li class="py-0.5"><strong>Holiday Constraints:</strong> The calculation must explicitly exclude standard weekends (Saturdays and Sundays) AND exclude any custom calendar dates passed inside the custom_holidays list parameter.</li><li class="py-0.5"><strong>Boundary Counting:</strong> The calculation must be inclusive of both boundary dates (i.e., if a product orders and ships on the exact same valid business day, the duration metrics must return 1).</li></ul>
@@ -12303,7 +11848,7 @@ def fill_missing_performance_factors(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (248,'248. Forward-Fill Intermittent Time Series with Upper Bounds','
+VALUES (238,'238. Forward-Fill Intermittent Time Series with Upper Bounds','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">High-frequency financial tick streams inside high_frequency_stock_ticks.csv frequently register data drops due to network issues, resulting in empty rows (NaN). Standard forward-fills (ffill) solve this but present a major risk: they carry old data forward over long gaps, which pollutes volatility tracking models. Write a Python function bounded_volatility_fill(df: pd. DataFrame, max_fill_gap: int) -> pd. DataFrame that patches temporal streams within strict bounds:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Chronological Alignment:</strong> Sort the ticker records globally by Ticker alphabetically, and then by Timestamp in ascending chronological order. Set Timestamp as the explicit index anchor of the dataset.</li><li class="py-0.5"><strong>Partitioned Forward-Fill:</strong> Group the sorted data space by the Ticker column.</li><li class="py-0.5"><strong>Bounded Imputation:</strong> Execute a forward-fill configuration across the Price column to patch missing (NaN) cells with the closest preceding valid price metric.</li><li class="py-0.5"><strong>Upper Gap Limits:</strong> Enforce a strict upper bound limit specified by the max_fill_gap parameter. If a ticker exhibits a consecutive run of missing cells that strictly exceeds max_fill_gap, stop filling (leave the excess subsequent missing slots as NaN).</li><li class="py-0.5"><strong>Output Frame:</strong> Return the complete DataFrame with the filled price data. Restore Timestamp as a standard data column.</li></ul>
@@ -12364,7 +11909,7 @@ def resample_uneven_stock_ticks(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (249,'249. Detect Consecutive Day Streaks (The Gaps-and-Islands Problem)','
+VALUES (239,'239. Detect Consecutive Day Streaks (The Gaps-and-Islands Problem)','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">To identify loyal user cohorts, marketing analytics engines parse transaction logs to find customers who make purchases over multiple consecutive calendar days. This requires grouping scattered dates into continuous time islands while filtering out non-consecutive activity gaps. Write a Python function detect_consecutive_purchases(df: pd. DataFrame, min_streak: int) -> pd. DataFrame that solves the Gaps-and-Islands time sequence challenge:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Date Normalization:</strong> Convert the Date column to a true date-only standard format (removing any hours/minutes/seconds tokens). Remove exact duplicate purchase dates for the same customer so each calendar day is counted only once.</li><li class="py-0.5"><strong>Chronological Sorting:</strong> Sort the entire dataset by CustomerID alphabetically, and then by Date in ascending chronological order.</li><li class="py-0.5"><strong>Island Island Sequence Partitioning:</strong> Identify continuous clusters of consecutive days for each customer.(Operational</li><li class="py-0.5"><strong>Hint:</strong> Subtracting an escalating row counter sequence from each date creates a uniform structural baseline date. Rows sharing an identical baseline date belong to the same consecutive calendar island).</li><li class="py-0.5"><strong>Streak Tally Formulation:</strong> Calculate the total length (duration in days) of each continuous island sequence. Filter and retain only those islands where the streak duration length is strictly greater than or equal to the min_streak parameter.</li><li class="py-0.5"><strong>Output Schema:</strong> Return a flat summary DataFrame containing the columns CustomerID, StreakStartDate, StreakEndDate, and StreakLength, sorted by StreakLength in descending order.</li></ul>
@@ -12421,7 +11966,7 @@ def detect_consecutive_outliers(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (250,'250. Resample Irregular High-Frequency Ticks to Open-High-Low-Close (OHLC)','
+VALUES (240,'240. Resample Irregular High-Frequency Ticks to Open-High-Low-Close (OHLC)','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Trading visualization engines cannot process raw, microsecond financial ticks directly. Financial charting tools require high-frequency feeds (such as the raw inputs in high_frequency_stock_ticks.csv) to be consolidated into standard Open-High-Low-Close (OHLC) bar structures over fixed time intervals. Write a Python function resample_to_ohlc(df: pd. DataFrame, time_frame: str) -> pd. DataFrame that converts high-frequency price fields:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Timeline Initialization:</strong> Convert the Timestamp column into a true Pandas datetime standard format and establish it as the definitive row index anchor. Remove rows where the Price column is missing (NaN).</li><li class="py-0.5"><strong>Chronological Sorting:</strong> Sort the DataFrame explicitly by the datetime index in ascending order. OHLC Resample (.resample().ohlc()): Group the dataset by the Ticker column, and resample the chronological price stream into uniform time blocks defined by the time_frame parameters (e.g., ''5Min'', ''1H''). Index Flattening &</li><li class="py-0.5"><strong>Cleaning:</strong> Flatten the resulting hierarchical MultiIndex column headers (open, high, low, close) so they act as standard columns. Convert the index markers back into two flat data columns named Ticker and BarTimestamp.</li><li class="py-0.5"><strong>Output Sorting:</strong> Sort the output matrix alphabetically by Ticker first, and chronologically by BarTimestamp second. Drop any bar intervals where no ticks occurred (removing completely empty intervals).</li></ul>
@@ -12480,7 +12025,7 @@ def plot_student_score_distributions(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (251,'251. Calculate Rolling Window Metrics with Variable Time-Offsets','
+VALUES (241,'241. Calculate Rolling Window Metrics with Variable Time-Offsets','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Standard row-based rolling calculations (window=7) distort statistical standard deviations if time intervals are highly irregular. For example, 7 rows of data could represent 7 seconds during peak market activity, or 7 hours during low-volume periods. To accurately track metrics like rolling temperature averages in sensor_readings_noisy.csv, the window calculation must be constrained by an absolute time duration offset (e.g., 2D or 1H) rather than a fixed row count. Write a Python function calculate_time_rolling_mean(df: pd. DataFrame, time_window: str) -> pd. DataFrame that builds time-offset windows:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Datetime Index Verification:</strong> Convert the Timestamp column into a standard datetime format and set it as the explicit index of the table. Sort the index in ascending chronological order.</li><li class="py-0.5"><strong>Time-Based Windowing:</strong> Group the data space by the SensorID column, and execute a moving rolling window calculation across the Temperature column.</li><li class="py-0.5"><strong>Offset Configuration:</strong> Set the rolling window parameters to use the variable string offset supplied by the time_window argument (e.g., ''2h'', ''1D'').</li><li class="py-0.5"><strong>Minimum Window Span:</strong> Configure the rolling calculation using min_periods=1 so it yields valid running calculations from the very first row rather than generating leading null entries.</li><li class="py-0.5"><strong>Structural Return:</strong> Append the rolling statistics back onto the source dataset as a new column named RollingTimeMeanTemp. Return the complete DataFrame with Timestamp fully restored as a standard column.</li></ul>
@@ -12538,7 +12083,7 @@ def plot_sensor_timeline(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (252,'252. Align Asynchronous Events Using Forward-Looking merge_asof','
+VALUES (242,'242. Align Asynchronous Events Using Forward-Looking merge_asof','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Financial validation pipelines tracking market execution map incoming customer transactions back to the closest available baseline market price. Because trade executions and market price changes happen asynchronously, you must pair each transaction with the nearest future market tick occurring within a strict time limit. Write a Python function merge_future_market_ticks(df_orders: pd. DataFrame, df_ticks: pd. DataFrame) -> pd. DataFrame that implements asynchronous future matching:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Chronological Alignment:</strong> Ensure the Timestamp column in both DataFrames is cast to a true Pandas datetime format and sorted in ascending order.</li><li class="py-0.5"><strong>Forward Asynchronous Join:</strong> Use pd.merge_asof() to link df_orders to df_ticks based on their timestamps.</li><li class="py-0.5"><strong>Directional Matching Configuration:</strong> Configure the matching direction to look strictly forward (matching each order timestamp to the closest subsequent market tick timestamp that is greater than or equal to it).</li><li class="py-0.5"><strong>Tolerance Boundaries:</strong> Set a strict maximum time window tolerance limit of 500 milliseconds (pd. Timedelta(milliseconds=500)). If no market tick occurs within 500 milliseconds after the order timestamp, do not perform the join (leave the inherited tick columns as NaN).</li></ul>
@@ -12599,7 +12144,7 @@ def plot_sales_by_category(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (253,'253. Compute Expanding Metric Maximums and Exponentially Weighted Decays','
+VALUES (243,'243. Compute Expanding Metric Maximums and Exponentially Weighted Decays','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Quantitative momentum models evaluate asset price histories by measuring both absolute lifetime price ceilings and exponentially decaying moving baselines. This requires running expanding windows and exponentially weighted functions side-by-side to track trend acceleration shifts. Write a Python function compute_momentum_indicators(df: pd. DataFrame, alpha_factor: float) -> pd. DataFrame that constructs advanced analytical tracking models:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Chronological Alignment:</strong> Sort the incoming transaction log globally by Ticker alphabetically, and then by Timestamp in ascending chronological order.</li><li class="py-0.5"><strong>Expanding Historical Ceilings:</strong> Group the sorted records by Ticker. For each group, calculate the expanding cumulative maximum of the Price column up to the current row index point. Name this new column LifetimePeakPrice. Exponential Decay Calculations (.ewm()): Within each ticker group, compute the exponentially weighted moving average of the Price column.</li><li class="py-0.5"><strong>Smoothing Parameters:</strong> Configure the decay function using the alpha smoothing parameter specified by the alpha_factor argument. Set adjust=False to force recursive calculation rules. Name this tracking column Price_EWMA.</li><li class="py-0.5"><strong>Output Cleanliness:</strong> Round all calculated float values to exactly 4 decimal places. Return the complete DataFrame.</li></ul>
@@ -12657,7 +12202,7 @@ def plot_score_vs_hours_scatter(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (254,'254. Downcast Massive Dataframes via Numeric and Categorical Type Traversal','
+VALUES (244,'244. Downcast Massive Dataframes via Numeric and Categorical Type Traversal','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">When huge multi-gigabyte files are loaded into Pandas, the engine defaults to high-bit representations (like int64 and float64) for all numerical fields, and object (string) pointers for categorical columns. This consumes excessive amounts of RAM. To optimize production memory footprints, you must programmatically downcast data types to their smallest possible bit depths without losing structural numerical precision or truncating cell values. Write a Python function optimize_dataframe_memory(df: pd. DataFrame) -> pd. DataFrame that implements memory downcasting:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Integer Downcasting:</strong> For every column containing integer types, downcast the field to the lowest possible signed integer bit depth (int8, int16, int32, int64) that can safely hold the column''s absolute maximum and minimum values using pd.to_numeric(..., downcast=''integer'').</li><li class="py-0.5"><strong>Float Downcasting:</strong> For every column containing floating-point numbers, downcast the field to the smallest available float bit depth (float32 or float64) using pd.to_numeric(..., downcast=''float'').</li><li class="py-0.5"><strong>Categorical Compression:</strong> Scan all remaining object (string) columns. If a string column''s unique value cardinality is low—specifically, if its unique value count is strictly less than 5% of the total row dimension of the DataFrame—convert that column explicitly into a memory-efficient category data type.</li><li class="py-0.5"><strong>Data Integrity:</strong> The final cell values and row shapes must remain identical to the source table.</li></ul>
@@ -12717,7 +12262,7 @@ def plot_monthly_profit_trend(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (255,'255. Vectorized Numeric Evaluation Using pd.eval() for Compound Logic','
+VALUES (245,'245. Vectorized Numeric Evaluation Using pd.eval() for Compound Logic','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Evaluating compound mathematical queries on massive dataframes using standard Python syntax notation (e.g., df[(df[''A''] > 0) & (df[''B''] < 5)]) forces Pandas to instantiate large intermediate allocation arrays in RAM. This causes out-of-memory errors on large datasets. To optimize performance, you must execute compound evaluation logic through the vectorized optimization engine via pd.eval(). Write a Python function evaluate_compound_logic(df: pd. DataFrame) -> pd. DataFrame that builds optimized numerical masks:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Vectorized Logic Execution:</strong> Use the high-performance pd.eval() engine string interpreter to evaluate a compound condition across the dataset.</li><li class="py-0.5"><strong>Compound Filter Rule:</strong> The filter expression must evaluate the following strict condition string:$$\text{Mask} = (\text{Quantity} > 5) \land (\text{UnitPrice} < 50.0) \land (\text{Discount} > 0.05)$$Imputation</li><li class="py-0.5"><strong>Safe Handling:</strong> Before evaluating the expression, replace any missing cells (NaN) in the Quantity, UnitPrice, and Discount columns with a flat value of 0.</li><li class="py-0.5"><strong>Data Isolation:</strong> Filter the incoming table to return only the rows where the compound logical statement evaluates to True. Keep all original columns intact.</li></ul>
@@ -12773,7 +12318,7 @@ def plot_sensor_distributions_box(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (256,'256. High-Speed Conditional String Filtering via Vectorized .query()','
+VALUES (246,'246. High-Speed Conditional String Filtering via Vectorized .query()','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Standard row filtering using boolean syntax arrays becomes unreadable and performs poorly when dealing with complex, multi-variable categorical filtering logic. You must use the optimized .query() expression engine to run high-speed, conditional string filtration. Write a Python function query_high_speed_filters(df: pd. DataFrame, min_hours: float, target_support: str) -> pd. DataFrame that executes optimized runtime queries:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Dynamic Expression Injection:</strong> Use the .query() method to filter the incoming DataFrame.</li><li class="py-0.5"><strong>Multi-Variable String Rule:</strong> The expression string must evaluate rows based on the following multi-variable condition:$$\text{Condition} = (\text{StudyHours} \ge \text{@min\_hours}) \land (\text{SchoolSupport} == \text{@target\_support})$$Variable</li><li class="py-0.5"><strong>Referencing:</strong> Use the @ symbol within the query expression string to dynamically reference the local variables min_hours and target_support.</li><li class="py-0.5"><strong>Casing Normalization:</strong> Prior to executing the query, ensure the SchoolSupport text column is stripped of all surrounding whitespaces and converted to a standard string.</li></ul>
@@ -12829,7 +12374,7 @@ def plot_region_user_distribution(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (257,'257. Chunked Processing Architecture for Multi-Gigabyte Ingestion','
+VALUES (247,'247. Chunked Processing Architecture for Multi-Gigabyte Ingestion','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Challenge 98: Chunked Processing Architecture for Multi-Gigabyte IngestionProblem DescriptionWhen processing an enormous multi-gigabyte data repository that exceeds the available RAM capacity of a host machine, calling pd.read_csv("large_file.csv") will instantly trigger a system crash. To process large files safely, you must implement a chunked reading architecture that streams the file sequentially in manageable micro-batches. Write a Python function process_stream_chunks(file_path: str, batch_chunk_size: int) -> pd. DataFrame that simulates chunked micro-batch processing:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Chunked Ingestion Engine:</strong> Open the target file using pd.read_csv() combined with the chunksize=batch_chunk_size parameter configuration. This will return a iterable text file parsing stream reader object.</li><li class="py-0.5"><strong>Iterative Batch Aggregation:</strong> Loop through each chunk batch sequentially. Within each chunk batch, perform an immediate data filtering step: retain only those rows where the Status column matches "Error" or "Err".</li><li class="py-0.5"><strong>Relational In-Line Truncation:</strong> For the filtered rows in each chunk, discard all columns except Timestamp, SensorID, and Status to minimize the data''s memory footprint before aggregation.</li><li class="py-0.5"><strong>Consolidated Reconstruction:</strong> Vertically stack (pd.concat) the filtered data slices from each chunk into a single, consolidated output DataFrame. Reset the positional index smoothly from 0 to $N-1$. Input Functional Parametersfile_path: A string path pointing toward the location of a mock big data file structured identically to sensor_readings_noisy.csv.batch_chunk_size: An integer defining the maximum row limit processed inside a single micro-batch iteration loop (e.g., 100). ConstraintsThe function must avoid loading the entire file into memory at once; data must be filtered chunk-by-chunk. Example 1Input File Execution Parameters (batch_chunk_size = 2 over a 4-row file):Chunk 1</li><li class="py-0.5"><strong>Log Block:</strong>
@@ -12866,7 +12411,7 @@ def plot_stock_price_candlesticks(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (258,'258. Eliminate SettingWithCopyWarning in Deeply Nested Views','
+VALUES (248,'248. Eliminate SettingWithCopyWarning in Deeply Nested Views','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">When modifying values in a subset of a DataFrame, developers frequently trigger the notorious SettingWithCopyWarning. This occurs when an operation is performed on a "view" of the data rather than an explicit "copy", leaving it ambiguous whether the original DataFrame was successfully updated. To build safe production data pipelines, you must eliminate chained indexing loops and enforce explicit allocation. Write a Python function safe_salary_adjustment(df: pd. DataFrame, target_dept: str, bonus_multiplier: float) -> pd. DataFrame that performs safe data mutations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Subset Isolation:</strong> Isolate a subset of the incoming DataFrame containing only employees belonging to the specified target_dept.</li><li class="py-0.5"><strong>Explicit Copy Enforcement:</strong> Enforce an explicit memory allocation on this slice using the .copy() method to completely sever its reference view link to the source table.</li><li class="py-0.5"><strong>In-Place Mutation:</strong> Within this new, isolated DataFrame, multiply the CurrentSalary column by the bonus_multiplier value to compute an updated compensation matrix.</li><li class="py-0.5"><strong>Warning Mitigation:</strong> The execution of this function must run completely clean, without triggering a SettingWithCopyWarning or altering the rows of the original input DataFrame. Return only the modified subset DataFrame.</li></ul>
@@ -12924,7 +12469,7 @@ def plot_departmental_profit_heatmap(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (259,'259. Optimize Row-Wise Traversal (Replacing iterrows with itertuples)','
+VALUES (249,'249. Optimize Row-Wise Traversal (Replacing iterrows with itertuples)','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Using .iterrows() to loop through rows in a large dataset is a major anti-pattern in Pandas. It runs slowly because it has to pack each row''s data into a new Pandas Series object at every step. When vectorization isn''t an option and you must loop through rows, you should use the much faster .itertuples() method, which streams rows as lightweight, optimized Python named tuples. Write a Python function compute_custom_performance_index(df: pd. DataFrame) -> list that optimizes row loops:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Lightweight Row Streaming:</strong> Loop through the rows of the incoming academic DataFrame using the optimized .itertuples() traversal architecture. Disable index tracking inside the tuple generation loop by setting index=False to speed up performance.</li><li class="py-0.5"><strong>Row-Wise Algorithmic Logic:</strong> For each row tuple, compute a custom index score called PerformanceIndex based on these conditional rules:If AttendanceRate is strictly less than 80.0, the score is defined as: StudyHours * 0.5 + SleepHoursIf AttendanceRate is greater than or equal to 80.0, the score is defined as: StudyHours * 1.2 + SleepHours * 1.5 -</li><li class="py-0.5"><strong>ScreenTimeOutput Structure:</strong> Store the calculated numerical scores in a standard Python list, preserving the exact order of rows from the original dataset. Return this list.</li></ul>
@@ -12977,7 +12522,7 @@ def plot_correlation_matrix(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (260,'260. Fast Element-Wise Matrix Mutations Using NumPy Vectorization Backends','
+VALUES (250,'250. Fast Element-Wise Matrix Mutations Using NumPy Vectorization Backends','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">While the .apply() method is flexible, applying a custom Python function to rows or columns operates as an implicit for loop under the hood. For large datasets, this approach is highly inefficient. To achieve maximum execution speed, you should pass data directly to underlying NumPy arrays (.values or .to_numpy()) to harness true low-level C-vectorized parallel processing. Write a Python function fast_vectorized_profit_scaler(df: pd. DataFrame) -> np.ndarray that utilizes NumPy vectorization backends:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>NumPy Array Extraction:</strong> Extract the raw numeric data from the Quantity, UnitPrice, and Profit columns as a combined multi-dimensional NumPy ndarray block using the .values property.</li><li class="py-0.5"><strong>Low-Level Array Math:</strong> Perform low-level C-vectorized mathematical mutations directly on the extracted NumPy array coordinates. Compute a new array named ScaledYield using the following logic:For rows where the Profit coordinate is strictly negative (representing a loss), scale the absolute value of that loss by multiplying it by the corresponding Quantity. For rows where the Profit coordinate is zero or positive, multiply the Profit value by the corresponding UnitPrice.</li><li class="py-0.5"><strong>Output Format:</strong> Return the calculated ScaledYield values as a standalone one-dimensional NumPy ndarray, preserving the data''s initial row order.</li></ul>
@@ -13030,7 +12575,7 @@ def detect_fraudulent_transactions(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (261,'261. Parallelizing Custom User-Defined Functions Across Groups','
+VALUES (251,'251. Parallelizing Custom User-Defined Functions Across Groups','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">When executing highly complex user-defined functions (UDFs) across a dataset using .groupby().apply(), Pandas processes each group partition sequentially on a single CPU core. On large multi-core production systems, this leaves the remaining CPU cores completely idle. To optimize resource utilization, you must structure your grouping code into discrete, independent tasks that can be executed in parallel across multiple processing threads. Write a Python function parallel_group_processing(df: pd. DataFrame) -> pd. DataFrame that designs parallel-ready group operations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Subgroup Structural Partitioning:</strong> Group the educational tracking grid by the ParentEducation column.</li><li class="py-0.5"><strong>Isolated Task Design:</strong> Design a clean user-defined function (UDF) that can run independently on any individual group chunk. The UDF must sort the chunk''s internal rows by ExamScore in descending order, drop the lowest 10% of records from that specific group, and calculate the mathematical variance of the remaining scores.</li><li class="py-0.5"><strong>Consolidated Assembly:</strong> Return a flat summary DataFrame containing the columns ParentEducation and FilteredVariance, sorted alphabetically by ParentEducation.</li><li class="py-0.5"><strong>Architecture Readiness:</strong> Ensure the processing logic uses standard, non-interdependent functions, making it fully compatible with parallel mapping frameworks (like joblib or multiprocessing).</li></ul>
@@ -13087,7 +12632,7 @@ def score_relative_percentiles(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (262,'262. Compute Rolling Correlation Matrices Across Sliding Timelines','
+VALUES (252,'252. Compute Rolling Correlation Matrices Across Sliding Timelines','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Quantitative analysts evaluating asset pairs inside high_frequency_stock_ticks.csv monitor shifting market microstructures by tracking the rolling correlation between asset price movements over time. Static global correlation calculations are insufficient because they hide brief periods of decoupling caused by localized price shocks. Write a Python function compute_rolling_pair_correlation(df: pd. DataFrame, window_size: int) -> pd. DataFrame that calculates sliding time-series correlations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Ticker Alignment Imputation:</strong> The input DataFrame contains irregular tick logs for multiple tickers. Pivot the data so that Timestamp becomes the explicit row index, Ticker labels become columns, and Price values fill the intersections. Chronologically sort this pivoted index.</li><li class="py-0.5"><strong>Missing Tick Forward-Protection:</strong> High-frequency streams often contain mismatched timestamps between assets. Forward-fill (ffill) missing values across the ticker columns so that the last known price persists until a new tick arrives. If leading values remain null, drop those rows.</li><li class="py-0.5"><strong>Rolling Correlation Processing:</strong> Execute a moving window correlation matrix calculation using .rolling(window=window_size).corr().</li><li class="py-0.5"><strong>Target Level Extraction:</strong> The resulting rolling correlation output returns a hierarchical MultiIndex column-and-row matrix at each timestamp step. Extract the rolling correlation values strictly between the ticker pairs "AAPL" and "TSLA".</li><li class="py-0.5"><strong>Output Structure:</strong> Return a flat DataFrame with columns Timestamp and RollingCorrelation. Remove any leading rows where the rolling window lacked sufficient data points to compute a valid correlation matrix.</li></ul>
@@ -13146,7 +12691,7 @@ def detect_stale_hardware_nodes(df):
     pass','','high_frequency_stock_ticks.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (263,'263. Multi-Condition Deduplication Keeping Custom Dynamic Extremes','
+VALUES (253,'253. Multi-Condition Deduplication Keeping Custom Dynamic Extremes','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Cleaning transaction records from the dirty_store_transactions.csv ledger requires removing redundant customer logs. However, flat deduplication commands (like .drop_duplicates(keep=''first'')) fail when business logic requires evaluating multiple conditions simultaneously to determine which unique row to preserve. Write a Python function deduplicate_dynamic_extremes(df: pd. DataFrame) -> pd. DataFrame that runs complex deduplication filters:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Duplicate Domain Identification:</strong> A group of rows are considered duplicates if they share identical values for both CustomerID and ProductCategory.</li><li class="py-0.5"><strong>Dynamic Priority Rules:</strong> Within each duplicate group, analyze the rows and retain exactly one record based on the following selection priority:Preserve the row that logged the absolute maximum Profit metric. If multiple rows in a duplicate group tie for the exact same maximum profit, break the tie by preserving the row that logs the absolute minimum Discount value. If a tie still persists across both profit and discount, retain the row with the lower numerical TransactionID.</li><li class="py-0.5"><strong>Index Restoration:</strong> Return the final deduplicated DataFrame sorted by TransactionID in ascending order, with its row indices reset continuously from 0.</li></ul>
@@ -13202,7 +12747,7 @@ def segment_customer_lifetimes(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (264,'264. Dynamic Quantile-Based Binning Across Variable Group Sizes','
+VALUES (254,'254. Dynamic Quantile-Based Binning Across Variable Group Sizes','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Standard quantile binning (pd.qcut()) calculates uniform thresholds across an entire dataset. However, this distorts performance classifications if baseline behaviors vary heavily between distinct categories. For example, a student exam score of 75 might be in the top 10% at a school with strict grading, but in the bottom 20% at another. To normalize scores accurately, you must compute quantile boundaries dynamically within each group separate from the rest of the dataset. Write a Python function compute_grouped_quantiles(df: pd. DataFrame) -> pd. DataFrame that builds custom localized ranking bins:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Subgroup Quantile Allocation:</strong> Group the academic tracking grid by the ParentEducation column.</li><li class="py-0.5"><strong>Localized Variable Binning:</strong> Within each separate education group, bucket the individual ExamScore values into exactly three distinct quantile ranks (Terciles).</li><li class="py-0.5"><strong>Ordinal Label Formatting:</strong> Name the three quantile bins precisely "Low", "Medium", and "High" from lowest to highest score.</li><li class="py-0.5"><strong>Column Injection Assignment:</strong> Append these dynamic group-level assignments to a new column named CohortPerformanceTier.</li><li class="py-0.5"><strong>Data Integrity Preservation:</strong> Return the complete original DataFrame holding all its initial features with the new CohortPerformanceTier column attached. Do not drop rows or shuffle the original data sequence.</li></ul>
@@ -13260,7 +12805,7 @@ def calculate_seasonal_financials(df):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (265,'265. Reconstruct Lineage Tables from Self-Referential Parent-Child Rows','
+VALUES (255,'255. Reconstruct Lineage Tables from Self-Referential Parent-Child Rows','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Corporate organizational maps or product manufacturing bills of materials are frequently stored in flat relational tables using self-referential rows (where a row contains a key pointing back to another row''s identifier in the same table, representing a parent-child relationship). To run hierarchical network models, you must recursively traverse these self-referential rows to trace corporate lineages. Write a Python function reconstruct_management_lineage(df: pd. DataFrame) -> pd. DataFrame that builds an algorithmic tree lineage tracker:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Self-Referential Traversal:</strong> The input table contains employee records with two key columns: EmployeeID (individual system key) and ManagerID (refers to the EmployeeID of their immediate superior).</li><li class="py-0.5"><strong>Lineage Path Tracking:</strong> Tracing up this hierarchy, recursively follow the chain of command for each employee until you reach the absolute top-tier executive (the root node, indicated by a ManagerID that is null, empty, or equal to their own EmployeeID).</li><li class="py-0.5"><strong>Lineage Feature Generation:</strong> For each employee, generate a new column named LineageDepth that stores the integer count of management tiers above them (e.g., top-tier executive = 0, direct report = 1, second-tier report = 2).</li><li class="py-0.5"><strong>Root Node Execution:</strong> Create an additional tracking column named UltimateSuperiorID containing the EmployeeID of the absolute top executive at the root of their management chain.</li><li class="py-0.5"><strong>Output Structure:</strong> Return a flat DataFrame containing the columns EmployeeID, ManagerID, LineageDepth, and UltimateSuperiorID, sorted by LineageDepth in ascending order.</li></ul>
@@ -13318,7 +12863,7 @@ def detect_high_volatility_symbols(df):
     pass','','dirty_store_transactions.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (266,'266. Identify Complex Cycle Patterns in Graph Metadata','
+VALUES (256,'256. Identify Complex Cycle Patterns in Graph Metadata','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Network infrastructure matrices parsing time-stamped system feeds from sensor_readings_noisy.csv monitor data routing paths between physical devices. If a network configuration error occurs, data packets can get trapped in a circular loop, passing endlessly between nodes and consuming bandwidth. You must build an engine to trace these routing paths and flag cyclic dependencies. Write a Python function detect_network_cycles(df: pd. DataFrame) -> pd. DataFrame that runs topological cycle evaluations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Graph Setup:</strong> The incoming DataFrame contains two relational columns: SourceNode and DestinationNode, representing directed edges in a network graph.</li><li class="py-0.5"><strong>Cycle Traversal Logic:</strong> Build an algorithm to traverse the directed edges for each source node. Track the path of connected nodes until you either hit a dead end (a node with no outgoing edges) or encounter a node that has already been visited within the current traversal path, confirming a circular loop.</li><li class="py-0.5"><strong>Anomaly Flagging:</strong> Add a boolean tracking column named IsCyclic that evaluates to True if the node belongs to a circular path, and False otherwise.</li><li class="py-0.5"><strong>Output Architecture:</strong> Return a flat summary DataFrame containing only two columns: SourceNode and IsCyclic. Remove duplicates so each unique SourceNode appears exactly once, sorted alphabetically.</li></ul>
@@ -13379,7 +12924,7 @@ def score_predictive_metrics(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (267,'267. Vectorized Matrix Multiplications for Multi-Dimensional Coordinate Tiers','
+VALUES (257,'257. Vectorized Matrix Multiplications for Multi-Dimensional Coordinate Tiers','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Advanced spatial classification models process large datasets inefficiently if coordinate transformations are run inside row-wise loops. To maximize performance, you must bypass standard Pandas methods and pass data columns directly into custom matrix dot-products using underlying linear algebra backends. Write a Python function execute_matrix_transformation(df: pd. DataFrame, transform_matrix: np.ndarray) -> pd. DataFrame that implements linear algebra transformations:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Feature Vector Extraction:</strong> Extract the data from three numeric columns—StudyHours, SleepHours, and ScreenTime—as a dense 2D NumPy array of shape $(N, 3)$ using the .values property.</li><li class="py-0.5"><strong>Matrix Dot-Product Transformation:</strong> Perform a vectorized matrix multiplication (np.dot or the @ operator) between the extracted $(N, 3)$ feature array and the provided $(3, 3)$ transformation matrix, yielding a new transformed matrix of shape $(N, 3)$.</li><li class="py-0.5"><strong>Calculated Column Appending:</strong> Map these newly calculated vectors back onto the source DataFrame as three distinct columns named Vector_X, Vector_Y, and Vector_Z respectively.</li><li class="py-0.5"><strong>Preservation Layout:</strong> Round all three newly generated float columns to exactly 4 decimal places. Return the complete modified DataFrame containing all original columns along with the transformation vectors.</li></ul>
@@ -13426,7 +12971,7 @@ def normalize_sensor_features(df, transform_matrix):
     pass','','student_performance_factors.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (268,'268. Track Dynamic Multi-Layer State Machine Transitions','
+VALUES (258,'258. Track Dynamic Multi-Layer State Machine Transitions','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">Security monitoring tools processing high-precision streams like sensor_readings_noisy.csv detect complex system vulnerabilities by tracking sequential changes in operational status over time. A simple count of errors is insufficient; you must track exactly how a system transitions between different states over sequential steps. Write a Python function track_state_transitions(df: pd. DataFrame) -> pd. DataFrame that models state machine progressions:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Chronological Sorting:</strong> Sort the incoming dataset globally by SensorID alphabetically, and then by Timestamp in ascending chronological order.</li><li class="py-0.5"><strong>State Window Shifting:</strong> Within each SensorID group, create a new column named PriorStatus that uses the .shift(1) method to capture the immediate preceding row''s status value.</li><li class="py-0.5"><strong>Transition Mapping:</strong> Combine the current row''s Status and the PriorStatus value to create a transition string column named StateTransition formatted precisely as "PRIOR_TO_CURRENT" (e.g., "Normal_to_Error").</li><li class="py-0.5"><strong>Boundary Management:</strong> For the very first row of each sensor group, PriorStatus will evaluate to NaN. Replace this initial transition string with the default label "START_STATE".</li><li class="py-0.5"><strong>Output Structure:</strong> Return the complete DataFrame holding all initial attributes with the PriorStatus and StateTransition columns attached.</li></ul>
@@ -13484,7 +13029,7 @@ def track_state_transitions(df):
     pass','','sensor_readings_noisy.csv');
 
 INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
-VALUES (269,'269. End-to-End Multiprocess Pipeline Orchestration','
+VALUES (259,'259. End-to-End Multiprocess Pipeline Orchestration','
 <div class="space-y-5 text-ink font-sans">
   <div class="text-body text-sm font-light leading-relaxed">
     <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">This final challenge brings together all the key areas of the curriculum—data cleaning, joining, aggregation, and structural reshaping—into a single, unified production pipeline. You must design an end-to-end data transformation engine that ingests raw, messy transaction files and processes them into clean analytical features. Write a Python function orchestrate_data_pipeline(df_transactions: pd. DataFrame, df_customers: pd. DataFrame) -> pd. DataFrame that coordinates a complete multi-step transformation pipeline:</p><ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed"><li class="py-0.5"><strong>Data Sanitization Step:</strong> Clean the df_transactions table by stripping all leading/trailing whitespaces from the ProductCategory column and forcing all characters to lowercase. Remove any rows where Profit or CustomerID is missing (NaN).</li><li class="py-0.5"><strong>Relational Ingestion Step:</strong> Merge the cleaned transactions DataFrame with the df_customers master dimension table using an Inner Join on the shared CustomerID column.</li><li class="py-0.5"><strong>Advanced Group Aggregation Step:</strong> Group the combined dataset by Region and the cleaned ProductCategory columns simultaneously. For each group, calculate two statistics:The total cumulative sum of the Quantity column (name this output column TotalQuantity). The volume-weighted average profit using the formula:$$\text{WeightedProfit} = \frac{\sum (\text{Quantity} \times \text{Profit})}{\sum \text{Quantity}}$$Structural</li><li class="py-0.5"><strong>Pivot Reshaping Step:</strong> Pivot the aggregated results so that Region becomes the explicit row index, and unique values within the ProductCategory column swing horizontally into the primary column layout. The cells at each intersection must display the calculated WeightedProfit metric.</li><li class="py-0.5"><strong>Final Output Formatting:</strong> Fill any missing or empty grid cells (NaN) inside the final pivot grid with a flat default value of 0.00. Round all float metrics to exactly 2 decimal places. Return the finalized pivoted DataFrame.</li></ul>
@@ -13527,5 +13072,221 @@ import numpy as np
 def orchestrate_data_pipeline(df_transactions, df_customers):
     # Write your code here
     pass','','dirty_store_transactions.csv');
+
+INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
+VALUES (260,'260. High-Volume Financial Transaction Pipeline','
+<div class="space-y-5 text-ink font-sans">
+  <div class="text-body text-sm font-light leading-relaxed">
+    <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">You are processing a multi-gigabyte financial transaction dataset stored across multiple CSV fragments. The data contains duplicate transaction IDs due to network retries, structural formatting errors in string fields, and missing values in numeric transaction amounts and categorical merchant types. Write a Python function <code>process_financial_pipeline(file1: str, file2: str)</code> using Pandas to cleanse the dataset:</p>
+    <ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed">
+      <li class="py-0.5"><strong>Sequential Read:</strong> Read both CSV fragments sequentially and merge/concatenate them into a single DataFrame.</li>
+      <li class="py-0.5"><strong>Drop Duplicates:</strong> Drop exact duplicate rows based on the <code>TransactionID</code> column.</li>
+      <li class="py-0.5"><strong>Clean Strings:</strong> Standardize the <code>MerchantType</code> values by removing leading/trailing spaces and forcing Title case.</li>
+      <li class="py-0.5"><strong>Impute Amount:</strong> Impute missing values in the <code>TransactionAmount</code> column using the group-wise median grouped by <code>MerchantType</code>.</li>
+      <li class="py-0.5"><strong>Impute Merchant:</strong> Fill any remaining missing <code>MerchantType</code> values using the mode.</li>
+    </ul>
+  </div>
+</div>
+','medium',200,'pandas','import pandas as pd
+import numpy as np
+
+def process_financial_pipeline(file1, file2):
+    # Write your pipeline code here
+    pass','','financial_transactions_part1.csv');
+
+INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
+VALUES (261,'261. E-Commerce Customer Churn Cleaning & Mapping','
+<div class="space-y-5 text-ink font-sans">
+  <div class="text-body text-sm font-light leading-relaxed">
+    <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An e-commerce platform provides a customer behavior CSV file filled with dirty data, including trailing whitespace in categorical labels, hidden nulls represented as string question marks (?), duplicate customer profiles from multi-device logins, and missing tenure values. Write a Python function <code>clean_customer_churn(df: pd.DataFrame)</code> to sanitize the data:</p>
+    <ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed">
+      <li class="py-0.5"><strong>Hidden Nulls:</strong> Replace non-standard missing values (specifically string question marks <code>?</code> and spacing blanks) with <code>NaN</code>.</li>
+      <li class="py-0.5"><strong>Clean Profile Duplicates:</strong> Remove duplicate user profiles based on <code>CustomerID</code>.</li>
+      <li class="py-0.5"><strong>Numeric Imputation:</strong> Fill missing numeric <code>Tenure</code> values with the mean of the column.</li>
+      <li class="py-0.5"><strong>Categorical Imputation:</strong> Fill missing <code>Segment</code> values using the mode.</li>
+    </ul>
+  </div>
+</div>
+','medium',200,'pandas','import pandas as pd
+import numpy as np
+
+def clean_customer_churn(df):
+    # Write your cleaning code here
+    return df','','customer_churn_dirty.csv');
+
+INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
+VALUES (262,'262. IoT Sensor Stream Anomaly Preprocessing','
+<div class="space-y-5 text-ink font-sans">
+  <div class="text-body text-sm font-light leading-relaxed">
+    <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An industrial IoT sensor log CSV file suffers from overlapping timestamps, corrupted missing fields, and duplicate entries generated during system reboots. Write a Python function <code>preprocess_iot_stream(df: pd.DataFrame)</code> to sanitize the telemetry logs:</p>
+    <ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed">
+      <li class="py-0.5"><strong>DateTime Parsing:</strong> Parse the <code>Timestamp</code> column to DateTime format and sort the DataFrame chronologically.</li>
+      <li class="py-0.5"><strong>Deduplicate Timestamps:</strong> Drop duplicate rows sharing identical <code>Timestamp</code> values, keeping only the latest record.</li>
+      <li class="py-0.5"><strong>Hybrid Temperature Imputation:</strong> Handle missing <code>Temperature</code> values using a hybrid strategy: fill short gaps via forward-fill (limit=1), and fill any remaining structural blanks with the median sensor reading of that specific <code>DeviceID</code>.</li>
+    </ul>
+  </div>
+</div>
+','medium',200,'pandas','import pandas as pd
+import numpy as np
+
+def preprocess_iot_stream(df):
+    # Write your preprocessing code here
+    return df','','iot_telemetry_corrupt.csv');
+
+INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
+VALUES (263,'263. Healthcare Demographic Record Imputation','
+<div class="space-y-5 text-ink font-sans">
+  <div class="text-body text-sm font-light leading-relaxed">
+    <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A public health CSV database contains missing data in critical columns like age, blood pressure, and hospital stay duration, along with duplicate patient identification entries. Write a Python function <code>impute_healthcare_records(df: pd.DataFrame)</code> to cleanse the records:</p>
+    <ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed">
+      <li class="py-0.5"><strong>Deduplicate Patients:</strong> Drop duplicate patient identification rows based on patient hashes (<code>PatientHash</code>).</li>
+      <li class="py-0.5"><strong>Group Imputation:</strong> Calculate and apply group-wise mean imputation for missing <code>Age</code> values stratified by <code>DiseaseCategory</code>.</li>
+      <li class="py-0.5"><strong>Severity Mode:</strong> Impute missing categorical <code>SeverityGrade</code> entries with the mode.</li>
+    </ul>
+  </div>
+</div>
+','medium',200,'pandas','import pandas as pd
+import numpy as np
+
+def impute_healthcare_records(df):
+    # Write your imputation code here
+    return df','','healthcare_demographics_raw.csv');
+
+INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
+VALUES (264,'264. Supply Chain Logistics Data Cleansing','
+<div class="space-y-5 text-ink font-sans">
+  <div class="text-body text-sm font-light leading-relaxed">
+    <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A logistics tracking CSV contains shipping delays with structural inconsistencies, duplicate tracking numbers, and missing transit days. Write a Python function <code>cleanse_logistics_data(df: pd.DataFrame)</code> to cleanse the data:</p>
+    <ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed">
+      <li class="py-0.5"><strong>Deduplicate Logs:</strong> Drop duplicate tracking records based on <code>TrackingNumber</code>.</li>
+      <li class="py-0.5"><strong>Transit Median:</strong> Fill missing <code>TransitDays</code> using the median grouped by <code>ShippingTier</code>.</li>
+      <li class="py-0.5"><strong>Carrier Imputation:</strong> Impute missing <code>CarrierName</code> with the mode.</li>
+    </ul>
+  </div>
+</div>
+','medium',200,'pandas','import pandas as pd
+import numpy as np
+
+def cleanse_logistics_data(df):
+    # Write your cleansing code here
+    return df','','logistics_tracking_dirty.csv');
+
+INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
+VALUES (265,'265. Multi-Sheet Corporate Budget Consolidation','
+<div class="space-y-5 text-ink font-sans">
+  <div class="text-body text-sm font-light leading-relaxed">
+    <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">You are given a corporate financial Excel workbook (<code>budget_2026.xlsx</code>) containing multiple sheets representing different regional offices, each with slightly varying column headers, duplicate project IDs, and missing budget allocations. Write a Python function <code>consolidate_regional_budgets(file_path: str)</code> to align and merge them:</p>
+    <ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed">
+      <li class="py-0.5"><strong>Iterate Sheets:</strong> Iterate through all sheets in the Excel workbook.</li>
+      <li class="py-0.5"><strong>Standardize Headers:</strong> Standardize varying project ID columns (<code>ProjID</code>, <code>Project_ID</code>, <code>Proj_Code</code>) to <code>ProjectID</code>, department columns (<code>Dept</code>, <code>Department</code>) to <code>Department</code>, and regional budget columns to <code>Budget</code>.</li>
+      <li class="py-0.5"><strong>Deduplicate:</strong> Remove duplicate project listings based on <code>ProjectID</code>.</li>
+      <li class="py-0.5"><strong>Department Imputation:</strong> Fill missing <code>Budget</code> allocations using the group-wise median per <code>Department</code>.</li>
+    </ul>
+  </div>
+</div>
+','hard',300,'pandas','import pandas as pd
+import numpy as np
+
+def consolidate_regional_budgets(file_path):
+    # Write your consolidation code here
+    pass','','budget_2026.xlsx');
+
+INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
+VALUES (266,'266. Retail Inventory Unmerging and Cleaning','
+<div class="space-y-5 text-ink font-sans">
+  <div class="text-body text-sm font-light leading-relaxed">
+    <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A retail inventory Excel file (<code>retail_inventory_merged.xlsx</code>) contains merged cells for category names, formatting errors, duplicate SKU listings, and blank stock count entries. Write a Python function <code>clean_retail_inventory(file_path: str)</code> to preprocess the sheets:</p>
+    <ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed">
+      <li class="py-0.5"><strong>Unmerge Fill:</strong> Load the Excel workbook and properly forward-fill category names (which are merged cells).</li>
+      <li class="py-0.5"><strong>Deduplicate SKUs:</strong> Remove duplicate SKU entries.</li>
+      <li class="py-0.5"><strong>Inventory Imputation:</strong> Impute missing stock values: use the mode for categorical stock status flags, and the mean for numeric stock quantities.</li>
+    </ul>
+  </div>
+</div>
+','hard',300,'pandas','import pandas as pd
+import numpy as np
+
+def clean_retail_inventory(file_path):
+    # Write your inventory cleaning code here
+    pass','','retail_inventory_merged.xlsx');
+
+INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
+VALUES (267,'267. HR Performance Multi-Table Extraction','
+<div class="space-y-5 text-ink font-sans">
+  <div class="text-body text-sm font-light leading-relaxed">
+    <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An employee performance Excel workbook has irregular tabular layouts with metadata rows at the top, duplicate employee IDs from transitions, and missing evaluation scores. Write a Python function <code>extract_hr_performance(file_path: str)</code> to parse and clean the ledger:</p>
+    <ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed">
+      <li class="py-0.5"><strong>Skip Metadata:</strong> Programmatically skip metadata rows at the top to locate actual headers.</li>
+      <li class="py-0.5"><strong>Clean ID Duplicates:</strong> Drop duplicate rows based on <code>EmployeeID</code>.</li>
+      <li class="py-0.5"><strong>Score Imputation:</strong> Impute missing performance scores using the department-wise median.</li>
+      <li class="py-0.5"><strong>Employment Mode:</strong> Fill missing <code>EmploymentType</code> values with the mode.</li>
+    </ul>
+  </div>
+</div>
+','medium',200,'pandas','import pandas as pd
+import numpy as np
+
+def extract_hr_performance(file_path):
+    # Write your HR parsing code here
+    pass','','employee_performance_irregular.xlsx');
+
+INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
+VALUES (268,'268. Real Estate Property Appraisal Pipeline','
+<div class="space-y-5 text-ink font-sans">
+  <div class="text-body text-sm font-light leading-relaxed">
+    <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">A real estate Excel file contains property appraisals with missing valuations, duplicate property listings from multi-agent entries, and corrupt currency string formats. Write a Python function <code>clean_property_appraisals(file_path: str)</code> to clean and parse the properties:</p>
+    <ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed">
+      <li class="py-0.5"><strong>Parse Currency:</strong> Clean currency strings (e.g. <code>$1,200,000</code>) by removing symbols and commas, converting them to numeric types.</li>
+      <li class="py-0.5"><strong>Deduplicate Properties:</strong> Drop duplicate listings based on <code>PropertyID</code>.</li>
+      <li class="py-0.5"><strong>Price Imputation:</strong> Impute missing property valuations using the median price per zip code.</li>
+    </ul>
+  </div>
+</div>
+','medium',200,'pandas','import pandas as pd
+import numpy as np
+
+def clean_property_appraisals(file_path):
+    # Write your appraisal parsing code here
+    pass','','property_appraisals_corrupt.xlsx');
+
+INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
+VALUES (269,'269. Smart-Meter Energy Consumption Cleaning','
+<div class="space-y-5 text-ink font-sans">
+  <div class="text-body text-sm font-light leading-relaxed">
+    <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">An energy utility Excel workbook tracks smart-meter power loads, featuring missing hourly readings and duplicate timestamps due to synchronization glitches. Write a Python function <code>clean_energy_consumption(file_path: str)</code> to cleanse the smart meter log:</p>
+    <ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed">
+      <li class="py-0.5"><strong>Clean Multi-Index:</strong> Handle the multi-index spreadsheet layout correctly.</li>
+      <li class="py-0.5"><strong>Deduplicate Timestamps:</strong> Remove duplicate timestamps, keeping only the first record.</li>
+      <li class="py-0.5"><strong>Rolling Imputation:</strong> Impute missing power load readings using a rolling mean (window size 3).</li>
+    </ul>
+  </div>
+</div>
+','medium',200,'pandas','import pandas as pd
+import numpy as np
+
+def clean_energy_consumption(file_path):
+    # Write your energy consumption cleaning code here
+    pass','','smart_meter_consumption.xlsx');
+
+INSERT INTO public.coding_questions (id,title,description,difficulty,points,category,starter_code,verification_script,dataset_name)
+VALUES (270,'270. Global Branch Quarterly Revenue Analysis','
+<div class="space-y-5 text-ink font-sans">
+  <div class="text-body text-sm font-light leading-relaxed">
+    <p class="mb-4 leading-relaxed text-sm font-normal text-ink font-sans">You have preprocessed quarterly revenue data for 50 global branches. Write a Python function <code>plot_branch_revenue(file_path: str)</code> using Matplotlib or Seaborn to visualize the branch performance:</p>
+    <ul class="list-disc pl-5 mb-4 space-y-2 text-sm text-ink font-sans font-normal leading-relaxed">
+      <li class="py-0.5"><strong>Grouped/Stacked Plot:</strong> Plot quarterly revenues (Q1 to Q4) for each branch as a grouped or stacked bar chart.</li>
+      <li class="py-0.5"><strong>Labels Customization:</strong> Rotate branch category labels by 90 degrees.</li>
+      <li class="py-0.5"><strong>Error Bars:</strong> Include explicit standard deviation error bars (from the <code>StdDev</code> column) representing variance.</li>
+      <li class="py-0.5"><strong>Return Object:</strong> Return the Matplotlib <code>Axes</code> object (<code>ax</code>).</li>
+    </ul>
+  </div>
+</div>
+','medium',200,'matplotlib-seaborn','import pandas as pd
+import matplotlib.pyplot as plt
+
+def plot_branch_revenue(file_path):
+    fig, ax = plt.subplots()
+    # Write your plotting code here
+    return ax','','branch_quarterly_revenue.csv');
 
 COMMIT;
